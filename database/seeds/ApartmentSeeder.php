@@ -18,7 +18,7 @@ class ApartmentSeeder extends Seeder
             $a->title = $faker->words(rand(3, 8), true);
             $a->rooms_number = rand(2, 6);
             $a->beds_number = rand(2, 6);
-            $a->baths_number = rand(2, 6);
+            $a->bath_number = rand(2, 6);
             $a->meters = rand(70, 300);
             $a->address = $faker->streetAddress();
             $a->latitude = $faker->latitude();
