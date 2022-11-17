@@ -48,7 +48,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('admin.user.show', compact('user'));
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -59,7 +59,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.user.edit', compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -75,17 +75,20 @@ class UserController extends Controller
             'name' => 'nullable|max:255',
             'surname' => 'nullable|max:255',
             'email' => 'required|email:rfc',
-            'password' => 'required|min:8',
+            'password' => 'nullable|min:8',
             'date_of_birth' => 'nullable|date'
         ]);
 
-        if($params['password'] !== $user->password) {
+        
+        if($params['password']) {     
             $params['password'] = Hash::make($params['password']);
+        } else {
+            $params['password'] = $user->password;
         }
 
         $user->update($params);
 
-        return redirect()->route('admin.user.show', compact('user'));
+        return redirect()->route('admin.users.show', compact('user'));
     }
 
     /**
