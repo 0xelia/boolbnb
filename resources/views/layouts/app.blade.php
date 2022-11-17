@@ -41,6 +41,8 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                 {{ csrf_field() }}
                             </form>
+
+                            <a class="text-white" href="{{ route('admin.users.show', Auth::user())}}">Visualizza profilo</a>
                         @endguest
                     </div>
                 </div>

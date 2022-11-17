@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -47,7 +48,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('admin.user.show', compact('user'));
     }
 
     /**
@@ -58,7 +59,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.user.edit', compact('user'));
     }
 
     /**
@@ -70,7 +71,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $params = $request->validate([
+            'name' => 'nullable|max:255',
+            'surname' => 'nullable|max:255',
+            'email' => 'required|email:rfc',
+            'password' => 'required|min:8',
+            'date_of_birth' => 'nullable|date'
+        ]);
+
+        if($params['password'] !== $user->password) {
+            $params['password'] = Hash::make($params['password']);
+        }
+
+        $user->update($params);
+
+        return redirect()->route('admin.user.show', compact('user'));
     }
 
     /**
