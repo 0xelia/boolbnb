@@ -12,7 +12,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-                ApartmentSeeder::class
+                ApartmentSeeder::class,
+                ServiceSeeder::class,
+                SponsorSeeder::class
             ]
         );
     }
