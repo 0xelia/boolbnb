@@ -11,7 +11,9 @@ class Apartment extends Model
     }
 
     public function sponsors(){
-        return $this->belongsToMany('App\Sponsor');
+        return $this->belongsToMany('App\Sponsor')
+            ->withPivot(['expire_date'])
+            ->withTimestamp();
     }
 
     public function user(){
