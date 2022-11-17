@@ -12,7 +12,6 @@ class SponsorSeeder extends Seeder
      */
     public function run()
     {
-       
         $plans = config('sponsor');
 
         foreach($plans as $plane) {
