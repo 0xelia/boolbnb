@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
                 ServiceSeeder::class,
                 SponsorSeeder::class,
                 ImageSeeder::class,
-                ViewsSeeder::class,
+                ViewSeeder::class,
+                MessageSeeder::class,
             ]
         );
     }
