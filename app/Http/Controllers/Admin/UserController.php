@@ -76,7 +76,8 @@ class UserController extends Controller
             'surname' => 'nullable|max:255',
             'email' => 'required|email:rfc',
             'password' => 'nullable|min:8',
-            'date_of_birth' => 'nullable|date'
+            'date_of_birth' => 'nullable|date',
+            'profile_pic' => 'nullable|immage|max:2048'
         ]);
 
         
