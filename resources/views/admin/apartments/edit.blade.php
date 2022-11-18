@@ -26,9 +26,9 @@
             <div class="mb-8">
                 <label class="block mb-4" for="image">Copertina</label>
                 <input type="file" placeholder="Aggiungi l'immagine di " name="image" id="image" value="{{old('images', $apartment->images)}}"
-                class="w-full px-4 py-4 rounded-xl @error('title') border border-red-700 @enderror">
+                class="w-full px-4 py-4 rounded-xl @error('image') border border-red-700 @enderror">
 
-                @error('images')
+                @error('image')
                     <p class="text-red-700">
                         {{$message}}
                     </p>    
@@ -38,9 +38,9 @@
             <div class="mb-8">
                 <label class="block mb-4" for="images">Galleria Immagini</label>
                 <input type="file" multiple placeholder="Aggiungi qui un'immagine" name="images[]" id="images" value="{{old('images', $apartment->images)}}"
-                class="w-full px-4 py-4 rounded-xl @error('title') border border-red-700 @enderror">
+                class="w-full px-4 py-4 rounded-xl @error('images') border border-red-700 @enderror">
 
-                @error('images')
+                @error('images[]')
                     <p class="text-red-700">
                         {{$message}}
                     </p>    

@@ -103,7 +103,19 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        dd($request->all());
+        
+        if(array_key_exists('image', $params)){
+
+            Storage::delete([$apartment->image]);
+            $image_path = Storage::put('image', $params['image']);
+            $params['image'] = $image_path;
+
+        } else {
+            $params['image'] = $apartment->image;
+        }
+
+        $apartment->update($params);
+        return redirect()->route('admin.apartments.show', $apartment);
     }
 
     /**
