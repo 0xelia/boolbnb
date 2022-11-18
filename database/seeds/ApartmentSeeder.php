@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use App\Apartment;
 use App\User;
+use App\Service;
 
 class ApartmentSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class ApartmentSeeder extends Seeder
     public function run(Faker $faker)
     {
         $user_ids = User::all()->pluck('id');
+        $services = Service::all();
 
         for($i = 0; $i <= 15; $i++){
             $a = new Apartment;
@@ -30,6 +32,10 @@ class ApartmentSeeder extends Seeder
             $a->image = $faker->imageUrl();
 
             $a->save();
+
+            $random_services = $services->shuffle()->take(3);
+            $a->services()->sync($random_services);
+
         }
     }
 }
