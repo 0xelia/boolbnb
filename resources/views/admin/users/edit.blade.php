@@ -73,9 +73,23 @@
                     </div>
                 </div>
 
+                <div class="flex flex-wrap -mx-3 mt-6">
+                  <div class="w-full md:w-3/3 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="profile_pic">
+                      Immagine Profilo
+                    </label>
+                    <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="file" name="profile_pic" id="profile_pic">
+                    @error('profile_pic')
+                          <div id="profile_pic" class="invalid-feedback">
+                              {{ $message }}
+                          </div>
+                      @enderror
+                  </div>
+                </div>
+
                   
 
-                <button class="bg-blue-500 p-3 mt-5 rounded text-white">Modifica profilo</button>
+                <button class="bg-blue-500 p-3 mt-5 rounded text-white">Salva</button>
             </form>
             
         </div>

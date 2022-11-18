@@ -4,7 +4,7 @@
 
     <div class="container mx-auto">
         <div class="grid grid-cols-2">
-            <div>Immagine</div>
+            <img src="{{ $user->profile_pic }}" alt="">
             <div class="grid grid-rows-2 gap-8">
                 <div>
                     <span class="block text-xl pb-4">Username</span> 
