@@ -40,4 +40,9 @@ class User extends Authenticatable
     public function apartments(){
         return $this->hasMany('App\Apartment');
     }
+
+    public function getCoverPathAttribute()
+    {
+        return $this->cover ? Storage::disk('images')->url($this->cover) : null;
+    }
 }
