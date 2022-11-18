@@ -30,6 +30,7 @@ class ApartmentSeeder extends Seeder
             $a->latitude = $faker->latitude();
             $a->longitude = $faker->longitude();
             $a->image = $faker->imageUrl();
+            $a->price = rand(20, 400);
 
             $a->save();
 

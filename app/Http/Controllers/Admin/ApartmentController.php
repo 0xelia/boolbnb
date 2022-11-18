@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Auth;
 use App\Apartment;
 use App\Http\Controllers\Controller;
+use App\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ApartmentController extends Controller
 {
@@ -40,10 +43,33 @@ class ApartmentController extends Controller
     public function store(Request $request)
     {
         $user_id = Auth::id();
-        dd($request->all());
-        foreach ($request->images as $image) {
-            echo $image;
-        }
+        $params = $request->validate([
+            'title' => 'required|max:255',
+            'rooms_number' => 'required|integer|min:1|max:255',
+            'beds_number' => 'required|integer|min:1|max:255',
+            'bath_number' => 'required|integer|min:0|max:255',
+            'meters' => 'required|integer|min:0|max:65535',
+            'address' => 'required|max:255',
+            'image' => 'required|image|max:2048',
+            'visible' => [
+                'required',
+                Rule::in(['true', 'false']),
+            ],
+            'price' => 'required|numeric|min:0',
+            'images.*' => 'nullable|image|max:2048'
+        ]);
+        $params['user_id'] = $user_id;
+        $gallery = [];
+        $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
+        $apartment = Apartment::create($params);
+        // dd($apartment);
+        // foreach ($request->images as $key => $image) {
+        //     $img = Storage::put('gallery', $image);
+        //     $gallery[$key]['path'] = $img;
+        // }
+        // foreach ($gallery as $img) {
+        //     Image::create();
+        // }
     }
 
     /**

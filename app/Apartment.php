@@ -6,6 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Apartment extends Model
 {
+    protected $fillable = [
+        'title',
+        'rooms_number',
+        'beds_number',
+        'bath_number',
+        'meters',
+        'address',
+        'latitude',
+        'longitude',
+        'image',
+        'visible',
+        'price',
+        'user_id'
+    ];
+
     public function services(){
         return $this->belongsToMany('App\Service');
     }

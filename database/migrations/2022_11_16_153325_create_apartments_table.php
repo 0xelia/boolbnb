@@ -24,6 +24,8 @@ class CreateApartmentsTable extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->string('image');
+            $table->decimal('price');
+            $table->boolean('visible')->default(true);
             $table->timestamps();
         });
     }

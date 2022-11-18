@@ -10,33 +10,102 @@
                 @csrf
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="title">Titolo:</label>
-                    <input class="p-2 flex-grow" type="text" name="title" id="title" placeholder="Inserisci un titolo">
+                    <input class="p-2 flex-grow" type="text" name="title" id="title" placeholder="Inserisci un titolo" value="{{ old('title') }}">
+                    @error('title')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="rooms">Numero camere:</label>
-                    <input class="p-2 flex-grow" type="number" name="rooms" id="rooms" placeholder="Inserisci numero delle camere">
+                    <input class="p-2 flex-grow" type="number" name="rooms_number" id="rooms" placeholder="Inserisci numero delle camere" value="{{ old('rooms_number') }}">
+                    @error('rooms_number')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="beds">Numero letti:</label>
-                    <input class="p-2 flex-grow" type="number" name="beds" id="beds" placeholder="Inserisci numero dei letti">
+                    <input class="p-2 flex-grow" type="number" name="beds_number" id="beds" placeholder="Inserisci numero dei letti" value="{{ old('beds_number') }}">
+                    @error('beds_number')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="baths">Numero bagni:</label>
-                    <input class="p-2 flex-grow" type="number" name="baths" id="baths" placeholder="Inserisci numero dei bagni">
+                    <input class="p-2 flex-grow" type="number" name="bath_number" id="baths" placeholder="Inserisci numero dei bagni" value="{{ old('bath_number') }}">
+                    @error('bath_number')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="meters">Metri quadri:</label>
-                    <input class="p-2 flex-grow" type="number" name="meters" id="meters" placeholder="Inserisci metri quadri">
+                    <input class="p-2 flex-grow" type="number" name="meters" id="meters" placeholder="Inserisci metri quadri" value="{{ old('meters') }}">
+                    @error('meters')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
+                </div>
+                <div class="flex flex-col gap-2 mb-4">
+                    <label class="mr-2 font-bold" for="address">Indirizzo:</label>
+                    <input class="p-2 flex-grow" type="text" name="address" id="address" placeholder="Inserisci l'indirizzo" value="{{ old('address') }}">
+                    @error('address')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
+                </div>
+                <div class="flex flex-col gap-2 mb-4">
+                    <label class="mr-2 font-bold" for="price">Prezzo:</label>
+                    <input class="p-2 flex-grow" type="number" name="price" id="price" placeholder="Inserisci il prezzo" value="{{ old('price') }}">
+                    @error('price')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="image">Aggiungi immagine di copertina:</label>
                     <input type="file" name="image" id="image">
+                    @error('image')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="images">Aggiungi immagine/i alla galleria:</label>
                     <input type="file" name="images[]" id="images" multiple>
+                    @error('images[]')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
                 </div>
-                <input class="p-2 border-2 rounded-lg bg-transparent cursor-pointer" type="submit" value="DAIIII">
+                <div class="flex flex-col gap-2 mb-4">
+                    <label class="mr-2 font-bold">Visibilità:</label>
+                    <div>
+                        <input class="p-2" type="radio" name="visible" id="visible" value="true">                    
+                        <label class="mr-2" for="visible">Visibile</label>
+                    </div>
+                    <div>
+                        <input class="p-2" type="radio" name="visible" id="hidden" value="false">                    
+                        <label class="mr-2" for="hidden">Nascosto</label>
+                    </div>
+                    @error('visible')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
+                </div>
+                <input class="p-2 border-2 rounded-lg bg-transparent cursor-pointer" type="submit" value="Salva">
             </form>
         </div>
     </div>
