@@ -103,11 +103,28 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        
+        $params = $request->validate([
+            'title' => 'required|max:255',
+            'rooms_number' => 'required|integer|min:1|max:255',
+            'beds_number' => 'required|integer|min:1|max:255',
+            'bath_number' => 'required|integer|min:0|max:255',
+            'meters' => 'required|integer|min:0|max:65535',
+            'address' => 'required|max:255',
+            'image' => 'required|image|max:2048',
+            'visible' => [
+                'required',
+                Rule::in(['true', 'false']),
+            ],
+            'price' => 'required|numeric|min:0',
+            'images.*' => 'nullable|image|max:2048'
+        ]);
+
+        $params['user_id'] = Auth::id();
+
         if(array_key_exists('image', $params)){
 
             Storage::delete([$apartment->image]);
-            $image_path = Storage::put('image', $params['image']);
+            $image_path = Storage::put('cover_images', $params['image']);
             $params['image'] = $image_path;
 
         } else {
