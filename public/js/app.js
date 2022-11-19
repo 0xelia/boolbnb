@@ -1916,33 +1916,42 @@ __webpack_require__.r(__webpack_exports__);
     return {
       key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
       city: '',
+      cap: '',
       address: '',
+      latitude: '',
+      longitude: '',
       baseUri: 'https://api.tomtom.com/search/2/geocode/'
     };
   },
   methods: {
     fetchAddress: function fetchAddress() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.baseUri + this.address + ',' + this.city + '.json?key=' + this.key).then(function (res) {
-        console.log(res);
-      });
-    }
-  },
-  watch: {
-    address: function address(a, b) {
-      console.log('via');
-      if (a != b) {
-        this.fetchAddress();
-      }
-    },
-    city: function city(a, b) {
-      console.log('via');
-      if (this.address) {
-        if (a != b) {
-          this.fetchAddress();
-        }
+      var _this = this;
+      if (this.city && this.address && this.cap) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.baseUri + this.address + ',' + this.city + '.json?key=' + this.key).then(function (res) {
+          res.data.results.forEach(function (result) {
+            if (result.address.postalCode === _this.cap) {
+              _this.latitude = result.position.lat;
+              _this.longitude = result.position.lon;
+            }
+          });
+        });
       }
     }
   }
+  // watch: {
+  //     address(a,b){
+  //         if(a != b){
+  //             this.fetchAddress()
+  //         }
+  //     },
+  //     city(a,b){
+  //         if(this.address){
+  //             if(a != b){
+  //                 this.fetchAddress()
+  //             }
+  //         }
+  //     }
+  // }
 });
 
 /***/ }),
@@ -1986,6 +1995,7 @@ var render = function render() {
       value: _vm.city
     },
     on: {
+      blur: _vm.fetchAddress,
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.city = $event.target.value;
@@ -2016,12 +2026,86 @@ var render = function render() {
       value: _vm.address
     },
     on: {
+      blur: _vm.fetchAddress,
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.address = $event.target.value;
       }
     }
-  })])]);
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "flex flex-col gap-2 mb-4"
+  }, [_c("label", {
+    staticClass: "mr-2 font-bold",
+    attrs: {
+      "for": "address"
+    }
+  }, [_vm._v("Cap:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.cap,
+      expression: "cap"
+    }],
+    staticClass: "p-2 flex-grow",
+    attrs: {
+      type: "text",
+      name: "cap",
+      id: "cap",
+      placeholder: "Inserisci il cap"
+    },
+    domProps: {
+      value: _vm.cap
+    },
+    on: {
+      blur: _vm.fetchAddress,
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.cap = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.latitude,
+      expression: "latitude"
+    }],
+    staticClass: "p-2 flex-grow",
+    attrs: {
+      type: "hidden",
+      name: "latitude"
+    },
+    domProps: {
+      value: _vm.latitude
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.latitude = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.longitude,
+      expression: "longitude"
+    }],
+    staticClass: "p-2 flex-grow",
+    attrs: {
+      type: "hidden",
+      name: "longitude"
+    },
+    domProps: {
+      value: _vm.longitude
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.longitude = $event.target.value;
+      }
+    }
+  })]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

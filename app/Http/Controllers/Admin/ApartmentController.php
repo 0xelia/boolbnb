@@ -55,6 +55,9 @@ class ApartmentController extends Controller
             'meters' => 'required|integer|min:0|max:65535',
             'city' => 'required|max:255',
             'address' => 'required|max:255',
+            'latitude' => 'required|max:255',
+            'longitude' => 'required|max:255',
+            'cap' => 'required|max:255',
             'image' => 'required|image|max:2048',
             'visible' => [
                 'required',
