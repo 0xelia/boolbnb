@@ -51,20 +51,6 @@ import axios from 'axios';
                 }
             }
         },
-        // watch: {
-        //     address(a,b){
-        //         if(a != b){
-        //             this.fetchAddress()
-        //         }
-        //     },
-        //     city(a,b){
-        //         if(this.address){
-        //             if(a != b){
-        //                 this.fetchAddress()
-        //             }
-        //         }
-        //     }
-        // }
     }
 </script>
 

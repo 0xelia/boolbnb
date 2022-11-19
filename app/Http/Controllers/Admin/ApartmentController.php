@@ -69,21 +69,7 @@ class ApartmentController extends Controller
         $params['user_id'] = $user_id;
         $gallery = [];
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
-        $params['address']=Str::slug($params['address']);
-        /*$url = 'http://api.tomtom.com/search/2/geocode/'. $params['address'] . ',' . $params['city'] . '.json?key=' . $key;
-        //dd($url);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $resp = curl_exec($ch);
-        $decoded = null;
-        if($e=curl_error($ch)){
-            echo $e;
-        }else{
-            $decoded = json_decode($resp);
-        }
 
-        curl_close($ch);*/
 
         $apartment = Apartment::create($params);
         // dd($apartment);
