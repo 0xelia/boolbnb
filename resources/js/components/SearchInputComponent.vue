@@ -2,12 +2,12 @@
     <div>
         <div class="flex flex-col gap-2 mb-4">
             <label class="mr-2 font-bold" for="city">Città:</label>
-            <input class="p-2 flex-grow" type="text" name="city"  id="city" placeholder="Inserisci la città" v-bind:value="city">
+            <input class="p-2 flex-grow" type="text" name="city"  id="city" placeholder="Inserisci la città" v-model="city">
 
             </div>
         <div class="flex flex-col gap-2 mb-4">
             <label class="mr-2 font-bold" for="address">Indirizzo:</label>
-            <input class="p-2 flex-grow" type="text" name="address" id="address" placeholder="Inserisci l'indirizzo" v-bind:value="address">
+            <input class="p-2 flex-grow" type="text" name="address" id="address" placeholder="Inserisci l'indirizzo" v-model="address">
 
         </div>
     </div>
@@ -15,17 +15,22 @@
 
 
 <script>
+
+import axios from 'axios';
+
     export default{
         data(){
             return{
-                city,
-                address,
-                baseUri: 'http://api.tomtom.com/search/2/geocode/'+ $params['address'] + ',' + $params['city'] + '.json?key=' + $key,
+                key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+                city: '',
+                address: '',
+                baseUri: 'https://api.tomtom.com/search/2/geocode/',
             }
         },
         methods: {
             fetchAddress(){
-                axios.get(baseUri)
+                
+                axios.get(this.baseUri + this.address + ',' + this.city + '.json?key=' + this.key)
                 .then((res)=>{
                     console.log(res)
                 });
@@ -33,13 +38,15 @@
         },
         watch: {
             address(a,b){
-                if(a!=b){
+                console.log('via')
+                if(a != b){
                     this.fetchAddress()
                 }
             },
             city(a,b){
+                console.log('via')
                 if(this.address){
-                    if(a!=b){
+                    if(a != b){
                         this.fetchAddress()
                     }
                 }

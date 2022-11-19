@@ -1908,28 +1908,34 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      city: city,
-      address: address,
-      baseUri: 'http://api.tomtom.com/search/2/geocode/' + $params['address'] + ',' + $params['city'] + '.json?key=' + $key
+      key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+      city: '',
+      address: '',
+      baseUri: 'https://api.tomtom.com/search/2/geocode/'
     };
   },
   methods: {
     fetchAddress: function fetchAddress() {
-      axios.get(baseUri).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.baseUri + this.address + ',' + this.city + '.json?key=' + this.key).then(function (res) {
         console.log(res);
       });
     }
   },
   watch: {
     address: function address(a, b) {
+      console.log('via');
       if (a != b) {
         this.fetchAddress();
       }
     },
     city: function city(a, b) {
+      console.log('via');
       if (this.address) {
         if (a != b) {
           this.fetchAddress();
@@ -1963,6 +1969,12 @@ var render = function render() {
       "for": "city"
     }
   }, [_vm._v("Città:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.city,
+      expression: "city"
+    }],
     staticClass: "p-2 flex-grow",
     attrs: {
       type: "text",
@@ -1972,6 +1984,12 @@ var render = function render() {
     },
     domProps: {
       value: _vm.city
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.city = $event.target.value;
+      }
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "flex flex-col gap-2 mb-4"
@@ -1981,6 +1999,12 @@ var render = function render() {
       "for": "address"
     }
   }, [_vm._v("Indirizzo:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address,
+      expression: "address"
+    }],
     staticClass: "p-2 flex-grow",
     attrs: {
       type: "text",
@@ -1990,6 +2014,12 @@ var render = function render() {
     },
     domProps: {
       value: _vm.address
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.address = $event.target.value;
+      }
     }
   })])]);
 };
@@ -31728,10 +31758,7 @@ Vue.component('search-input-component', __webpack_require__(/*! ./components/Sea
  */
 
 var app = new Vue({
-  el: '#app',
-  components: {
-    'search-input-component': __webpack_require__(/*! ./components/SearchInputComponent.vue */ "./resources/js/components/SearchInputComponent.vue")
-  }
+  el: '#app'
 });
 
 /***/ }),
@@ -31765,7 +31792,8 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -31862,8 +31890,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\leocv\OneDrive\Desktop\developer\boolbnb-main\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\leocv\OneDrive\Desktop\developer\boolbnb-main\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! C:\Boolean\Boolbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Boolean\Boolbnb\resources\css\app.css */"./resources/css/app.css");
 
 
 /***/ })

@@ -53,7 +53,8 @@
                         </p>
                     @enderror
                 </div>
-                <search-input-component/>
+
+                <search-input-component></search-input-component>
                 <!--<div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="city">Città:</label>
                     <input class="p-2 flex-grow" type="text" name="city" id="city" placeholder="Inserisci la città" value="{{ old('city') }}">
