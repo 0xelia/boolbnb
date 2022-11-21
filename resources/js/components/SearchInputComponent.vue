@@ -1,9 +1,8 @@
 <template>
     <div>
-
-        <!-- <div ref="search" @keyup="fetchAutocomplete" v-html="searchBoxHTML.innerHTML"></div> -->
-        <label>Searchbox: </label>
-        <input @keyup.enter="fetchAutocomplete" v-model="address">
+        <div ref="searchWrapper">
+            <label>Indirizzo</label>
+        </div>
 
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
 
@@ -51,9 +50,12 @@ import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
             }
         },
         created() {
-            this.ttSearchBox = new SearchBox(services, this.options)
-            this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML()
+            this.ttSearchBox = new SearchBox(services, this.options);
+            this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML();
         },
+        mounted() {
+            this.$refs.searchWrapper.append(this.searchBoxHTML);
+        }
     }
 </script>
 

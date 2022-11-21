@@ -1975,6 +1975,9 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.ttSearchBox = new _tomtom_international_web_sdk_plugin_searchbox__WEBPACK_IMPORTED_MODULE_2___default.a(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__["services"], this.options);
     this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML();
+  },
+  mounted: function mounted() {
+    this.$refs.searchWrapper.append(this.searchBoxHTML);
   }
 });
 
@@ -1994,27 +1997,9 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("label", [_vm._v("Searchbox: ")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.address,
-      expression: "address"
-    }],
-    domProps: {
-      value: _vm.address
-    },
-    on: {
-      keyup: function keyup($event) {
-        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
-        return _vm.fetchAutocomplete.apply(null, arguments);
-      },
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.address = $event.target.value;
-      }
-    }
-  }), _vm._v(" "), _c("input", {
+  return _c("div", [_c("div", {
+    ref: "searchWrapper"
+  }, [_c("label", [_vm._v("Indirizzo")])]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
