@@ -1,11 +1,11 @@
 <template>
     <div>
 
-        <div @keyup="fetchAutocomplete" v-html="searchBoxHTML.innerHTML"></div>
+        <div ref="search" @keyup="fetchAutocomplete" v-html="searchBoxHTML.innerHTML"></div>
 
         <div class="flex flex-col gap-2 mb-4">
             <label class="mr-2 font-bold" for="address">Indirizzo:</label>
-            <input class="p-2 flex-grow" @keyup="fetchAutocomplete" type="text" name="address" id="address" placeholder="Inserisci l'indirizzo" v-model="address">
+            <input class="p-2 flex-grow" @keyup="fetchAutocomplete" type="text" name="address" id="address" placeholder="Inserisci l'indirizzo" >
         </div>
 
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
@@ -25,19 +25,19 @@ import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
     export default{
         data(){
             return{
-                key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
-                address: '',
+                apiKey: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+                address: 'via roma',
                 latitude: '',
                 longitude: '',
-                baseUri: 'https://api.tomtom.com/search/2/',
+                baseUrl: 'https://api.tomtom.com/search/2/search',
                 options: {
                     searchOptions: {
-                        key: this.key,
+                        key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
                         language: 'it-IT',
-                        limit: 5
+                        limit: 15
                     },
                     autocompleteOptions: {
-                        key: this.key,
+                        key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
                         language: 'it-IT'
                     }
                 },
@@ -45,10 +45,19 @@ import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
                 searchBoxHTML: null,
             }
         },
+        // watch: {
+        //     address(a, b) {
+        //         if (a != b) {
+        //             const inputEl = document.querySelector('.tt-search-box-input');
+        //             inputEl.setAttribute('value', this.address);
+        //             console.log(inputEl);
+        //         }
+        //     }
+        // },
         methods: {
             fetchAddress(){
                 if(this.address) {
-                    axios.get(this.baseUri + 'geocode/' + this.address + '.json?key=' + this.key)
+                    axios.get(this.baseUri + 'geocode/' + this.address + '.json?key=' + this.apiKey)
                     .then((res)=>{
                         res.data.results.forEach(result => {
                             if(result.address.postalCode === this.cap) {
@@ -59,17 +68,19 @@ import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
                     });
                 }
             },
-            fetchAutocomplete(){
-                axios.get(this.baseUri + 'autocomplete/' + this.address + '.json?key=' + this.key + '&language=it-IT')
-                .then((res) => {
-                    console.log(res)
-                })
+            fetchAutocomplete() {
+                axios.get(`${this.baseUrl}/${this.address}.json?limit=${this.options.searchOptions.limit}&language=${this.options.searchOptions.language}&key=${this.apiKey}`)
+                    .then(res => console.log(res)
+                );
             }
         },
-        created(){
+        created() {
             this.ttSearchBox = new SearchBox(services, this.options)
             this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML()
-            console.log(this.searchBoxHTML.innerHTML)
+        },
+        mounted() {
+            const inputEl = this.$refs.search.children[0].children[2];
+            inputEl.setAttribute('value', this.address);
         }
     }
 </script>

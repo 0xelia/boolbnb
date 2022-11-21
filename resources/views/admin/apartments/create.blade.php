@@ -116,7 +116,7 @@
                         </p>
                     @enderror
                 </div>
-                <input class="p-2 border-2 rounded-lg bg-transparent cursor-pointer" type="submit" value="Salva">
+                <input class="p-2 border-2 rounded-lg bg-transparent cursor-pointer" type="button" value="Salva">
             </form>
         </div>
     </div>
