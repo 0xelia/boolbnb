@@ -4,10 +4,15 @@
     
     <section class="container mx-auto">
 
+
         <h1 class="text-5xl font-bold mb-8">
             {{$apartment->title}}
         </h1>
         
+        <figure class="w-full ">
+            <img src="{{ asset('storage/' . $apartment->image) }}" alt="">
+        </figure>
+
         <h3 class="text-2xl font-bold mb-2">
             Informazioni:
         </h3>

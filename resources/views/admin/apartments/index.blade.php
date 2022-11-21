@@ -15,7 +15,7 @@
                 <a href="{{ route('admin.apartments.show', $apartment) }}">
                     <li>
                         <figure>
-                            <img class="rounded-lg mb-3" src="{{ $apartment->image }}" alt="">
+                            <img class="rounded-lg mb-3" src="{{ $apartment->image_path }}" alt="">
                         </figure>
                         <h3 class="font-bold capitalize">
                             {{ $apartment->title }}

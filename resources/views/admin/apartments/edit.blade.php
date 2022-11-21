@@ -49,9 +49,20 @@
 
 
 
-
-
+            
+            
             <div class="flex justify-between mb-8">
+                <div class="">
+                    <label class="block mb-4" for="meters">M</label>
+                    <input type="number" placeholder="Quante stanze ha il tuo immobile?" name="meters" id="title" value="{{old('meters', $apartment->meters)}}"
+                    class="w-full px-4 py-4 rounded-xl @error('meters') border border-red-700 @enderror">
+                    
+                    @error('meters')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
+                </div>
 
                 <div class="">
                     <label class="block mb-4" for="rooms_number">N. Stanze</label>
@@ -65,25 +76,26 @@
                     @enderror
                 </div>
 
+                
                 <div class="">
                     <label class="block mb-4" for="beds_number">N. Posti letto</label>
                     <input type="number" placeholder="Quante camere ha il tuo immobile?" name="beds_number" id="title" value="{{old('beds_number', $apartment->rooms_number)}}"
                     class="w-full px-4 py-4 rounded-xl @error('beds_number') border border-red-700 @enderror">
                     
                     @error('beds_number')
-                        <p class="text-red-700">
-                            {{$message}}
-                        </p>    
+                    <p class="text-red-700">
+                        {{$message}}
+                    </p>    
                     @enderror
                 </div>
-
+                
                 <div class="">
                     <label class="block mb-4" for="bath_number">N. Bagni</label>
                     <input type="number" placeholder="Quanti bagni ha il tuo immobile?" name="bath_number" id="title" value="{{old('bath_number', $apartment->bath_number)}}"
                     class="w-full px-4 py-4 rounded-xl @error('rooms_number') border border-red-700 @enderror">
                     
                     @error('bath_number')
-                        <p class="text-red-700">
+                    <p class="text-red-700">
                             {{$message}}
                         </p>    
                     @enderror
@@ -128,7 +140,7 @@
                     <input class="p-2" type="radio" name="visible" id="hidden" value="false">                    
                     <label class="mr-2" for="hidden">Nascosto</label>
                 </div>
-                
+
                 @error('visible')
                     <p class="text-red-700">
                         {{$message}}
@@ -137,6 +149,7 @@
             </div>
 
             <input class="w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" value="Modifica Appartamento">
+
         </form>
     </section>
 @endsection

@@ -58,6 +58,7 @@ class ApartmentController extends Controller
             'price' => 'required|numeric|min:0',
             'images.*' => 'nullable|image|max:2048'
         ]);
+
         $params['user_id'] = $user_id;
         $gallery = [];
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
@@ -120,6 +121,7 @@ class ApartmentController extends Controller
         ]);
 
         $params['user_id'] = Auth::id();
+        $params['visible'] = $params['visible'] ? 1 : 0;
 
         if(array_key_exists('image', $params)){
 
@@ -143,6 +145,9 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        //
+        Storage::delete($apartment->image);
+        $apartment->delete();
+
+        return redirect()->route('admin.apartments.index');
     }
 }
