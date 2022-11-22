@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Apartment;
 use App\Http\Controllers\Controller;
 use App\Image;
@@ -31,6 +32,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
+
         return view('admin.apartments.create');
     }
 
@@ -42,6 +44,8 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
+        $key = config('tomtom');
+
         $user_id = Auth::id();
         $params = $request->validate([
             'title' => 'required|max:255',
@@ -50,6 +54,8 @@ class ApartmentController extends Controller
             'bath_number' => 'required|integer|min:0|max:255',
             'meters' => 'required|integer|min:0|max:65535',
             'address' => 'required|max:255',
+            'latitude' => 'required|max:255',
+            'longitude' => 'required|max:255',
             'image' => 'required|image|max:2048',
             'visible' => [
                 'required',
@@ -61,7 +67,10 @@ class ApartmentController extends Controller
         $params['user_id'] = $user_id;
         $gallery = [];
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
+
+
         $apartment = Apartment::create($params);
+        return redirect()->route('admin.apartments.show', compact('apartment'));
         // dd($apartment);
         // foreach ($request->images as $key => $image) {
         //     $img = Storage::put('gallery', $image);

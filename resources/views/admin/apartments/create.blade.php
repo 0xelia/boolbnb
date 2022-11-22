@@ -14,7 +14,7 @@
                     @error('title')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
                     @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
@@ -23,7 +23,7 @@
                     @error('rooms_number')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
                     @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
@@ -32,7 +32,7 @@
                     @error('beds_number')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
                     @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
@@ -41,7 +41,7 @@
                     @error('bath_number')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
                     @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
@@ -50,7 +50,25 @@
                     @error('meters')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
+                    @enderror
+                </div>
+                @php
+                    $key = env('TOMTOM_API_KEY');                
+                @endphp                
+                <search-input-component api-key="{{ $key }}"></search-input-component>
+                @error('address')
+                    <p class="text-red-700">
+                        {{$message}}
+                    </p>
+                @enderror
+                <!--<div class="flex flex-col gap-2 mb-4">
+                    <label class="mr-2 font-bold" for="city">Città:</label>
+                    <input class="p-2 flex-grow" type="text" name="city" id="city" placeholder="Inserisci la città" value="{{ old('city') }}">
+                    @error('city')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>
                     @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
@@ -59,16 +77,16 @@
                     @error('address')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
                     @enderror
-                </div>
+                </div>-->
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="price">Prezzo:</label>
                     <input class="p-2 flex-grow" type="number" name="price" id="price" placeholder="Inserisci il prezzo" value="{{ old('price') }}">
                     @error('price')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
                     @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
@@ -77,7 +95,7 @@
                     @error('image')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
                     @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
@@ -86,23 +104,23 @@
                     @error('images[]')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
                     @enderror
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold">Visibilità:</label>
                     <div>
-                        <input class="p-2" type="radio" name="visible" id="visible" value="true">                    
+                        <input class="p-2" type="radio" name="visible" id="visible" value="true">
                         <label class="mr-2" for="visible">Visibile</label>
                     </div>
                     <div>
-                        <input class="p-2" type="radio" name="visible" id="hidden" value="false">                    
+                        <input class="p-2" type="radio" name="visible" id="hidden" value="false">
                         <label class="mr-2" for="hidden">Nascosto</label>
                     </div>
                     @error('visible')
                         <p class="text-red-700">
                             {{$message}}
-                        </p>    
+                        </p>
                     @enderror
                 </div>
                 <input class="p-2 border-2 rounded-lg bg-transparent cursor-pointer" type="submit" value="Salva">
