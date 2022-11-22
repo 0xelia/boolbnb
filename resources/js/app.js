@@ -20,7 +20,9 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 //import search_input from './components/SearchInputComponent.vue'
 
-Vue.component('search-input-component', require('./components/SearchInputComponent.vue').default);
+Vue.component(
+    'search-input-component', 
+    require('./components/SearchInputComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,7 +32,4 @@ Vue.component('search-input-component', require('./components/SearchInputCompone
 
 const app = new Vue({
     el: '#app',
-    components:{
-        'search-input-component':require('./components/SearchInputComponent.vue')
-    }
 });

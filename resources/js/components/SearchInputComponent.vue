@@ -1,50 +1,67 @@
 <template>
     <div>
-        <div class="flex flex-col gap-2 mb-4">
-            <label class="mr-2 font-bold" for="city">Città:</label>
-            <input class="p-2 flex-grow" type="text" name="city"  id="city" placeholder="Inserisci la città" v-bind:value="city">
-
-            </div>
-        <div class="flex flex-col gap-2 mb-4">
-            <label class="mr-2 font-bold" for="address">Indirizzo:</label>
-            <input class="p-2 flex-grow" type="text" name="address" id="address" placeholder="Inserisci l'indirizzo" v-bind:value="address">
-
+        <div ref="searchWrapper" class='flex flex-col gap-2 mb-4'>
+            <label class="font-bold">Indirizzo</label>
         </div>
+
+        <input class="p-2 flex-grow" type="hidden" name="address" v-model="address">
+        
+        <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
+
+        <input class="p-2 flex-grow" type="hidden" name="longitude" v-model="longitude">
     </div>
 </template>
 
 
 <script>
+
+import axios from 'axios';
+import { services } from '@tomtom-international/web-sdk-services';
+import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
+
+
     export default{
+        props: {
+            apiKey: String,
+        },
         data(){
             return{
-                city,
-                address,
-                baseUri: 'http://api.tomtom.com/search/2/geocode/'+ $params['address'] + ',' + $params['city'] + '.json?key=' + $key,
+                address: '',
+                latitude: '',
+                longitude: '',
+                options: {
+                    searchOptions: {
+                        key: this.apiKey,
+                        language: 'it-IT',
+                        countrySet: 'IT',
+                        limit: 15
+                    },
+                    autocompleteOptions: {
+                        key: this.apiKey,
+                        language: 'it-IT'
+                    }
+                },
+                ttSearchBox: null,
+                searchBoxHTML: null,
             }
         },
         methods: {
-            fetchAddress(){
-                axios.get(baseUri)
-                .then((res)=>{
-                    console.log(res)
-                });
+            getResult(result) {
+                const res = result.data.result
+                this.latitude = res.position.lat
+                this.longitude = res.position.lng
+                this.address = res.address.freeformAddress
+                console.log(this.address)
             }
         },
-        watch: {
-            address(a,b){
-                if(a!=b){
-                    this.fetchAddress()
-                }
-            },
-            city(a,b){
-                if(this.address){
-                    if(a!=b){
-                        this.fetchAddress()
-                    }
-                }
-            }
-        }
+        created() {
+            this.ttSearchBox = new SearchBox(services, this.options);
+            this.ttSearchBox.on('tomtom.searchbox.resultselected', this.getResult);
+            this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML();
+        },
+        mounted() {
+            this.$refs.searchWrapper.append(this.searchBoxHTML);
+        },
     }
 </script>
 
