@@ -54,6 +54,17 @@
             <div class="flex justify-between mb-8">
 
                 <div class="">
+                    <label class="block mb-4" for="meters">M. quadrati</label>
+                    <input type="number" placeholder="Quante stanze ha il tuo immobile?" name="meters" id="title" value="{{old('meters', $apartment->meters)}}"
+                    class="w-full px-4 py-4 rounded-xl @error('meters') border border-red-700 @enderror">
+                    
+                    @error('meters')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>    
+                    @enderror
+                </div>
+                <div class="">
                     <label class="block mb-4" for="rooms_number">N. Stanze</label>
                     <input type="number" placeholder="Quante stanze ha il tuo immobile?" name="rooms_number" id="title" value="{{old('rooms_number', $apartment->rooms_number)}}"
                     class="w-full px-4 py-4 rounded-xl @error('rooms_number') border border-red-700 @enderror">
@@ -104,17 +115,15 @@
                 @enderror
             </div>
 
-            <div>
-                <label class="block mb-4" for="address">Modifica il'indirizzo</label>
-                <input type="text" placeholder="Qui va l'indirizzo del tu immobile" name="address" id="address" value="{{old('address', $apartment->address)}}"
-                class="w-full px-4 py-4 rounded-xl @error('address') border border-red-700 @enderror">
-
-                @error('address')
-                    <p class="text-red-700">
-                        {{$message}}
-                    </p>    
-                @enderror
-            </div>
+            @php
+            $key = env('TOMTOM_API_KEY');                
+            @endphp                
+            <search-input-component api-key="{{ $key }}"></search-input-component>
+            @error('address')
+                <p class="text-red-700">
+                    {{$message}}
+                </p>
+            @enderror
 
             <div class="flex flex-col gap-2 mb-4">
 
@@ -137,6 +146,16 @@
             </div>
 
             <input class="w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" value="Modifica Appartamento">
+
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         </form>
     </section>
 @endsection

@@ -118,8 +118,10 @@ class ApartmentController extends Controller
             'beds_number' => 'required|integer|min:1|max:255',
             'bath_number' => 'required|integer|min:0|max:255',
             'meters' => 'required|integer|min:0|max:65535',
-            'address' => 'required|max:255',
-            'image' => 'required|image|max:2048',
+            'address' => 'max:255',
+            'latitude' => 'max:255',
+            'longitude' => 'max:255',
+            'image' => 'image|max:2048',
             'visible' => [
                 'required',
                 Rule::in(['true', 'false']),
@@ -129,6 +131,14 @@ class ApartmentController extends Controller
         ]);
 
         $params['user_id'] = Auth::id();
+
+        if(!$params['address']){
+            $params['address'] = $apartment->address; 
+            $params['latitude'] = $apartment->latitude; 
+            $params['longitude'] = $apartment->longitude; 
+        }
+
+        $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
 
         if(array_key_exists('image', $params)){
 
