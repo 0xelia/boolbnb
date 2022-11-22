@@ -55,6 +55,7 @@ import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
         },
         mounted() {
             this.$refs.searchWrapper.append(this.searchBoxHTML);
+
         }
     }
 </script>

@@ -12,9 +12,28 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+    <style>
+    .stroke-title{
+        -webkit-text-stroke: 2px rgb(255, 255, 255);
+    };
+    
+    .titles{
+        transform: translateY(-100%)
+    };
+    .lighthouse{
+        
+    };
+    </style>
 </head>
-<body class="bg-gray-100 h-screen antialiased leading-none">
+<body class="bg-gray-100 h-screen antialiased leading-none h-screen">
 <div class="flex flex-col">
+
+    <img class="relative w-screen h-screen object-cover object-center" src="{{asset('/img/background.jpg')}}" alt="">
+    {{-- <img  class="absolute  w-screen h-screen object-cover object-center lighthouse" src="{{asset('/img/lighthouse.png')}}" alt=""> --}}
+
+
+
     @if(Route::has('login'))
         <div class="absolute top-0 right-0 mt-4 mr-4">
             @auth
@@ -28,40 +47,15 @@
         </div>
     @endif
 
-    <div class="min-h-screen flex items-center justify-center">
-        <div class="flex flex-col justify-around h-full">
-            <div>
-                <h1 class="text-gray-600 text-center font-light tracking-wider text-5xl mb-6">
-                    {{ config('app.name', 'Laravel') }}
-                </h1>
-                <ul class="list-reset">
-                    <li class="inline pr-8">
-                        <a href="https://laravel.com/docs" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Documentation">Documentation</a>
-                    </li>
-                    <li class="inline pr-8">
-                        <a href="https://laracasts.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Laracasts">Laracasts</a>
-                    </li>
-                    <li class="inline pr-8">
-                        <a href="https://laravel-news.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="News">News</a>
-                    </li>
-                    <li class="inline pr-8">
-                        <a href="https://nova.laravel.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Nova">Nova</a>
-                    </li>
-                    <li class="inline pr-8">
-                        <a href="https://forge.laravel.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Forge">Forge</a>
-                    </li>
-                    <li class="inline pr-8">
-                        <a href="https://vapor.laravel.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Vapor">Vapor</a>
-                    </li>
-                    <li class="inline pr-8">
-                        <a href="https://github.com/laravel/laravel" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="GitHub">GitHub</a>
-                    </li>
-                    <li class="inline pr-8">
-                        <a href="https://tailwindcss.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Tailwind Css">Tailwind CSS</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
+    <div class="relative titles text-red-600 w-screen h-screen">
+        <h1 class="text-white absolute top-1/2 right-1/2  text-center lowercase font-bold tracking-wider text-xxl mb-6 main-title">
+            {{ config('app.name', 'boolbnb') }}
+        </h1>
+        <img  class="absolute bottom-0  w-screen h-screen object-cover object-center lighthouse" src="{{asset('/img/lighthouse.png')}}" alt="">
+        <h2 class=" text-center text-transparent absolute top-1/2 right-1/2   lowercase font-bold tracking-wider text-xxl mb-6 stroke-title">
+            {{ config('app.name', 'boolbnb') }}
+        </h2>
     </div>
 </div>
 </body>
