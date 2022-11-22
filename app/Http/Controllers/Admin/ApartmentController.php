@@ -103,7 +103,8 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('admin.apartments.edit', compact('apartment'));
+        $services = Service::all();
+        return view('admin.apartments.edit', compact('apartment','services'));
     }
 
     /**
@@ -121,14 +122,15 @@ class ApartmentController extends Controller
             'beds_number' => 'required|integer|min:1|max:255',
             'bath_number' => 'required|integer|min:0|max:255',
             'meters' => 'required|integer|min:0|max:65535',
-            'address' => 'required|max:255',
+            //'address' => 'required|max:255',
             'image' => 'required|image|max:2048',
             'visible' => [
                 'required',
                 Rule::in(['true', 'false']),
             ],
             'price' => 'required|numeric|min:0',
-            'images.*' => 'nullable|image|max:2048'
+            'images.*' => 'nullable|image|max:2048',
+            'services.*' => 'nullable|exists:services,id'
         ]);
 
         $params['user_id'] = Auth::id();
@@ -143,7 +145,13 @@ class ApartmentController extends Controller
             $params['image'] = $apartment->image;
         }
 
+        if(array_key_exists('services', $params)){
+            $apartment->services()->sync($params['services']);
+        }
+        
         $apartment->update($params);
+
+
         return redirect()->route('admin.apartments.show', $apartment);
     }
 

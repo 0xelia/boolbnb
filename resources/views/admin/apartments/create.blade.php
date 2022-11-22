@@ -82,7 +82,7 @@
                 </div>-->
 
                 <div class="flex flex-col gap-2 mb-4">
-                    <label class="mr-2 font-bold">Services</label>
+                    <label class="mr-2 font-bold">Servizi:</label>
                     <ul>
                         @foreach ($services as $service)
                             <li>
