@@ -15,7 +15,6 @@
 
 <script>
 
-import axios from 'axios';
 import { services } from '@tomtom-international/web-sdk-services';
 import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
 

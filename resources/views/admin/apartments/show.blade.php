@@ -34,10 +34,17 @@
         </ul>
 
         
+        <div class="flex gap-2">
 
-        <a href="{{route('admin.apartments.edit', $apartment)}}" class="">
-            <input class="w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="button" value="Modifica Appartamento">
-        </a>
+            <a href="{{route('admin.apartments.edit', $apartment)}}" class="flex-grow">
+                <input class="w-full  cursor-pointer py-4 px-8 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="button" value="Modifica Appartamento">
+            </a>
+            <form action="{{route('admin.apartments.destroy', $apartment)}}" method="post">
+                @csrf
+                @method('DELETE')
+                <input type="submit" value=" Elimina" class="cursor-pointer py-4 px-8 rounded-xl my-8 hover:bg-red-500  bg-red-400 text-white">
+            </form>
+        </div>
     </section>
 
 @endsection
