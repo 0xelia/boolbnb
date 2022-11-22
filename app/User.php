@@ -42,8 +42,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Apartment');
     }
 
-    public function getCoverPathAttribute()
+    public function getProfilePicPathAttribute()
     {
         return $this->profile_pic ? Storage::disk('images')->url($this->profile_pic) : null;
     }
+
+    protected $appends = ['profile_pic_path'];
 }
