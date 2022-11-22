@@ -36,7 +36,7 @@
             </div>
 
             <div class="mb-8">
-                <label class="block mb-4" for="images">Galleria Immagini</label>
+                <label class="block mb-4" for="images">Aggiungi Foto alla galleria</label>
                 <input type="file" multiple placeholder="Aggiungi qui un'immagine" name="images[]" id="images" value="{{old('images', $apartment->images)}}"
                 class="w-full px-4 py-4 rounded-xl @error('images') border border-red-700 @enderror">
 

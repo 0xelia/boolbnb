@@ -71,15 +71,18 @@ class ApartmentController extends Controller
         $params['image'] = $cover_path;
 
         $apartment = Apartment::create($params);
-        
-        foreach($params['images'] as $image){
-            $image_params = [];
 
-            $image_path = Storage::put('gallery', $image);
-            $image_params['path'] = $image_path;
-            $image_params['apartment_id'] = $apartment->id;
+        if(array_key_exists('imges', $params)){
 
-            $newImage = Image::create($image_params);
+            foreach($params['images'] as $image){
+                $image_params = [];
+                
+                $image_path = Storage::put('gallery', $image);
+                $image_params['path'] = $image_path;
+                $image_params['apartment_id'] = $apartment->id;
+                
+                $newImage = Image::create($image_params);
+            }
         }
         return redirect()->route('admin.apartments.show', compact('apartment'));
     }
@@ -154,6 +157,20 @@ class ApartmentController extends Controller
         }
 
         $apartment->update($params);
+
+        if(array_key_exists('images', $params)){
+
+            foreach($params['images'] as $image){
+                $image_params = [];
+                
+                $image_path = Storage::put('gallery', $image);
+                $image_params['path'] = $image_path;
+                $image_params['apartment_id'] = $apartment->id;
+                
+                $newImage = Image::create($image_params);
+            }
+        }
+
         return redirect()->route('admin.apartments.show', $apartment);
     }
 
@@ -166,8 +183,12 @@ class ApartmentController extends Controller
     public function destroy(Apartment $apartment)
     {
         Storage::delete($apartment->image);
-        $apartment->delete();
 
+        foreach($apartment->images as $img){
+            Storage::delete($img->path);
+        }
+
+        $apartment->delete();
         return redirect()->route('admin.apartments.index');
     }
 }

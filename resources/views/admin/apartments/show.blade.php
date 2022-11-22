@@ -10,12 +10,23 @@
         
         <div class="grid grid-cols-2 pr-4">
 
-            <figure class="overflow-hidden rounded-xl w-full">
-                <img class="w-full" src="{{ $apartment->pic_path }}" alt="">
-            </figure>
-            <ul class="flex flex-col">
-                
-            </ul>
+            <div class="flex flex-col">
+
+                <figure class="overflow-hidden rounded-xl w-full">
+                    <img class="w-full" src="{{ $apartment->pic_path }}" alt="">
+                </figure>
+
+                <ul class="flex  flex-no-wrap py-4 gap-2 max-w-full overflow-x-scroll">
+                    @foreach ($apartment->images as $image)
+                    <li class="w-40 max-h-24 overflow-hidden rounded-xl">
+                        <figure class="h-full">
+                            <img class="h-full w-full object-cover object-center" src="{{$image->img_path}}" alt="">
+                        </figure>
+                    </li>
+                    @endforeach
+                </ul>
+
+            </div>
         </div>
 
         <h3 class="text-2xl font-bold mb-2">
