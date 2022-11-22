@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -86,6 +87,14 @@ class UserController extends Controller
         } else {
             $params['password'] = $user->password;
         }
+
+        if(array_key_exists('profile_pic', $params)) {
+            $img_path = Storage::disk('images')->put('profile_images', $params['profile_pic']);
+            $params['profile_pic'] = $img_path;
+        }
+
+
+
 
         $user->update($params);
 

@@ -49,6 +49,8 @@
 
 
 
+
+
             <div class="flex justify-between mb-8">
 
                 <div class="">
@@ -87,6 +89,19 @@
                     @enderror
                 </div>
 
+
+            </div>
+
+            <div class="">
+                <label class="block mb-4" for="price">Prezzo</label>
+                <input type="number" placeholder="Costo a notte" name="price" id="title" value="{{old('price', $apartment->price)}}"
+                class="w-full px-4 py-4 rounded-xl @error('price') border border-red-700 @enderror">
+                
+                @error('price')
+                    <p class="text-red-700">
+                        {{$message}}
+                    </p>    
+                @enderror
             </div>
 
             <div>
@@ -95,6 +110,26 @@
                 class="w-full px-4 py-4 rounded-xl @error('address') border border-red-700 @enderror">
 
                 @error('address')
+                    <p class="text-red-700">
+                        {{$message}}
+                    </p>    
+                @enderror
+            </div>
+
+            <div class="flex flex-col gap-2 mb-4">
+
+                <label class="mr-2 font-bold">Visibilità:</label>
+                <div>
+                    <input class="p-2" type="radio" name="visible" id="visible" value="true">                    
+                    <label class="mr-2" @checked(true) for="visible">Visibile</label>
+                </div>
+
+                <div>
+                    <input class="p-2" type="radio" name="visible" id="hidden" value="false">                    
+                    <label class="mr-2" for="hidden">Nascosto</label>
+                </div>
+                
+                @error('visible')
                     <p class="text-red-700">
                         {{$message}}
                     </p>    
