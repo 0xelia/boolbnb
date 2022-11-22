@@ -136,7 +136,7 @@
                     <ul>
                         @foreach ($services as $service)
                             <li>                                
-                                <input @if(in_array($service->id, $apartment->services()->pluck('id')->toArray())) checked @endif class="p-2" type="checkbox" name="services[]" id="{{$service->name}}" value="{{$service->id}}">
+                                <input @if(in_array($service->id, old('services', $apartment->services->pluck('id')->all()))) checked @endif class="p-2" type="checkbox" name="services[]" id="{{$service->name}}" value="{{$service->id}}">
                                 <label class="mr-2" for="{{$service->name}}">{{$service->name}}</label>
                             </li>
                         @endforeach
@@ -147,7 +147,6 @@
                         </p>
                     @enderror
             </div>
-
             <input class="w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" value="Modifica Appartamento">
         </form>
     </section>

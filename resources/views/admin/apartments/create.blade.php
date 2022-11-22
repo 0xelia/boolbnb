@@ -86,7 +86,7 @@
                     <ul>
                         @foreach ($services as $service)
                             <li>
-                                <input class="p-2" type="checkbox" name="services[]" id="{{$service->name}}" value="{{$service->id}}">
+                                <input class="p-2" type="checkbox" name="services[]" @if( in_array($service->id, old('service', []))) checked @endif id="{{$service->name}}" value="{{$service->id}}">
                                 <label class="mr-2" for="{{$service->name}}">{{$service->name}}</label>
                             </li>
                         @endforeach
