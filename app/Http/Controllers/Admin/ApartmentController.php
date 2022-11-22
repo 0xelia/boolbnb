@@ -129,6 +129,7 @@ class ApartmentController extends Controller
             $image_path = Storage::put('cover_images', $params['image']);
             $params['image'] = $image_path;
 
+            
         } else {
             $params['image'] = $apartment->image;
         }
