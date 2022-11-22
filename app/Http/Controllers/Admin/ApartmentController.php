@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Apartment;
+use App\Service;
 use App\Http\Controllers\Controller;
 use App\Image;
 use Illuminate\Http\Request;
@@ -32,8 +33,8 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-
-        return view('admin.apartments.create');
+        $services = Service::all();
+        return view('admin.apartments.create', compact('services'));
     }
 
     /**
@@ -62,15 +63,18 @@ class ApartmentController extends Controller
                 Rule::in(['true', 'false']),
             ],
             'price' => 'required|numeric|min:0',
-            'images.*' => 'nullable|image|max:2048'
+            'images.*' => 'nullable|image|max:2048',
+            'services.*' => 'nullable|exists:services,id'
         ]);
         $params['user_id'] = $user_id;
         $gallery = [];
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
-
-
         $apartment = Apartment::create($params);
-        return redirect()->route('admin.apartments.show', compact('apartment'));
+        if(array_key_exists('services', $params))
+        {
+            $apartment->services()->sync($params['services']);
+        }
+       // return redirect()->route('admin.apartments.show', compact('apartment'));
         // dd($apartment);
         // foreach ($request->images as $key => $image) {
         //     $img = Storage::put('gallery', $image);

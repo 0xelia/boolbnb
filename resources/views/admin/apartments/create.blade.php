@@ -54,8 +54,8 @@
                     @enderror
                 </div>
                 @php
-                    $key = env('TOMTOM_API_KEY');                
-                @endphp                
+                    $key = env('TOMTOM_API_KEY');
+                @endphp
                 <search-input-component api-key="{{ $key }}"></search-input-component>
                 @error('address')
                     <p class="text-red-700">
@@ -80,6 +80,24 @@
                         </p>
                     @enderror
                 </div>-->
+
+                <div class="flex flex-col gap-2 mb-4">
+                    <label class="mr-2 font-bold">Services</label>
+                    <ul>
+                        @foreach ($services as $service)
+                            <li>
+                                <input class="p-2" type="checkbox" name="services[]" id="{{$service->name}}" value="{{$service->id}}">
+                                <label class="mr-2" for="{{$service->name}}">{{$service->name}}</label>
+                            </li>
+                        @endforeach
+                    </ul>
+                    @error('services.*')
+                        <p  class="text-red-700">
+                            {{$message}}
+                        </p>
+                    @enderror
+                </div>
+
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="price">Prezzo:</label>
                     <input class="p-2 flex-grow" type="number" name="price" id="price" placeholder="Inserisci il prezzo" value="{{ old('price') }}">

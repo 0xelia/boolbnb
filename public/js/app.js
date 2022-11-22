@@ -1942,22 +1942,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    apiKey: String
+  },
   data: function data() {
     return {
-      apiKey: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
       address: '',
       latitude: '',
       longitude: '',
-      baseUrl: 'https://api.tomtom.com/search/2/search',
       options: {
         searchOptions: {
-          key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+          key: this.apiKey,
           language: 'it-IT',
           countrySet: 'IT',
           limit: 15
         },
         autocompleteOptions: {
-          key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+          key: this.apiKey,
           language: 'it-IT'
         }
       },
@@ -1966,14 +1967,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    fetchAutocomplete: function fetchAutocomplete() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(this.baseUrl, "/").concat(this.address, ".json?limit=").concat(this.options.searchOptions.limit, "&countrySet=").concat(this.options.searchOptions.countrySet, "&language=").concat(this.options.searchOptions.language, "&key=").concat(this.apiKey)).then(function (res) {
-        return console.log(res);
-      });
+    getResult: function getResult(result) {
+      var res = result.data.result;
+      this.latitude = res.position.lat;
+      this.longitude = res.position.lng;
+      this.address = res.address.freeformAddress;
+      console.log(this.address);
     }
   },
   created: function created() {
     this.ttSearchBox = new _tomtom_international_web_sdk_plugin_searchbox__WEBPACK_IMPORTED_MODULE_2___default.a(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__["services"], this.options);
+    this.ttSearchBox.on('tomtom.searchbox.resultselected', this.getResult);
     this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML();
   },
   mounted: function mounted() {
@@ -1998,8 +2002,32 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", [_c("div", {
-    ref: "searchWrapper"
-  }, [_c("label", [_vm._v("Indirizzo")])]), _vm._v(" "), _c("input", {
+    ref: "searchWrapper",
+    staticClass: "flex flex-col gap-2 mb-4"
+  }, [_c("label", {
+    staticClass: "font-bold"
+  }, [_vm._v("Indirizzo")])]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address,
+      expression: "address"
+    }],
+    staticClass: "p-2 flex-grow",
+    attrs: {
+      type: "hidden",
+      name: "address"
+    },
+    domProps: {
+      value: _vm.address
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.address = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -31910,8 +31938,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/boolbnb/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/boolbnb/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! C:\Users\leocv\OneDrive\Desktop\developer\boolbnb-main\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\leocv\OneDrive\Desktop\developer\boolbnb-main\resources\css\app.css */"./resources/css/app.css");
 
 
 /***/ })
