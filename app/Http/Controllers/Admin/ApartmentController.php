@@ -53,11 +53,9 @@ class ApartmentController extends Controller
             'beds_number' => 'required|integer|min:1|max:255',
             'bath_number' => 'required|integer|min:0|max:255',
             'meters' => 'required|integer|min:0|max:65535',
-            'city' => 'required|max:255',
             'address' => 'required|max:255',
             'latitude' => 'required|max:255',
             'longitude' => 'required|max:255',
-            'cap' => 'required|max:255',
             'image' => 'required|image|max:2048',
             'visible' => [
                 'required',
@@ -72,6 +70,7 @@ class ApartmentController extends Controller
 
 
         $apartment = Apartment::create($params);
+        return redirect()->route('admin.apartments.show', compact('apartment'));
         // dd($apartment);
         // foreach ($request->images as $key => $image) {
         //     $img = Storage::put('gallery', $image);

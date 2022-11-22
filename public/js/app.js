@@ -1944,19 +1944,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+      apiKey: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
       address: '',
       latitude: '',
       longitude: '',
-      baseUri: 'https://api.tomtom.com/search/2/',
+      baseUrl: 'https://api.tomtom.com/search/2/search',
       options: {
         searchOptions: {
-          key: this.key,
+          key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
           language: 'it-IT',
-          limit: 5
+          countrySet: 'IT',
+          limit: 15
         },
         autocompleteOptions: {
-          key: this.key,
+          key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
           language: 'it-IT'
         }
       },
@@ -1965,29 +1966,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    fetchAddress: function fetchAddress() {
-      var _this = this;
-      if (this.address) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.baseUri + 'geocode/' + this.address + '.json?key=' + this.key).then(function (res) {
-          res.data.results.forEach(function (result) {
-            if (result.address.postalCode === _this.cap) {
-              _this.latitude = result.position.lat;
-              _this.longitude = result.position.lon;
-            }
-          });
-        });
-      }
-    },
     fetchAutocomplete: function fetchAutocomplete() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.baseUri + 'autocomplete/' + this.address + '.json?key=' + this.key + '&language=it-IT').then(function (res) {
-        console.log(res);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(this.baseUrl, "/").concat(this.address, ".json?limit=").concat(this.options.searchOptions.limit, "&countrySet=").concat(this.options.searchOptions.countrySet, "&language=").concat(this.options.searchOptions.language, "&key=").concat(this.apiKey)).then(function (res) {
+        return console.log(res);
       });
     }
   },
   created: function created() {
     this.ttSearchBox = new _tomtom_international_web_sdk_plugin_searchbox__WEBPACK_IMPORTED_MODULE_2___default.a(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__["services"], this.options);
     this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML();
-    console.log(this.searchBoxHTML.innerHTML);
+  },
+  mounted: function mounted() {
+    this.$refs.searchWrapper.append(this.searchBoxHTML);
   }
 });
 
@@ -2008,44 +1998,8 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", [_c("div", {
-    domProps: {
-      innerHTML: _vm._s(_vm.searchBoxHTML.innerHTML)
-    },
-    on: {
-      keyup: _vm.fetchAutocomplete
-    }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "flex flex-col gap-2 mb-4"
-  }, [_c("label", {
-    staticClass: "mr-2 font-bold",
-    attrs: {
-      "for": "address"
-    }
-  }, [_vm._v("Indirizzo:")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.address,
-      expression: "address"
-    }],
-    staticClass: "p-2 flex-grow",
-    attrs: {
-      type: "text",
-      name: "address",
-      id: "address",
-      placeholder: "Inserisci l'indirizzo"
-    },
-    domProps: {
-      value: _vm.address
-    },
-    on: {
-      keyup: _vm.fetchAutocomplete,
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.address = $event.target.value;
-      }
-    }
-  })]), _vm._v(" "), _c("input", {
+    ref: "searchWrapper"
+  }, [_c("label", [_vm._v("Indirizzo")])]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -31956,8 +31910,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Boolean\Boolbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Boolean\Boolbnb\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Applications/MAMP/htdocs/boolbnb/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/boolbnb/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })

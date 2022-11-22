@@ -53,8 +53,15 @@
                         </p>
                     @enderror
                 </div>
-
-                <search-input-component></search-input-component>
+                @php
+                    $key = env('TOMTOM_API_KEY');                
+                @endphp                
+                <search-input-component api-key="{{ $key }}"></search-input-component>
+                @error('address')
+                    <p class="text-red-700">
+                        {{$message}}
+                    </p>
+                @enderror
                 <!--<div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="city">Città:</label>
                     <input class="p-2 flex-grow" type="text" name="city" id="city" placeholder="Inserisci la città" value="{{ old('city') }}">

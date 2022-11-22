@@ -1,13 +1,11 @@
 <template>
     <div>
-
-        <div @keyup="fetchAutocomplete" v-html="searchBoxHTML.innerHTML"></div>
-
-        <div class="flex flex-col gap-2 mb-4">
-            <label class="mr-2 font-bold" for="address">Indirizzo:</label>
-            <input class="p-2 flex-grow" @keyup="fetchAutocomplete" type="text" name="address" id="address" placeholder="Inserisci l'indirizzo" v-model="address">
+        <div ref="searchWrapper" class='flex flex-col gap-2 mb-4'>
+            <label class="font-bold">Indirizzo</label>
         </div>
 
+        <input class="p-2 flex-grow" type="hidden" name="address" v-model="address">
+        
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
 
         <input class="p-2 flex-grow" type="hidden" name="longitude" v-model="longitude">
@@ -23,21 +21,23 @@ import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
 
 
     export default{
+        props: {
+            apiKey: String,
+        },
         data(){
             return{
-                key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
                 address: '',
                 latitude: '',
                 longitude: '',
-                baseUri: 'https://api.tomtom.com/search/2/',
                 options: {
                     searchOptions: {
-                        key: this.key,
+                        key: this.apiKey,
                         language: 'it-IT',
-                        limit: 5
+                        countrySet: 'IT',
+                        limit: 15
                     },
                     autocompleteOptions: {
-                        key: this.key,
+                        key: this.apiKey,
                         language: 'it-IT'
                     }
                 },
@@ -46,31 +46,22 @@ import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
             }
         },
         methods: {
-            fetchAddress(){
-                if(this.address) {
-                    axios.get(this.baseUri + 'geocode/' + this.address + '.json?key=' + this.key)
-                    .then((res)=>{
-                        res.data.results.forEach(result => {
-                            if(result.address.postalCode === this.cap) {
-                                this.latitude = result.position.lat
-                                this.longitude = result.position.lon
-                            }
-                        });
-                    });
-                }
-            },
-            fetchAutocomplete(){
-                axios.get(this.baseUri + 'autocomplete/' + this.address + '.json?key=' + this.key + '&language=it-IT')
-                .then((res) => {
-                    console.log(res)
-                })
+            getResult(result) {
+                const res = result.data.result
+                this.latitude = res.position.lat
+                this.longitude = res.position.lng
+                this.address = res.address.freeformAddress
+                console.log(this.address)
             }
         },
-        created(){
-            this.ttSearchBox = new SearchBox(services, this.options)
-            this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML()
-            console.log(this.searchBoxHTML.innerHTML)
-        }
+        created() {
+            this.ttSearchBox = new SearchBox(services, this.options);
+            this.ttSearchBox.on('tomtom.searchbox.resultselected', this.getResult);
+            this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML();
+        },
+        mounted() {
+            this.$refs.searchWrapper.append(this.searchBoxHTML);
+        },
     }
 </script>
 
