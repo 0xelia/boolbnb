@@ -70,11 +70,10 @@ class ApartmentController extends Controller
         $gallery = [];
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
         $apartment = Apartment::create($params);
-        if(array_key_exists('services', $params))
-        {
+        if(array_key_exists('services', $params)){
             $apartment->services()->sync($params['services']);
         }
-       // return redirect()->route('admin.apartments.show', compact('apartment'));
+        return redirect()->route('admin.apartments.show', compact('apartment'));
         // dd($apartment);
         // foreach ($request->images as $key => $image) {
         //     $img = Storage::put('gallery', $image);
