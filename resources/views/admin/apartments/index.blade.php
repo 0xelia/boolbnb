@@ -13,9 +13,9 @@
         <ul class="grid grid-cols-4 gap-4">
             @foreach ($apartments as $apartment)
                 <a href="{{ route('admin.apartments.show', $apartment) }}">
-                    <li>
-                        <figure>
-                            <img class="rounded-lg mb-3" src="{{ $apartment->image }}" alt="">
+                    <li class="flex h-full flex-col">
+                        <figure class="overflow-hidden flex-grow rounded-xl">
+                            <img class="w-full h-full object-cover object-center" src="{{ $apartment->pic_path }}" alt="">
                         </figure>
                         <h3 class="font-bold capitalize">
                             {{ $apartment->title }}

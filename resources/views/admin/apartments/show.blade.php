@@ -1,13 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
     <section class="container mx-auto">
 
         <h1 class="text-5xl font-bold mb-8">
             {{$apartment->title}}
         </h1>
         
+        <div class="grid grid-cols-2 pr-4">
+
+            <figure class="overflow-hidden rounded-xl w-full">
+                <img class="w-full" src="{{ $apartment->pic_path }}" alt="">
+            </figure>
+            <ul class="flex flex-col">
+                
+            </ul>
+        </div>
+
         <h3 class="text-2xl font-bold mb-2">
             Informazioni:
         </h3>
