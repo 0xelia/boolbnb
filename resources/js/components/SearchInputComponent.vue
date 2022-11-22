@@ -1,9 +1,11 @@
 <template>
     <div>
-        <div ref="searchWrapper">
-            <label>Indirizzo</label>
+        <div ref="searchWrapper" class='flex flex-col gap-2 mb-4'>
+            <label class="font-bold">Indirizzo</label>
         </div>
 
+        <input class="p-2 flex-grow" type="hidden" name="address" v-model="address">
+        
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
 
         <input class="p-2 flex-grow" type="hidden" name="longitude" v-model="longitude">
@@ -19,22 +21,23 @@ import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
 
 
     export default{
+        props: {
+            apiKey: String,
+        },
         data(){
             return{
-                apiKey: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
                 address: '',
                 latitude: '',
                 longitude: '',
-                baseUrl: 'https://api.tomtom.com/search/2/search',
                 options: {
                     searchOptions: {
-                        key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+                        key: this.apiKey,
                         language: 'it-IT',
                         countrySet: 'IT',
                         limit: 15
                     },
                     autocompleteOptions: {
-                        key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+                        key: this.apiKey,
                         language: 'it-IT'
                     }
                 },
@@ -43,19 +46,22 @@ import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
             }
         },
         methods: {
-            fetchAutocomplete() {
-                axios.get(`${this.baseUrl}/${this.address}.json?limit=${this.options.searchOptions.limit}&countrySet=${this.options.searchOptions.countrySet}&language=${this.options.searchOptions.language}&key=${this.apiKey}`)
-                    .then(res => console.log(res)
-                );
+            getResult(result) {
+                const res = result.data.result
+                this.latitude = res.position.lat
+                this.longitude = res.position.lng
+                this.address = res.address.freeformAddress
+                console.log(this.address)
             }
         },
         created() {
             this.ttSearchBox = new SearchBox(services, this.options);
+            this.ttSearchBox.on('tomtom.searchbox.resultselected', this.getResult);
             this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML();
         },
         mounted() {
             this.$refs.searchWrapper.append(this.searchBoxHTML);
-        }
+        },
     }
 </script>
 

@@ -37,7 +37,10 @@
                                 <a class="no-underline hover:underline text-gray-300 text-sm p-3" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
                         @else
-                            <span class="text-gray-300 text-sm pr-4">{{ Auth::user()->name }}</span>
+                            <a class="text-white mr-5" href="{{ route('admin.apartments.index')}}">Appartamenti</a>
+                            <a class="text-white" href="{{ route('admin.users.show', Auth::user())}}">
+                                <span class="text-sm pr-4">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
+                            </a>
 
                             <a href="{{ route('logout') }}"
                                class="no-underline hover:underline text-gray-300 text-sm p-3"
@@ -46,8 +49,6 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                 {{ csrf_field() }}
                             </form>
-
-                            <a class="text-white" href="{{ route('admin.users.show', Auth::user())}}">Visualizza profilo</a>
                         @endguest
                     </div>
                 </div>
