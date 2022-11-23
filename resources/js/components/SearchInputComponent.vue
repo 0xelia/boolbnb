@@ -4,7 +4,7 @@
             <label class="font-bold">Indirizzo *</label>
         </div>
 
-        <input class="p-2 flex-grow" type="hidden" name="address" v-model="address" required>
+        <input class="p-2 flex-grow" type="hidden" name="address" v-model="address" maxlength="255" required>
 
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
 

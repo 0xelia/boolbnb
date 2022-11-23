@@ -10,7 +10,7 @@
                 @csrf
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="title">Titolo *</label>
-                    <input class="p-2 flex-grow" type="text" name="title" id="title" placeholder="Inserisci un titolo" value="{{ old('title') }}" required>
+                    <input class="p-2 flex-grow" type="text" name="title" maxlength="255" id="title" placeholder="Inserisci un titolo" value="{{ old('title') }}" required>
                     @error('title')
                         <p class="text-red-700">
                             {{$message}}
@@ -19,7 +19,7 @@
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="rooms">Numero camere *</label>
-                    <input class="p-2 flex-grow" type="number" name="rooms_number" id="rooms" placeholder="Inserisci numero delle camere" value="{{ old('rooms_number') }}" required>
+                    <input class="p-2 flex-grow" type="number" min="1" max="255" name="rooms_number" id="rooms" placeholder="Inserisci numero delle camere" value="{{ old('rooms_number') }}" required>
                     @error('rooms_number')
                         <p class="text-red-700">
                             {{$message}}
@@ -28,7 +28,7 @@
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="beds">Numero letti *</label>
-                    <input class="p-2 flex-grow" type="number" name="beds_number" id="beds" placeholder="Inserisci numero dei letti" value="{{ old('beds_number') }}" required>
+                    <input class="p-2 flex-grow" type="number" min="1" max="255" name="beds_number" id="beds" placeholder="Inserisci numero dei letti" value="{{ old('beds_number') }}" required>
                     @error('beds_number')
                         <p class="text-red-700">
                             {{$message}}
@@ -37,7 +37,7 @@
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="baths">Numero bagni *</label>
-                    <input class="p-2 flex-grow" type="number" name="bath_number" id="baths" placeholder="Inserisci numero dei bagni" value="{{ old('bath_number') }}" required>
+                    <input class="p-2 flex-grow" type="number" min="0" max="255" name="bath_number" id="baths" placeholder="Inserisci numero dei bagni" value="{{ old('bath_number') }}" required>
                     @error('bath_number')
                         <p class="text-red-700">
                             {{$message}}
@@ -46,7 +46,7 @@
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="meters">Metri quadri *</label>
-                    <input class="p-2 flex-grow" type="number" name="meters" id="meters" placeholder="Inserisci metri quadri" value="{{ old('meters') }}" required>
+                    <input class="p-2 flex-grow" type="number" min="0" max="65535" name="meters" id="meters" placeholder="Inserisci metri quadri" value="{{ old('meters') }}" required>
                     @error('meters')
                         <p class="text-red-700">
                             {{$message}}
@@ -100,7 +100,7 @@
 
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="price">Prezzo *</label>
-                    <input class="p-2 flex-grow" type="number" name="price" id="price" placeholder="Inserisci il prezzo" value="{{ old('price') }}" required>
+                    <input class="p-2 flex-grow" type="number" min="0" name="price" id="price" placeholder="Inserisci il prezzo" value="{{ old('price') }}" required>
                     @error('price')
                         <p class="text-red-700">
                             {{$message}}

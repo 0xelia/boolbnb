@@ -2017,6 +2017,7 @@ var render = function render() {
     attrs: {
       type: "hidden",
       name: "address",
+      maxlength: "255",
       required: ""
     },
     domProps: {
