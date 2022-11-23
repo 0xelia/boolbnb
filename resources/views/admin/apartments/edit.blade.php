@@ -6,7 +6,7 @@
             Modifica il tuo apartamento
         </h1>
 
-        <form action="{{route('admin.apartments.update', $apartment)}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('admin.apartments.update', $apartment)}}" method="post" enctype="multipart/form-data" id="form">
             @csrf
             @method('PUT')
 
