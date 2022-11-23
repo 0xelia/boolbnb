@@ -72,7 +72,7 @@ class ApartmentController extends Controller
 
         $apartment = Apartment::create($params);
 
-        if(array_key_exists('imges', $params)){
+        if(array_key_exists('images', $params)){
 
             foreach($params['images'] as $image){
                 $image_params = [];

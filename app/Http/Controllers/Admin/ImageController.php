@@ -84,13 +84,20 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        $path = $image->path;
-        $image->delete();
-        if($image->path && Storage::exists($path)){
-            Storage::delete($path);
-        }
-        $image->delete();
+        $apartment = $image->apartment->id;
 
-        return redirect()->route('admin.apartments.index');
+        Storage::delete($image->path);
+        $image->delete();
+        return redirect()->route('admin.apartments.show', $apartment);
+
+        // $path = $image->path;
+        // if($image->path && Storage::exists($path)){
+        //     Storage::delete($path);
+        // }
+        // $image->delete();
+
+        // return redirect()->route('admin.apartments.index');
+
+        
     }
 }
