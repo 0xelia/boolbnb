@@ -44,8 +44,6 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $key = config('tomtom');
-
         $user_id = Auth::id();
         $params = $request->validate([
             'title' => 'required|max:255',
@@ -64,21 +62,29 @@ class ApartmentController extends Controller
             'price' => 'required|numeric|min:0',
             'images.*' => 'nullable|image|max:2048'
         ]);
+
         $params['user_id'] = $user_id;
         $gallery = [];
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
 
+        $cover_path = Storage::put('cover_images', $params['image']);
+        $params['image'] = $cover_path;
 
         $apartment = Apartment::create($params);
+
+        if(array_key_exists('images', $params)){
+
+            foreach($params['images'] as $image){
+                $image_params = [];
+                
+                $image_path = Storage::put('gallery', $image);
+                $image_params['path'] = $image_path;
+                $image_params['apartment_id'] = $apartment->id;
+                
+                $newImage = Image::create($image_params);
+            }
+        }
         return redirect()->route('admin.apartments.show', compact('apartment'));
-        // dd($apartment);
-        // foreach ($request->images as $key => $image) {
-        //     $img = Storage::put('gallery', $image);
-        //     $gallery[$key]['path'] = $img;
-        // }
-        // foreach ($gallery as $img) {
-        //     Image::create();
-        // }
     }
 
     /**
@@ -151,6 +157,20 @@ class ApartmentController extends Controller
         }
 
         $apartment->update($params);
+
+        if(array_key_exists('images', $params)){
+
+            foreach($params['images'] as $image){
+                $image_params = [];
+                
+                $image_path = Storage::put('gallery', $image);
+                $image_params['path'] = $image_path;
+                $image_params['apartment_id'] = $apartment->id;
+                
+                $newImage = Image::create($image_params);
+            }
+        }
+
         return redirect()->route('admin.apartments.show', $apartment);
     }
 
@@ -163,8 +183,12 @@ class ApartmentController extends Controller
     public function destroy(Apartment $apartment)
     {
         Storage::delete($apartment->image);
-        $apartment->delete();
 
+        foreach($apartment->images as $img){
+            Storage::delete($img->path);
+        }
+
+        $apartment->delete();
         return redirect()->route('admin.apartments.index');
     }
 }
