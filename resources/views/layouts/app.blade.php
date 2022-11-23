@@ -24,13 +24,13 @@
     <div id="app">
         <nav class="bg-blue-900 shadow mb-8 py-6">
             <div class="container mx-auto px-6 md:px-0">
-                <div class="flex items-center justify-center">
+                <div class="flex items-center justify-between">
                     <div class="mr-6">
                         <a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline">
                             {{ config('app.name', 'Laravel') }}
                         </a>
                     </div>
-                    <div class="flex-1 text-right">
+                    <div class="flex gap-3 space-between items-center text-right ali">
                         @guest
                             <a class="no-underline hover:underline text-gray-300 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
@@ -38,10 +38,14 @@
                             @endif
                         @else
                             <a class="text-white mr-5" href="{{ route('admin.apartments.index')}}">Appartamenti</a>
-                            <a class="text-white" href="{{ route('admin.users.show', Auth::user())}}">
-                                <span class="text-sm pr-4">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
-                            </a>
-
+                            <div>
+                                <a class="text-white flex items-center" href="{{ route('admin.users.show', Auth::user())}}">
+                                    <span class="text-sm pr-4">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
+                                    @if(auth::user()->profile_pic)
+                                        <img style="width: 40px; height: 40px; border-radius: 50%;"  class="items-center" src="{{ auth::user()->profile_pic_path }}" alt="">
+                                    @endif
+                                </a>
+                            </div>
                             <a href="{{ route('logout') }}"
                                class="no-underline hover:underline text-gray-300 text-sm p-3"
                                onclick="event.preventDefault();

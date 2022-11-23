@@ -105,6 +105,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        Storage::delete($user->profile_pic);
+        
+        User::where('profile_pic', $user->profile_pic)->update(['profile_pic' => null]);
+
+        return redirect()->route('admin.users.show', $user);
     }
 }
