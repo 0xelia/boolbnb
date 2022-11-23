@@ -148,7 +148,7 @@ class ApartmentController extends Controller
         if(array_key_exists('services', $params)){
             $apartment->services()->sync($params['services']);
         }
-        
+
         $apartment->update($params);
 
 
