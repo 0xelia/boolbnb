@@ -6,7 +6,7 @@
             Modifica il tuo apartamento
         </h1>
 
-        <form action="{{route('admin.apartments.update', $apartment)}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('admin.apartments.update', $apartment)}}" method="post" enctype="multipart/form-data" id="form">
             @csrf
             @method('PUT')
 
@@ -22,10 +22,9 @@
                 @enderror
             </div>
 
-
             <div class="mb-8">
                 <label class="block mb-4" for="image">Copertina</label>
-                <input type="file" placeholder="Aggiungi l'immagine di " name="image" id="image" value="{{old('images', $apartment->images)}}"
+                <input type="file" placeholder="Aggiungi l'immagine di " name="image" id="image" value="{{old('image', $apartment->image)}}"
                 class="w-full px-4 py-4 rounded-xl @error('image') border border-red-700 @enderror">
 
                 @error('image')
@@ -33,6 +32,9 @@
                         {{$message}}
                     </p>    
                 @enderror
+                <p class="hidden text-red-700" id="image_error">
+                    The image failed to upload. Max size exceed.
+                </p>
             </div>
 
             <div class="mb-8">
@@ -40,16 +42,12 @@
                 <input type="file" multiple placeholder="Aggiungi qui un'immagine" name="images[]" id="images" value="{{old('images', $apartment->images)}}"
                 class="w-full px-4 py-4 rounded-xl @error('images') border border-red-700 @enderror">
 
-                @error('images[]')
+                @error('images.*')
                     <p class="text-red-700">
                         {{$message}}
                     </p>    
                 @enderror
             </div>
-
-
-
-
 
             <div class="flex justify-between mb-8">
 
@@ -78,7 +76,7 @@
 
                 <div class="">
                     <label class="block mb-4" for="beds_number">N. Posti letto</label>
-                    <input type="number" placeholder="Quante camere ha il tuo immobile?" name="beds_number" id="title" value="{{old('beds_number', $apartment->rooms_number)}}"
+                    <input type="number" placeholder="Quante camere ha il tuo immobile?" name="beds_number" id="title" value="{{old('beds_number', $apartment->beds_number)}}"
                     class="w-full px-4 py-4 rounded-xl @error('beds_number') border border-red-700 @enderror">
                     
                     @error('beds_number')
@@ -129,12 +127,12 @@
 
                 <label class="mr-2 font-bold">Visibilità:</label>
                 <div>
-                    <input class="p-2" type="radio" name="visible" id="visible" value="true">                    
+                    <input class="p-2" @if($apartment->visible == true) checked @endif type="radio" name="visible" id="visible" value="true">                    
                     <label class="mr-2" @checked(true) for="visible">Visibile</label>
                 </div>
 
                 <div>
-                    <input class="p-2" type="radio" name="visible" id="hidden" value="false">                    
+                    <input class="p-2" @if($apartment->visible == false) checked @endif type="radio" name="visible" id="hidden" value="false">                    
                     <label class="mr-2" for="hidden">Nascosto</label>
                 </div>
                 
@@ -145,17 +143,23 @@
                 @enderror
             </div>
 
-            <input class="w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" value="Modifica Appartamento">
-
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            <div class="flex flex-col gap-2 mb-4">
+                <label class="mr-2 font-bold">Servizi:</label>
+                    <ul>
+                        @foreach ($services as $service)
+                            <li>                                
+                                <input @if(in_array($service->id, old('services', $apartment->services->pluck('id')->all()))) checked @endif class="p-2" type="checkbox" name="services[]" id="{{$service->name}}" value="{{$service->id}}">
+                                <label class="mr-2" for="{{$service->name}}">{{$service->name}}</label>
+                            </li>
+                        @endforeach
+                    </ul>
+                    @error('services.*')
+                        <p  class="text-red-700">
+                            {{$message}}
+                        </p>
+                    @enderror
             </div>
-        @endif
+            <input class="cursor-pointer w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" id="submit" value="Modifica Appartamento">
         </form>
     </section>
 @endsection

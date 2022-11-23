@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Apartment;
+use App\Service;
 use App\Http\Controllers\Controller;
 use App\Image;
 use Illuminate\Http\Request;
@@ -32,8 +33,8 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-
-        return view('admin.apartments.create');
+        $services = Service::all();
+        return view('admin.apartments.create', compact('services'));
     }
 
     /**
@@ -60,7 +61,8 @@ class ApartmentController extends Controller
                 Rule::in(['true', 'false']),
             ],
             'price' => 'required|numeric|min:0',
-            'images.*' => 'nullable|image|max:2048'
+            'images.*' => 'nullable|image|max:2048',
+            'services.*' => 'nullable|exists:services,id'
         ]);
 
         $params['user_id'] = $user_id;
@@ -71,6 +73,9 @@ class ApartmentController extends Controller
         $params['image'] = $cover_path;
 
         $apartment = Apartment::create($params);
+        if(array_key_exists('services', $params)){
+            $apartment->services()->sync($params['services']);
+        }
 
         if(array_key_exists('images', $params)){
 
@@ -106,7 +111,8 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('admin.apartments.edit', compact('apartment'));
+        $services = Service::all();
+        return view('admin.apartments.edit', compact('apartment','services'));
     }
 
     /**
@@ -133,7 +139,8 @@ class ApartmentController extends Controller
                 Rule::in(['true', 'false']),
             ],
             'price' => 'required|numeric|min:0',
-            'images.*' => 'nullable|image|max:2048'
+            'images.*' => 'nullable|image|max:2048',
+            'services.*' => 'nullable|exists:services,id'
         ]);
 
         $params['user_id'] = Auth::id();
@@ -156,6 +163,10 @@ class ApartmentController extends Controller
             $params['image'] = $apartment->image;
         }
 
+        if(array_key_exists('services', $params)){
+            $apartment->services()->sync($params['services']);
+        }
+        
         $apartment->update($params);
 
         if(array_key_exists('images', $params)){
