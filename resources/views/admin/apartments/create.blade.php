@@ -112,9 +112,12 @@
                     <input type="file" name="image" id="image">
                     @error('image')
                         <p class="text-red-700">
-                            {{$message}}
+                            {{$message}}                            
                         </p>
                     @enderror
+                    <p class="hidden text-red-700" id="image_error">
+                        The image failed to upload. Max size exceed.
+                    </p>
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold" for="images">Aggiungi immagine/i alla galleria</label>
@@ -141,7 +144,7 @@
                         </p>
                     @enderror
                 </div>
-                <input class="p-2 border-2 rounded-lg bg-transparent cursor-pointer" type="submit" value="Salva">
+                <input class="p-2 border-2 rounded-lg bg-transparent cursor-pointer" type="submit" id="submit" value="Salva">
             </form>
             <div><strong>*</strong> indica un campo obbligatorio</div>
         </div>
