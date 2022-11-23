@@ -81,22 +81,20 @@ class ApartmentController extends Controller
             $apartment->services()->sync($params['services']);
         }
         
-        dd($params);
-
         if(array_key_exists('sponsors', $params)){
+            $sponsor = Sponsor::where('id', $params['sponsors'])->first();
+            $actual_date = Carbon::now();
+            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
+            $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
             $apartment->sponsors()->sync($params['sponsors']);
         }
 
-
         if(array_key_exists('images', $params)){
-
             foreach($params['images'] as $image){
                 $image_params = [];
-                
                 $image_path = Storage::put('gallery', $image);
                 $image_params['path'] = $image_path;
                 $image_params['apartment_id'] = $apartment->id;
-                
                 $newImage = Image::create($image_params);
             }
         }
@@ -180,7 +178,7 @@ class ApartmentController extends Controller
             $apartment->services()->sync($params['services']);
         }
         
-        if(array_key_exists('sponsors', $params) && !$apartment->sponsors){
+        if(array_key_exists('sponsors', $params) && $apartment->sponsors_id !== $params['sponsors']){
             $sponsor = Sponsor::where('id', $params['sponsors'])->first();
             $actual_date = Carbon::now();
             $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
