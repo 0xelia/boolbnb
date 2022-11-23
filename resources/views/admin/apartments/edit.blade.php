@@ -168,7 +168,7 @@
                         </p>
                     @enderror
             </div>
-            <input class="cursor-pointer w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="button" id="submit" value="Modifica Appartamento">
+            <input class="cursor-pointer w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" id="submit" value="Modifica Appartamento">
         </form>
     </section>
 @endsection

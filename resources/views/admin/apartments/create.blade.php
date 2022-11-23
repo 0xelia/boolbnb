@@ -144,7 +144,7 @@
                         </p>
                     @enderror
                 </div>
-                <input class="p-2 border-2 rounded-lg bg-transparent cursor-pointer" type="button" id="submit" value="Salva">
+                <input class="p-2 border-2 rounded-lg bg-transparent cursor-pointer" type="submit" id="submit" value="Salva">
             </form>
             <div><strong>*</strong> indica un campo obbligatorio</div>
         </div>

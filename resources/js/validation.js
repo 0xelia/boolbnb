@@ -174,17 +174,17 @@ if(imagesEl) {
 }
 
 
-buttonEl.addEventListener('click', function (event) {
-    if (
-        titleInput.value && 
-        roomsInput.value && 
-        bedsInput.value &&
-        bathsInput.value &&
-        metersInput.value &&
-        addressInput.value &&
-        priceInput.value
-    ) {
-        buttonEl.setAttribute('type', 'submit');
-    }
+// buttonEl.addEventListener('click', function (event) {
+//     if (
+//         titleInput.value && 
+//         roomsInput.value && 
+//         bedsInput.value &&
+//         bathsInput.value &&
+//         metersInput.value &&
+//         addressInput.value &&
+//         priceInput.value
+//     ) {
+//         buttonEl.setAttribute('type', 'submit');
+//     }
 
-})
+// })
