@@ -91,6 +91,23 @@
                     @enderror
                 </div>
 
+                <div class="flex flex-col gap-2 mb-4">
+                    <label class="mr-2 font-bold">Sponsorizzazione</label>
+                    <ul>
+                        @foreach ($sponsors as $sponsor)
+                            <li>
+                                <input class="p-2" type="radio" name="sponsors[]" @if( in_array($sponsor->id, old('sponsor', []))) checked @endif id="{{$sponsor->plane}}" value="{{$sponsor->id}}">
+                                <label class="mr-2" for="{{$sponsor->plane}}">{{$sponsor->plane}}</label>
+                            </li>
+                        @endforeach
+                    </ul>
+                    @error('sponsors.*')
+                        <p  class="text-red-700">
+                            {{$message}}
+                        </p>
+                    @enderror
+                </div>
+
                 <div class="flex flex-col gap-2 mb-4 price-wrapper">
                     <label class="mr-2 font-bold" for="price">Prezzo *</label>
                     <input class="p-2 flex-grow" type="number" min="0" name="price" id="price" placeholder="Inserisci il prezzo" value="{{ old('price') }}" required>
