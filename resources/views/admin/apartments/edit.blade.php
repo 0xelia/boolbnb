@@ -24,7 +24,7 @@
 
             <div class="mb-8">
                 <label class="block mb-4" for="image">Copertina</label>
-                <input type="file" placeholder="Aggiungi l'immagine di " name="image" id="image" value="{{old('images', $apartment->images)}}"
+                <input type="file" placeholder="Aggiungi l'immagine di " name="image" id="image" value="{{old('image', $apartment->image)}}"
                 class="w-full px-4 py-4 rounded-xl @error('image') border border-red-700 @enderror">
 
                 @error('image')
@@ -32,6 +32,9 @@
                         {{$message}}
                     </p>    
                 @enderror
+                <p class="hidden text-red-700" id="image_error">
+                    The image failed to upload. Max size exceed.
+                </p>
             </div>
 
             <div class="mb-8">
@@ -147,7 +150,7 @@
                         </p>
                     @enderror
             </div>
-            <input class="w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" value="Modifica Appartamento">
+            <input class="cursor-pointer w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" id="submit" value="Modifica Appartamento">
         </form>
     </section>
 @endsection
