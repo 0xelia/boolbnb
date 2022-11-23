@@ -23,7 +23,7 @@
                 Bagni: <span class="font-bold">{{$apartment->bath_number}}</span>
             </li>
         </ul>
-        <ul>
+        <ul class="mb-8">
             <p class="text-2xl font-bold mb-2"> Informazioni Aggiuntive </p> 
             <li>
                 Metri Quadrati: <span class="font-bold">{{$apartment->meters}}</span>
@@ -32,6 +32,18 @@
                 Indirizzo: {{$apartment->address}}
             </li>
         </ul>
+        <div class="mb-8">
+            <p class="text-2xl font-bold mb-2"> Servizi </p>
+            <ul class="flex gap-6">
+                @forelse ($apartment->services as $service)
+                    <li class="font-bold">
+                        {{$service->name}}
+                    </li>
+                @empty
+                    <li class="font-bold">Nessun servizio</li>
+                @endforelse 
+            </ul>
+        </div>
 
         
 
