@@ -12,6 +12,6 @@ class OrderController extends Controller
     }
 
     public function makePayment(Request $request){
-        return 'generate';
+        return 'make payment';
     }
 }
