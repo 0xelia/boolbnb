@@ -83,20 +83,12 @@
                 @forelse ($apartment->sponsors as $sponsor)
                     <li class="font-bold">
                         {{$sponsor->plane}}
-                        {{$sponsor->expire_date}}
-                        {{ Carbon\Carbon::now() }}
                     </li>
                 @empty
                     <li class="font-bold">Nessuna sponsorizzazione</li>
                 @endforelse 
             </ul>
         </div>
-
-        {{-- <div>
-            @foreach($test as $t)
-            {{$t->pivot->expire_date}}
-            @endforeach
-        </div> --}}
 
         
         <div class="flex gap-2">

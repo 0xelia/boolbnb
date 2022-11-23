@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use App\Apartment;
 use App\Service;
 use App\Http\Controllers\Controller;
@@ -13,7 +12,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use SponsorSeeder;
 
 class ApartmentController extends Controller
 {
@@ -182,7 +180,7 @@ class ApartmentController extends Controller
             $apartment->services()->sync($params['services']);
         }
         
-        if(array_key_exists('sponsors', $params) && $params['sponsors']){
+        if(array_key_exists('sponsors', $params)){
             $sponsor = Sponsor::where('id', $params['sponsors'])->first();
             $actual_date = Carbon::now();
             $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
