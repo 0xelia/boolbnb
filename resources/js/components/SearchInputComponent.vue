@@ -1,11 +1,11 @@
 <template>
     <div>
         <div ref="searchWrapper" class='flex flex-col gap-2 mb-4'>
-            <label class="font-bold">Indirizzo</label>
+            <label class="font-bold">Indirizzo *</label>
         </div>
 
-        <input class="p-2 flex-grow" type="hidden" name="address" v-model="address">
-        
+        <input class="p-2 flex-grow" type="hidden" name="address" v-model="address" required>
+
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
 
         <input class="p-2 flex-grow" type="hidden" name="longitude" v-model="longitude">

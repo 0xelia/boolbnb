@@ -2006,7 +2006,7 @@ var render = function render() {
     staticClass: "flex flex-col gap-2 mb-4"
   }, [_c("label", {
     staticClass: "font-bold"
-  }, [_vm._v("Indirizzo")])]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Indirizzo *")])]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -2016,7 +2016,8 @@ var render = function render() {
     staticClass: "p-2 flex-grow",
     attrs: {
       type: "hidden",
-      name: "address"
+      name: "address",
+      required: ""
     },
     domProps: {
       value: _vm.address
