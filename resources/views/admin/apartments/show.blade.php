@@ -89,7 +89,6 @@
                 @endforelse 
             </ul>
         </div>
-
         
         <div class="flex gap-2">
 

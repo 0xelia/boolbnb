@@ -180,7 +180,7 @@ class ApartmentController extends Controller
             $apartment->services()->sync($params['services']);
         }
         
-        if(array_key_exists('sponsors', $params)){
+        if(array_key_exists('sponsors', $params) && !$apartment->sponsors){
             $sponsor = Sponsor::where('id', $params['sponsors'])->first();
             $actual_date = Carbon::now();
             $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
