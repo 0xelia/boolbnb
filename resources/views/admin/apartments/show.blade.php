@@ -82,6 +82,18 @@
             </ul>
         </div>
         <div class="mb-8">
+            <p class="text-2xl font-bold mb-2"> Sponsorizazzione </p>
+            <ul class="flex gap-6">
+                @forelse ($apartment->sponsors as $sponsor)
+                    <li class="font-bold">
+                        {{$sponsor->plane}}
+                    </li>
+                @empty
+                    <li class="font-bold">Nessuna sponsorizzazione</li>
+                @endforelse 
+            </ul>
+        </div>
+        <div class="mb-8">
             <p class="text-2xl font-bold mb-2"> Ultimi messaggi </p>
             <table class="table-auto border-separate mb-4">
                 @if ( count($apartment->messages) > 0 )
@@ -138,8 +150,6 @@
                 <a href="{{ route('admin.messages.index', $apartment->id) }}" class="rounded-lg bg-blue-400 text-white py-2 px-4">Tutti i messaggi...</a>    
             @endif
         </div>
-
-        
         <div class="flex gap-2">
 
             <a href="{{route('admin.apartments.edit', $apartment)}}" class="flex-grow">

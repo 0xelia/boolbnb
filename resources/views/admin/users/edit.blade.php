@@ -40,7 +40,7 @@
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="date_of_birth">
                         Data di nascita
                       </label>
-                      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date" name="date_of_birth" value="@if($user->date_of_birth) {{ old('surname', $user->date_of_birth) }} @endif" id="date_of_birth">
+                      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date" name="date_of_birth" value="{{ old('date_of_birth', $user->date_of_birth) }}" id="date_of_birth">
                       @error('date_of_birth')
                             <div id="date_of_birth" class="invalid-feedback">
                                 {{ $message }}
@@ -87,9 +87,8 @@
                   </div>
                 </div>
 
-                  
-
-                <input type="submit" class="bg-blue-500 p-3 mt-5 rounded text-white" value="Invia">
+                
+                <input type="submit" class="bg-blue-500 p-3 mt-5 rounded text-white" value="Slava">
             </form>
             
         </div>

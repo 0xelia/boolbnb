@@ -23,7 +23,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->namespace('Admin')->
     Route::resource('apartments', 'ApartmentController');
     Route::get('/messages/{apartment_id}', 'MessageController@index')->name('messages.index');
     Route::get('/messages/{apartment}/message/{message}', 'MessageController@show')->name('messages.show');
-    Route::resource('users', 'UserController')->only(['show', 'update', 'edit']);
+    Route::resource('users', 'UserController')->only(['show', 'update', 'edit', 'destroy']);
     Route::resource('images', 'ImageController');
 
     Route::get('/home', 'HomeController@index')->name('home');
