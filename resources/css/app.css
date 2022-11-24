@@ -75,3 +75,9 @@ display: block;
     order: 1;
     cursor: pointer;
 }
+
+
+.notification{
+    top: -8px;
+    right: -8px;
+}
