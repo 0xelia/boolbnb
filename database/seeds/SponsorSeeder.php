@@ -14,11 +14,11 @@ class SponsorSeeder extends Seeder
     {
         $plans = config('sponsor');
 
-        foreach($plans as $plane) {
+        foreach($plans as $plan) {
             $p = new Sponsor();
-            $p->plane = $plane['plane'];
-            $p->price = $plane['price'];
-            $p->duration = $plane['duration'];
+            $p->plane = $plan['plane'];
+            $p->price = $plan['price'];
+            $p->duration = $plan['duration'];
 
             $p->save();
         }
