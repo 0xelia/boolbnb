@@ -10,10 +10,11 @@
             @csrf
             @method('PUT')
 
-            <div class="mb-8">
+            <div class="mb-8 title-wrapper">
                 <label class="block mb-4" for="title">Modifica il titolo</label>
-                <input type="text" placeholder="Qui va il titlodel tuo annuncio" name="title" id="title" value="{{old('title', $apartment->title)}}"
+                <input type="text" placeholder="Qui va il titlodel tuo annuncio" name="title" id="title" maxlength="255" required value="{{old('title', $apartment->title)}}" 
                 class="w-full px-4 py-4 rounded-xl @error('title') border border-red-700 @enderror">
+                <div class="title-error"></div>
 
                 @error('title')
                     <p class="text-red-700">
@@ -47,25 +48,30 @@
                         {{$message}}
                     </p>    
                 @enderror
+                <p class="hidden text-red-700" id="images_error">
+                    The image failed to upload. Max size exceed.
+                </p>
             </div>
 
             <div class="flex justify-between mb-8">
 
-                <div class="">
+                <div class="meters-wrapper">
                     <label class="block mb-4" for="meters">M. quadrati</label>
-                    <input type="number" placeholder="Quante stanze ha il tuo immobile?" name="meters" id="title" value="{{old('meters', $apartment->meters)}}"
+                    <input type="number" min="0" max="65535" placeholder="Quante stanze ha il tuo immobile?" name="meters" id="meters" required value="{{old('meters', $apartment->meters)}}"
                     class="w-full px-4 py-4 rounded-xl @error('meters') border border-red-700 @enderror">
-                    
+                    <div class="meters-error"></div>
+
                     @error('meters')
                         <p class="text-red-700">
                             {{$message}}
                         </p>    
                     @enderror
                 </div>
-                <div class="">
-                    <label class="block mb-4" for="rooms_number">N. Stanze</label>
-                    <input type="number" placeholder="Quante stanze ha il tuo immobile?" name="rooms_number" id="title" value="{{old('rooms_number', $apartment->rooms_number)}}"
+                <div class="rooms-wrapper">
+                    <label class="block mb-4" for="rooms">N. Stanze</label>
+                    <input type="number" min="1" max="255" required placeholder="Quante stanze ha il tuo immobile?" name="rooms_number" id="rooms" required value="{{old('rooms_number', $apartment->rooms_number)}}"
                     class="w-full px-4 py-4 rounded-xl @error('rooms_number') border border-red-700 @enderror">
+                    <div class="rooms-error"></div>
                     
                     @error('rooms_number')
                         <p class="text-red-700">
@@ -74,10 +80,11 @@
                     @enderror
                 </div>
 
-                <div class="">
-                    <label class="block mb-4" for="beds_number">N. Posti letto</label>
-                    <input type="number" placeholder="Quante camere ha il tuo immobile?" name="beds_number" id="title" value="{{old('beds_number', $apartment->beds_number)}}"
+                <div class="beds-wrapper">
+                    <label class="block mb-4" for="beds">N. Posti letto</label>
+                    <input type="number" min="1" max="255" placeholder="Quante camere ha il tuo immobile?" name="beds_number" id="beds" required value="{{old('beds_number', $apartment->beds_number)}}"
                     class="w-full px-4 py-4 rounded-xl @error('beds_number') border border-red-700 @enderror">
+                    <div class="beds-error"></div>
                     
                     @error('beds_number')
                         <p class="text-red-700">
@@ -86,10 +93,11 @@
                     @enderror
                 </div>
 
-                <div class="">
-                    <label class="block mb-4" for="bath_number">N. Bagni</label>
-                    <input type="number" placeholder="Quanti bagni ha il tuo immobile?" name="bath_number" id="title" value="{{old('bath_number', $apartment->bath_number)}}"
+                <div class="baths-wrapper">
+                    <label class="block mb-4" for="baths">N. Bagni</label>
+                    <input type="number" min="0" max="255" placeholder="Quanti bagni ha il tuo immobile?" name="bath_number" id="baths" required value="{{old('bath_number', $apartment->bath_number)}}"
                     class="w-full px-4 py-4 rounded-xl @error('rooms_number') border border-red-700 @enderror">
+                    <div class="baths-error"></div>
                     
                     @error('bath_number')
                         <p class="text-red-700">
@@ -101,10 +109,11 @@
 
             </div>
 
-            <div class="">
+            <div class="price-wrapper">
                 <label class="block mb-4" for="price">Prezzo</label>
-                <input type="number" placeholder="Costo a notte" name="price" id="title" value="{{old('price', $apartment->price)}}"
+                <input type="number" placeholder="Costo a notte" name="price" min="0" name="price" id="price" required value="{{old('price', $apartment->price)}}"
                 class="w-full px-4 py-4 rounded-xl @error('price') border border-red-700 @enderror">
+                <div class="price-error"></div>
                 
                 @error('price')
                     <p class="text-red-700">
