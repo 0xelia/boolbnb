@@ -16,7 +16,7 @@ class SponsorSeeder extends Seeder
 
         foreach($plans as $plan) {
             $p = new Sponsor();
-            $p->plane = $plan['plane'];
+            $p->plan = $plan['plan'];
             $p->price = $plan['price'];
             $p->duration = $plan['duration'];
 
