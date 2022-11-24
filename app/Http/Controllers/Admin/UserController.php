@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -49,6 +50,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        if(Auth::id() != $user->id){
+            return abort(403, 'Non hai i permessi per stare qui');
+        }
         return view('admin.users.show', compact('user'));
     }
 
@@ -60,6 +64,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if(Auth::id() != $user->id){
+            return abort(403, 'Non hai i permessi per stare qui');
+        }
+
         return view('admin.users.edit', compact('user'));
     }
 
