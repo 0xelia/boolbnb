@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('orders/generate', 'Api\Orders\OrderController@generate');
 
 Route::post('orders/make/payment', 'Api\Orders\OrderController@makePayment');
+
+Route::get('sponsors', 'Api\Sponsors\SponsorController@index');

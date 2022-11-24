@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Orders;
 
+use App\Rules\ValidSponsor;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrderRequest extends FormRequest
@@ -24,7 +25,11 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'token' => 'required',
+            'sponsor' => [
+                'required',
+                new ValidSponsor()
+            ]
         ];
     }
 }

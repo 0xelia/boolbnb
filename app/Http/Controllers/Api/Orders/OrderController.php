@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Api\Orders;
 
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Orders\OrderRequest;
+use App\Sponsor;
 use Braintree\Gateway;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function generate(Request $request, Gateway $gateway){
+    public function generate(OrderRequest $request, Gateway $gateway){
         $token = $gateway->clientToken()->generate();
         $data = [
             'success' => true,
@@ -19,11 +22,12 @@ class OrderController extends Controller
         return response()->json($data, 200);
     }
 
-    public function makePayment(Request $request, Gateway $gateway){
+    public function makePayment(OrderRequest $request, Gateway $gateway){
+
+        $sponsor = Sponsor::find($request->sponsor);
 
         $result = $gateway->transaction()->sale([
-            'amount' => '10.00',
-
+            'amount' => $sponsor->price,
             //token inviato dal frontend, diverso dall'altro
             'paymentMethodNonce' => $request->token,
             'options' => [
@@ -39,11 +43,11 @@ class OrderController extends Controller
             return response()->json($data, 200);
         }else{
             $data = [
-                'success' => true,
+                'success' => false,
                 'message' => 'Transazione fallita'
             ];
             return response()->json($data, 401);
         }
-        return 'make payment';
+        //return 'make payment';
     }
 }
