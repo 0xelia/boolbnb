@@ -14,7 +14,7 @@
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
                         Nome
                       </label>
-                      <input class="@error('name') is-invalid @enderror appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="name" value="{{ old('name', $user->name) }}" id="name">
+                      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="name" value="{{ old('name', $user->name) }}" id="name" required>
                       @error('name')
                       <div id="name" class="invalid-feedback">
                           {{ $message }}
@@ -26,7 +26,7 @@
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="surname">
                         Cognome
                       </label>
-                      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="surname" value="{{ old('surname', $user->surname) }}" id="surname">
+                      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="surname" value="{{ old('surname', $user->surname) }}" id="surname" required>
                     </div>
                     @error('surname')
                       <div id="surname" class="invalid-feedback">
@@ -52,7 +52,7 @@
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
                         Email
                       </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="email" name="email" value="{{ old('email', $user->email) }}" id="email">
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="email" name="email" value="{{ old('email', $user->email) }}" id="email" required>
                         @error('email')
                             <div id="email" class="pt-2 text-red italic text-red-700 invalid-feedback">
                                 {{ $message }}
@@ -89,7 +89,7 @@
 
                   
 
-                <button class="bg-blue-500 p-3 mt-5 rounded text-white">Salva</button>
+                <input type="submit" class="bg-blue-500 p-3 mt-5 rounded text-white" value="Invia">
             </form>
             
         </div>

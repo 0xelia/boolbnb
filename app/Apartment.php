@@ -3,9 +3,25 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Apartment extends Model
 {
+    protected $fillable = [
+        'title',
+        'rooms_number',
+        'beds_number',
+        'bath_number',
+        'meters',
+        'address',
+        'latitude',
+        'longitude',
+        'image',
+        'visible',
+        'price',
+        'user_id'
+    ];
+
     public function services(){
         return $this->belongsToMany('App\Service');
     }
@@ -28,5 +44,9 @@ class Apartment extends Model
 
     public function views(){
         return $this->hasMany('App\View');
+    }
+
+    public function getPicPathAttribute(){
+        return Storage::url($this->image);
     }
 }

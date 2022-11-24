@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -77,19 +78,23 @@ class UserController extends Controller
             'email' => 'required|email:rfc',
             'password' => 'nullable|min:8',
             'date_of_birth' => 'nullable|date',
-            'profile_pic' => 'nullable|immage|max:2048'
+            'profile_pic' => 'nullable|image|max:2048'
         ]);
-
-        
+ 
         if($params['password']) {     
             $params['password'] = Hash::make($params['password']);
         } else {
             $params['password'] = $user->password;
         }
 
+        if(array_key_exists('profile_pic', $params) && $params['profile_pic'] !== $user->profile_pic) {
+            $img_path = Storage::disk('images')->put('profile_images', $params['profile_pic']);
+            $params['profile_pic'] = $img_path;
+        }
+
         $user->update($params);
 
-        return redirect()->route('admin.users.show', compact('user'));
+        return redirect()->route('admin.users.show', $user);
     }
 
     /**

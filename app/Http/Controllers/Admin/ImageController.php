@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Image;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
@@ -15,7 +16,9 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        $images = Image::orderBy('created_at', 'desc')->get();
+
+        return view('admin.images.index', compact('images'));
     }
 
     /**
@@ -25,7 +28,7 @@ class ImageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.images.create');
     }
 
     /**
@@ -47,7 +50,7 @@ class ImageController extends Controller
      */
     public function show(Image $image)
     {
-        //
+        return view('images.show', compact('image'));
     }
 
     /**
@@ -81,6 +84,20 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        //
+        $apartment = $image->apartment->id;
+
+        Storage::delete($image->path);
+        $image->delete();
+        return redirect()->route('admin.apartments.show', $apartment);
+
+        // $path = $image->path;
+        // if($image->path && Storage::exists($path)){
+        //     Storage::delete($path);
+        // }
+        // $image->delete();
+
+        // return redirect()->route('admin.apartments.index');
+
+        
     }
 }
