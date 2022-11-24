@@ -198,8 +198,8 @@
                     <ul>
                         @foreach ($sponsors as $sponsor)
                             <li>                                
-                                <input @if(in_array($sponsor->id, old('sponsor', $apartment->sponsors->pluck('id')->all()))) checked @endif class="p-2" type="radio" name="sponsor" id="{{$sponsor->plane}}" value="{{$sponsor->id}}">
-                                <label class="mr-2" for="{{$sponsor->plan}}">{{$sponsor->plane}}</label>
+                                <input @if(in_array($sponsor->id, old('sponsor', $apartment->sponsors->pluck('id')->all()))) checked @endif class="p-2" type="radio" name="sponsor" id="{{$sponsor->plan}}" value="{{$sponsor->id}}">
+                                <label class="mr-2" for="{{$sponsor->plan}}">{{$sponsor->plan}}</label>
                             </li>
                         @endforeach
                     </ul>
