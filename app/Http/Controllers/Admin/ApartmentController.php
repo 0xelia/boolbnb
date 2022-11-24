@@ -109,6 +109,10 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
+        if(Auth::id() != $apartment->user->id){
+            return abort(403, 'Non hai i permessi per stare qui');
+        }
+
         return view('admin.apartments.show', compact('apartment'));
     }
 
@@ -120,6 +124,9 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
+        if(Auth::id() != $apartment->user->id){
+            return abort(403, 'Non hai i permessi per stare qui');
+        }
         $services = Service::all();
         $sponsors = Sponsor::all();
         return view('admin.apartments.edit', compact('apartment','services', 'sponsors'));
