@@ -178,9 +178,6 @@ class ApartmentController extends Controller
             $apartment->services()->sync($params['services']);
         }
         
-
-        // dd($apartment->sponsors[0]->pivot->sponsor_id);
-        // dd($params['sponsors']);
         if(array_key_exists('sponsors', $params) && $params['sponsors'][0] != $apartment->sponsors[0]->pivot->sponsor_id){
             $sponsor = Sponsor::where('id', $params['sponsors'])->first();
             $actual_date = Carbon::now();
