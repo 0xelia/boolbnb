@@ -112,7 +112,7 @@
                     <input type="file" name="image" id="image">
                     @error('image')
                         <p class="text-red-700">
-                            {{$message}}                            
+                            {{$message}}
                         </p>
                     @enderror
                     <p class="hidden text-red-700" id="image_error">
@@ -128,6 +128,10 @@
                         </p>
                     @enderror
                 </div>
+
+                <sponsor-component></sponsor-component>
+
+
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold">Visibilità *</label>
                     <div>
