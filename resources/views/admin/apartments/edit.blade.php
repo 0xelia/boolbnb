@@ -168,7 +168,24 @@
                         </p>
                     @enderror
             </div>
+
+            <div class="flex flex-col gap-2 mb-4">
+                <label class="mr-2 font-bold">Sponsorizzazione:</label>
+                    <ul>
+                        @foreach ($sponsors as $sponsor)
+                            <li>                                
+                                <input @if(in_array($sponsor->id, old('sponsor', $apartment->sponsors->pluck('id')->all()))) checked @endif class="p-2" type="radio" name="sponsors[]" id="{{$sponsor->plane}}" value="{{$sponsor->id}}">
+                                <label class="mr-2" for="{{$sponsor->plane}}">{{$sponsor->plane}}</label>
+                            </li>
+                        @endforeach
+                    </ul>
+                    @error('sponsors.*')
+                        <p  class="text-red-700">
+                            {{$message}}
+                        </p>
+                    @enderror
+            </div>
             <input class="cursor-pointer w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" id="submit" value="Modifica Appartamento">
         </form>
-    </section>
+    </section>|
 @endsection

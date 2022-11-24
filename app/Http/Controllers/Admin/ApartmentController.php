@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use App\Apartment;
 use App\Service;
 use App\Http\Controllers\Controller;
 use App\Image;
+use App\Sponsor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,8 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
-        return view('admin.apartments.create', compact('services'));
+        $sponsors = Sponsor::all();
+        return view('admin.apartments.create', compact('services', 'sponsors'));
     }
 
     /**
@@ -62,7 +64,8 @@ class ApartmentController extends Controller
             ],
             'price' => 'required|numeric|min:0',
             'images.*' => 'nullable|image|max:2048',
-            'services.*' => 'nullable|exists:services,id'
+            'services.*' => 'nullable|exists:services,id',
+            'sponsors.*' => 'nullable|exists:sponsors,id',
         ]);
 
         $params['user_id'] = $user_id;
@@ -73,19 +76,25 @@ class ApartmentController extends Controller
         $params['image'] = $cover_path;
 
         $apartment = Apartment::create($params);
+
         if(array_key_exists('services', $params)){
             $apartment->services()->sync($params['services']);
         }
+        
+        if(array_key_exists('sponsors', $params)){
+            $sponsor = Sponsor::where('id', $params['sponsors'])->first();
+            $actual_date = Carbon::now();
+            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
+            $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
+            $apartment->sponsors()->sync($params['sponsors']);
+        }
 
         if(array_key_exists('images', $params)){
-
             foreach($params['images'] as $image){
                 $image_params = [];
-                
                 $image_path = Storage::put('gallery', $image);
                 $image_params['path'] = $image_path;
                 $image_params['apartment_id'] = $apartment->id;
-                
                 $newImage = Image::create($image_params);
             }
         }
@@ -112,7 +121,8 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         $services = Service::all();
-        return view('admin.apartments.edit', compact('apartment','services'));
+        $sponsors = Sponsor::all();
+        return view('admin.apartments.edit', compact('apartment','services', 'sponsors'));
     }
 
     /**
@@ -140,7 +150,8 @@ class ApartmentController extends Controller
             ],
             'price' => 'required|numeric|min:0',
             'images.*' => 'nullable|image|max:2048',
-            'services.*' => 'nullable|exists:services,id'
+            'services.*' => 'nullable|exists:services,id',
+            'sponsors.*' => 'nullable|exists:sponsors,id',
         ]);
 
         $params['user_id'] = Auth::id();
@@ -167,6 +178,14 @@ class ApartmentController extends Controller
             $apartment->services()->sync($params['services']);
         }
         
+        if(array_key_exists('sponsors', $params) && $params['sponsors'][0] != $apartment->sponsors[0]->pivot->sponsor_id){
+            $sponsor = Sponsor::where('id', $params['sponsors'])->first();
+            $actual_date = Carbon::now();
+            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
+            $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
+            $apartment->sponsors()->sync($params['sponsors']);
+        }
+        
         $apartment->update($params);
 
         if(array_key_exists('images', $params)){
@@ -182,7 +201,7 @@ class ApartmentController extends Controller
             }
         }
 
-        return redirect()->route('admin.apartments.show', $apartment);
+        return redirect()->route('admin.apartments.show', compact('apartment'));
     }
 
     /**
