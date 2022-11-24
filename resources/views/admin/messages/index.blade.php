@@ -44,7 +44,7 @@
                             {{ strlen($text) > 50 ? substr($text,0,50)."..." : $text }}
                         </td>
                         <td>
-                            <a href="#" class="block rounded-lg bg-green-400 text-white py-2 px-4">Leggi</a>
+                            <a href="{{ route('admin.messages.show', [$apartment,$message]) }}" class="block rounded-lg bg-green-400 text-white py-2 px-4">Leggi</a>
                         </td>
                     </tr>                    
                 @endforeach

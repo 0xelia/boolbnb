@@ -22,6 +22,7 @@ Auth::routes();
 Route::middleware('auth')->prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
     Route::resource('apartments', 'ApartmentController');
     Route::get('/messages/{apartment_id}', 'MessageController@index')->name('messages.index');
+    Route::get('/messages/{apartment}/message/{message}', 'MessageController@show')->name('messages.show');
     Route::resource('users', 'UserController')->only(['show', 'update', 'edit']);
     Route::resource('images', 'ImageController');
 

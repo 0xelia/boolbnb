@@ -101,7 +101,7 @@
                         <th></th>     
                     </tr>                                 
                 @endif
-                @forelse ($apartment->messages as $key => $message)
+                @forelse ($apartment->messages()->orderBy('id', 'desc')->get() as $key => $message)
                     @if ($key < 5)
                         @php
                             $text = $message->text;
@@ -120,7 +120,7 @@
                                 {{ strlen($text) > 50 ? substr($text,0,50)."..." : $text }}
                             </td>
                             <td>
-                                <a href="#" class="block rounded-lg bg-green-400 text-white py-2 px-4">Leggi</a>
+                                <a href="{{ route('admin.messages.show', [$apartment,$message]) }}" class="block rounded-lg bg-green-400 text-white py-2 px-4">Leggi</a>
                             </td>
                         </tr>
                     @else

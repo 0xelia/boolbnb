@@ -16,7 +16,7 @@ class MessageController extends Controller
      */
     public function index($apartment_id)
     {
-        $messages = Message::where('apartment_id', $apartment_id)->get();
+        $messages = Message::where('apartment_id', $apartment_id)->orderBy('id', 'desc')->get();
         $apartment = Apartment::where('id', $apartment_id)->first();
         return view('admin.messages.index', compact('messages','apartment'));
     }
@@ -48,9 +48,9 @@ class MessageController extends Controller
      * @param  \App\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
+    public function show(Apartment $apartment, Message $message)
     {
-        //
+        return view('admin.messages.show', compact('apartment','message'));
     }
 
     /**
