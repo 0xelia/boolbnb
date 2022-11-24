@@ -111,7 +111,7 @@
                         </p>
                     @enderror
                     <p class="hidden text-red-700" id="image_error">
-                        The image failed to upload. Max size exceed.
+                        Seleziona un'immagine valida. Dimensione massima 2 megabyte
                     </p>
                 </div>
                 <div class="flex flex-col gap-2 mb-4">
@@ -123,7 +123,7 @@
                         </p>
                     @enderror
                     <p class="hidden text-red-700" id="images_error">
-                        The image failed to upload. Max size exceed.
+                        Selezione delle immagini valide. Dimensione massima 2 megabyte
                     </p>
                 </div>
                 <div class="flex flex-col gap-2 mb-4">

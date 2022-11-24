@@ -33,96 +33,110 @@ const priceError = document.querySelector('.price-error');
 const visibilityWrapper = document.querySelector('.visibility-wrapper');
 const visibilityError = document.querySelector('.visibility-error');
 
-titleInput.addEventListener('focusout', (event) => {
-    if (!titleInput.validity.valid) {
-        titleError.textContent = 'Il titolo deve avere massimo 255 caratteri';
-        titleWrapper.classList.add('text-red-700');
-        titleInput.classList.add('border-red-700', 'border-2');
-    }
-    else {
-        titleError.textContent = '';
-        titleWrapper.classList.remove('text-red-700');
-        titleInput.classList.remove('border-red-700', 'border-2');
-    }
-});
+if(titleInput) {
+    titleInput.addEventListener('focusout', (event) => {
+        if (!titleInput.validity.valid) {
+            titleError.textContent = 'Il titolo deve avere massimo 255 caratteri';
+            titleWrapper.classList.add('text-red-700');
+            titleInput.classList.add('border-red-700', 'border-2');
+        }
+        else {
+            titleError.textContent = '';
+            titleWrapper.classList.remove('text-red-700');
+            titleInput.classList.remove('border-red-700', 'border-2');
+        }
+    });
+}
 
-roomsInput.addEventListener('focusout', (event) => {
-    if (!roomsInput.validity.valid) {
-        roomsError.textContent = 'Inserisci un numero valido';
-        roomsWrapper.classList.add('text-red-700');
-        roomsInput.classList.add('border-red-700', 'border-2');
-    }
-    else {
-        roomsError.textContent = '';
-        roomsWrapper.classList.remove('text-red-700');
-        roomsInput.classList.remove('border-red-700', 'border-2');
-    }
-});
+if(roomsInput) {
+    roomsInput.addEventListener('focusout', (event) => {
+        if (!roomsInput.validity.valid) {
+            roomsError.textContent = 'Inserisci un numero valido';
+            roomsWrapper.classList.add('text-red-700');
+            roomsInput.classList.add('border-red-700', 'border-2');
+        }
+        else {
+            roomsError.textContent = '';
+            roomsWrapper.classList.remove('text-red-700');
+            roomsInput.classList.remove('border-red-700', 'border-2');
+        }
+    });
+}
 
-bedsInput.addEventListener('focusout', (event) => {
-    if (!bedsInput.validity.valid) {
-        bedsError.textContent = 'Inserisci un numero valido';
-        bedsWrapper.classList.add('text-red-700');
-        bedsInput.classList.add('border-red-700', 'border-2');
-    }
-    else {
-        bedsError.textContent = '';
-        bedsWrapper.classList.remove('text-red-700');
-        bedsInput.classList.remove('border-red-700', 'border-2');
-    }
-});
+if(bedsInput) {
+    bedsInput.addEventListener('focusout', (event) => {
+        if (!bedsInput.validity.valid) {
+            bedsError.textContent = 'Inserisci un numero valido';
+            bedsWrapper.classList.add('text-red-700');
+            bedsInput.classList.add('border-red-700', 'border-2');
+        }
+        else {
+            bedsError.textContent = '';
+            bedsWrapper.classList.remove('text-red-700');
+            bedsInput.classList.remove('border-red-700', 'border-2');
+        }
+    });
+}
 
-bathsInput.addEventListener('focusout', (event) => {
-    if (!bathsInput.validity.valid) {
-        bathsError.textContent = 'Inserisci un numero valido';
-        bathsWrapper.classList.add('text-red-700');
-        bathsInput.classList.add('border-red-700', 'border-2');
-    }
-    else {
-        bathsError.textContent = '';
-        bathsWrapper.classList.remove('text-red-700');
-        bathsInput.classList.remove('border-red-700', 'border-2');
-    }
-});
+if(bathsInput) {
+    bathsInput.addEventListener('focusout', (event) => {
+        if (!bathsInput.validity.valid) {
+            bathsError.textContent = 'Inserisci un numero valido';
+            bathsWrapper.classList.add('text-red-700');
+            bathsInput.classList.add('border-red-700', 'border-2');
+        }
+        else {
+            bathsError.textContent = '';
+            bathsWrapper.classList.remove('text-red-700');
+            bathsInput.classList.remove('border-red-700', 'border-2');
+        }
+    });
+}
 
-metersInput.addEventListener('focusout', (event) => {
-    if (!metersInput.validity.valid) {
-        metersError.textContent = 'Inserisci un numero valido';
-        metersWrapper.classList.add('text-red-700');
-        metersInput.classList.add('border-red-700', 'border-2');
-    }
-    else {
-        metersError.textContent = '';
-        metersWrapper.classList.remove('text-red-700');
-        metersInput.classList.remove('border-red-700', 'border-2');
-    }
-});
+if(metersInput) {
+    metersInput.addEventListener('focusout', (event) => {
+        if (!metersInput.validity.valid) {
+            metersError.textContent = 'Inserisci un numero valido';
+            metersWrapper.classList.add('text-red-700');
+            metersInput.classList.add('border-red-700', 'border-2');
+        }
+        else {
+            metersError.textContent = '';
+            metersWrapper.classList.remove('text-red-700');
+            metersInput.classList.remove('border-red-700', 'border-2');
+        }
+    });
+}
 
-addressInput.addEventListener('focusout', (event) => {
-    if (!addressInput.value) {
-        addressError.textContent = 'Inserisci un indirizzo valido';
-        addressWrapper.classList.add('text-red-700');
-        addressInput.classList.add('border-red-700', 'border-2');
-    }
-    else {
-        addressError.textContent = '';
-        addressWrapper.classList.remove('text-red-700');
-        addressInput.classList.remove('border-red-700', 'border-2');
-    }
-});
+if(addressInput) {
+    addressInput.addEventListener('focusout', (event) => {
+        if (!addressInput.value) {
+            addressError.textContent = 'Inserisci un indirizzo valido';
+            addressWrapper.classList.add('text-red-700');
+            addressInput.classList.add('border-red-700', 'border-2');
+        }
+        else {
+            addressError.textContent = '';
+            addressWrapper.classList.remove('text-red-700');
+            addressInput.classList.remove('border-red-700', 'border-2');
+        }
+    });
+}
 
-priceInput.addEventListener('focusout', (event) => {
-    if (!metersInput.validity.valid) {
-        priceError.textContent = 'Inserisci un numero valido';
-        priceWrapper.classList.add('text-red-700');
-        priceInput.classList.add('border-red-700', 'border-2');
-    }
-    else {
-        priceError.textContent = '';
-        priceWrapper.classList.remove('text-red-700');
-        priceInput.classList.remove('border-red-700', 'border-2');
-    }
-});
+if(priceInput) {
+    priceInput.addEventListener('focusout', (event) => {
+        if (!metersInput.validity.valid) {
+            priceError.textContent = 'Inserisci un numero valido';
+            priceWrapper.classList.add('text-red-700');
+            priceInput.classList.add('border-red-700', 'border-2');
+        }
+        else {
+            priceError.textContent = '';
+            priceWrapper.classList.remove('text-red-700');
+            priceInput.classList.remove('border-red-700', 'border-2');
+        }
+    });
+}
 
 // titleWrapper.addEventListener('focusout', formValidation, error='title-error', message='Inserisci un titolo compreso tra 5 e 255 caratteri');
 // roomsWrapper.addEventListener('focusout', formValidation, error='rooms-error', message='Inserisci un numero da 1 a 255');
@@ -173,18 +187,19 @@ if(imagesEl) {
     imagesEl.addEventListener('change', checkSize)
 }
 
-
-buttonEl.addEventListener('click', function (event) {
-    if (
-        titleInput.value && 
-        roomsInput.value && 
-        bedsInput.value &&
-        bathsInput.value &&
-        metersInput.value &&
-        addressInput.value &&
-        priceInput.value
-    ) {
-        buttonEl.setAttribute('type', 'submit');
-    }
-
-})
+if(buttonEl) {
+    buttonEl.addEventListener('click', function (event) {
+        if (
+            titleInput.value && 
+            roomsInput.value && 
+            bedsInput.value &&
+            bathsInput.value &&
+            metersInput.value &&
+            addressInput.value &&
+            priceInput.value
+        ) {
+            buttonEl.setAttribute('type', 'submit');
+        }
+    
+    })
+}
