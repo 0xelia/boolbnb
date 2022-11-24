@@ -42,6 +42,30 @@
                 <label class="block mb-4 font-bold" for="images">Aggiungi Foto alla galleria</label>
                 <input type="file" multiple placeholder="Aggiungi qui un'immagine" name="images[]" id="images" value="{{old('images', $apartment->images)}}"
                 class="w-full px-4 py-4 rounded-xl @error('images') border border-red-700 @enderror">
+                {{-- Gallery preview --}}
+
+                <ul class="flex items-center gap-2 relative">
+                    @forelse ($apartment->images as $img)
+                        <li class="gallery_pic">
+                            <figure class="h-12 w-24 overflow-hidden rounded-xl relative">
+                                <img class="w-full h-full object-cover object-center" src="{{$img->img_path}}" alt="">
+                            </figure>
+
+                            <input type="checkbox" name="delete_pic[]"  value="{{$img->id}}" id="{{$img->id}}">
+                        </li>
+
+                    @empty
+                    <p class="text-bold text-xl">Aggiungi foto alla galleria</p>
+                    @endforelse
+
+                    <li>
+                        <label for="images" class="file flex">
+                            <input type="file" multiple name="images[]" id="images" class=" custom-file-input order-2 @error('images') border border-red-700 @enderror">
+                            <span class="custom_file"></span>
+                        </label>
+                    </li>
+                </ul>
+                
 
                 @error('images.*')
                     <p class="text-red-700">
@@ -174,12 +198,12 @@
                     <ul>
                         @foreach ($sponsors as $sponsor)
                             <li>                                
-                                <input @if(in_array($sponsor->id, old('sponsor', $apartment->sponsors->pluck('id')->all()))) checked @endif class="p-2" type="radio" name="sponsors[]" id="{{$sponsor->plane}}" value="{{$sponsor->id}}">
-                                <label class="mr-2" for="{{$sponsor->plane}}">{{$sponsor->plane}}</label>
+                                <input @if(in_array($sponsor->id, old('sponsor', $apartment->sponsors->pluck('id')->all()))) checked @endif class="p-2" type="radio" name="sponsor" id="{{$sponsor->plane}}" value="{{$sponsor->id}}">
+                                <label class="mr-2" for="{{$sponsor->plan}}">{{$sponsor->plane}}</label>
                             </li>
                         @endforeach
                     </ul>
-                    @error('sponsors.*')
+                    @error('sponsor')
                         <p  class="text-red-700">
                             {{$message}}
                         </p>
