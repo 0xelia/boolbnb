@@ -141,11 +141,14 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
+
+
         $params = $request->validate([
             'title' => 'required|max:255',
             'rooms_number' => 'required|integer|min:1|max:255',
             'beds_number' => 'required|integer|min:1|max:255',
             'bath_number' => 'required|integer|min:0|max:255',
+            'delete_pic.*' => 'nullable',
             'meters' => 'required|integer|min:0|max:65535',
             'address' => 'max:255',
             'latitude' => 'max:255',
@@ -158,11 +161,11 @@ class ApartmentController extends Controller
             'price' => 'required|numeric|min:0',
             'images.*' => 'nullable|image|max:2048',
             'services.*' => 'nullable|exists:services,id',
-            'sponsors.*' => 'nullable|exists:sponsors,id',
+            'sponsor' => 'nullable|exists:sponsors,id',
         ]);
 
         $params['user_id'] = Auth::id();
-
+    
         if(!$params['address']){
             $params['address'] = $apartment->address; 
             $params['latitude'] = $apartment->latitude; 
@@ -185,15 +188,23 @@ class ApartmentController extends Controller
             $apartment->services()->sync($params['services']);
         }
         
-        if(array_key_exists('sponsors', $params) && $params['sponsors'][0] != $apartment->sponsors[0]->pivot->sponsor_id){
-            $sponsor = Sponsor::where('id', $params['sponsors'])->first();
+        if(array_key_exists('sponsor', $params)){
+            $sponsor = Sponsor::where('id', $params['sponsor'])->first();
             $actual_date = Carbon::now();
             $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
             $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
-            $apartment->sponsors()->sync($params['sponsors']);
+            $apartment->sponsors()->sync($params['sponsor']);
         }
         
         $apartment->update($params);
+
+        if(array_key_exists('delete_pic', $params)){
+            foreach($params['delete_pic'] as $id){                
+                $img = Image::where('id', $id)->first();
+                Storage::delete($img->path);
+                $img->delete();
+            }
+        }
 
         if(array_key_exists('images', $params)){
 

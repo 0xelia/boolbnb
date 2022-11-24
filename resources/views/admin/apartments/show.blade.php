@@ -86,7 +86,7 @@
             <ul class="flex gap-6">
                 @forelse ($apartment->sponsors as $sponsor)
                     <li class="font-bold">
-                        {{$sponsor->plane}}
+                        {{$sponsor->plan}}
                     </li>
                 @empty
                     <li class="font-bold">Nessuna sponsorizzazione</li>
