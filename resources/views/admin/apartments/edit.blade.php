@@ -40,9 +40,35 @@
 
             <div class="mb-8">
                 <label class="block mb-4 font-bold" for="images">Aggiungi Foto alla galleria</label>
-                <input type="file" multiple placeholder="Aggiungi qui un'immagine" name="images[]" id="images" value="{{old('images', $apartment->images)}}"
-                class="w-full px-4 py-4 rounded-xl @error('images') border border-red-700 @enderror">
+                
+                {{-- Gallery preview --}}
 
+                    <ul class="flex items-center gap-2 relative">
+                        @forelse ($apartment->images as $img)
+                            <li class="gallery_pic">
+                                <figure class="h-12 w-24 overflow-hidden rounded-xl relative">
+                                    <img class="w-full h-full object-cover object-center" src="{{$img->img_path}}" alt="">
+                                </figure>
+                                
+                                <form action="{{ route('admin.images.destroy', $img )}}" method="post" class="absolute">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" value="Elimina" class="delete_btn mt-1 px-6 py-2 text-white bg-red-600 rounded-xl text-xs cursor-pointer">
+                                </form>
+                            </li>
+
+                        @empty
+                        <p class="text-bold text-2xl">Aggiungi foto alla galleria</p>
+                        @endforelse
+
+                        <li>
+                            <label for="images" class="file flex">
+                                <input type="file" multiple name="images[]" id="images" class=" custom-file-input order-2 @error('images') border border-red-700 @enderror">
+                                <span class="custom_file"></span>
+                            </label>
+                        </li>
+                    </ul>
+                        
                 @error('images.*')
                     <p class="text-red-700">
                         {{$message}}
@@ -187,5 +213,15 @@
             </div>
             <input class="cursor-pointer w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" id="submit" value="Modifica Appartamento">
         </form>
+
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     </section>|
 @endsection

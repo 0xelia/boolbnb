@@ -21,3 +21,42 @@
     pointer-events: all;
     opacity: 1;
 }
+
+ .file-input::-webkit-file-upload-button {
+visibility: hidden;
+display: block;
+}
+
+/*
+.custom-file-input::before {
+    content: '+';
+    display: inline-block;
+    background: gray;
+    font-weight: 700;
+    color: rgb(69, 67, 67);
+    border-radius: 9999px;
+    padding: 5px 8px;
+    /* outline: none; */
+    /* white-space: nowrap; */
+    /* -webkit-user-select: none;
+    cursor: pointer;
+  } */
+
+
+.custom-file-input{
+    opacity: 0;
+}
+
+.custom_file::before{
+    content: '+';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    background-color: lightgray;
+    color: gray;
+    border-radius: 9999px;
+    order: 1;
+    cursor: pointer;
+}
