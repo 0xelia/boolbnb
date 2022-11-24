@@ -96,8 +96,8 @@
                     <ul>
                         @foreach ($sponsors as $sponsor)
                             <li>
-                                <input class="p-2" type="radio" name="sponsors[]" @if( in_array($sponsor->id, old('sponsor', []))) checked @endif id="{{$sponsor->plane}}" value="{{$sponsor->id}}">
-                                <label class="mr-2" for="{{$sponsor->plan}}">{{$sponsor->plane}}</label>
+                                <input class="p-2" type="radio" name="sponsors[]" @if( in_array($sponsor->id, old('sponsor', []))) checked @endif id="{{$sponsor->plan}}" value="{{$sponsor->id}}">
+                                <label class="mr-2" for="{{$sponsor->plan}}">{{$sponsor->plan}}</label>
                             </li>
                         @endforeach
                     </ul>
