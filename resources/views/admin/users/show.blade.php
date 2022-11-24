@@ -16,12 +16,12 @@
                     <span class="block text-xl pb-4">Username</span> 
                     <span>{{ $user->name .' '. $user->surname }}</span>
                 </div>
-                @if($user->date_of_birth)
-                <div>
-                    <span class="block text-xl pb-4">Data di nascita:</span> 
+                <span class="block text-xl pb-4">Data di nascita:</span> 
+                @if($user->date_of_birth) 
                     <span>{{ $user->date_of_birth }}</span>
-                </div>
-                @endif
+                @else
+                    <span> --/--/-- </span>
+                @endif  
                 <div>
                     <span class="block text-xl pb-4">Email</span> 
                     <span>{{ $user->email }}</span>
