@@ -2007,10 +2007,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchSponsors: function fetchSponsors() {
+      var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/sponsors').then(function (res) {
-        var sponsors = res.sponsors;
-        console.log(res);
-        console.log(sponsors);
+        _this.sponsors = res.data.sponsors;
       });
     }
   },
@@ -2137,7 +2136,7 @@ var render = function render() {
     staticClass: "mt-4 text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-white"
   }, [_vm._v("Promozioni disponibili")]), _vm._v(" "), _c("div", {
     staticClass: "mt-6 space-y-8 xl:mt-12"
-  }, [_vm._l(_vm.sponsors, function (sponsor) {
+  }, _vm._l(_vm.sponsors, function (sponsor) {
     return _c("div", {
       key: sponsor.id,
       staticClass: "flex items-center justify-between max-w-2xl px-8 py-4 mx-auto border cursor-pointer rounded-xl dark:border-gray-700"
@@ -2162,26 +2161,14 @@ var render = function render() {
       staticClass: "text-lg font-medium text-gray-700 sm:text-2xl dark:text-gray-200"
     }, [_vm._v(_vm._s(sponsor.plane))]), _vm._v(" "), _c("div", {
       staticClass: "px-2 text-xs text-blue-500 bg-gray-100 rounded-full sm:px-4 sm:py-1 dark:bg-gray-700"
-    }, [_vm._v("\n                                Save 20%\n                            ")])])]), _vm._v(" "), _vm._m(0, true)]);
-  }), _vm._v(" "), _vm._m(1)], 2)])]);
+    }, [_vm._v("\n                                Save 20%\n                            ")])])]), _vm._v(" "), _c("h2", {
+      staticClass: "text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300"
+    }, [_vm._v("$" + _vm._s(sponsor.price) + " "), _c("span", {
+      staticClass: "text-base font-medium"
+    }, [_vm._v("/Month")])])]);
+  }), 0)])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("h2", {
-    staticClass: "text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300"
-  }, [_vm._v("$49 "), _c("span", {
-    staticClass: "text-base font-medium"
-  }, [_vm._v("/Month")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "flex justify-center"
-  }, [_c("button", {
-    staticClass: "px-8 py-2 tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-  }, [_vm._v("\n                        Choose Plan\n                    ")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

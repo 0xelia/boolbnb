@@ -10,7 +10,7 @@
 
                 <div class="mt-6 space-y-8 xl:mt-12">
 
-                    <div class="flex items-center justify-between max-w-2xl px-8 py-4 mx-auto border cursor-pointer rounded-xl dark:border-gray-700" v-for="sponsor in sponsors" :key="sponsor.id">
+                    <div class="flex items-center justify-between max-w-2xl px-8 py-4 mx-auto border cursor-pointer rounded-xl dark:border-gray-700" v-for="sponsor in sponsors" :key="sponsor.id" @click="">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400 sm:h-9 sm:w-9" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -24,7 +24,7 @@
                             </div>
                         </div>
 
-                        <h2 class="text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300">$49 <span class="text-base font-medium">/Month</span></h2>
+                        <h2 class="text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300">${{sponsor.price}} <span class="text-base font-medium">/Month</span></h2>
                     </div>
 
                     <!--<div class="flex items-center justify-between max-w-2xl px-8 py-4 mx-auto border border-blue-500 cursor-pointer rounded-xl">
@@ -61,11 +61,11 @@
                         <h2 class="text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300">$149 <span class="text-base font-medium">/Month</span></h2>
                     </div>-->
 
-                    <div class="flex justify-center">
+                    <!--<div class="flex justify-center">
                         <button class="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                             Choose Plan
                         </button>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -84,9 +84,7 @@
             fetchSponsors() {
                 axios.get('/api/sponsors')
                 .then((res) => {
-                const sponsors=res.sponsors;
-                console.log(res);
-                console.log(sponsors);
+                    this.sponsors = res.data.sponsors;
                 })
             }
         },
