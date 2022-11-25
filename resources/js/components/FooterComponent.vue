@@ -1,5 +1,5 @@
 <template>
-    <footer class="text-sm">
+    <footer class="text-sm py-3">
         <div class="container flex justify-between">
             <ul class="flex gap-5">
                 <li v-for="(link, index) in links" :key="index">
