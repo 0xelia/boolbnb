@@ -195,7 +195,7 @@ class ApartmentController extends Controller
             $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
             $apartment->sponsors()->sync($params['sponsor']);
         }
-        
+       
         $apartment->update($params);
 
         if(array_key_exists('delete_pic', $params)){

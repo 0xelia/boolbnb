@@ -28,4 +28,5 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->namespace('Admin')->
     Route::resource('images', 'ImageController');
 
     Route::get('/home', 'HomeController@index')->name('home');
+
 });

@@ -21,8 +21,12 @@ window.Vue = require('vue');
 //import search_input from './components/SearchInputComponent.vue'
 
 Vue.component(
-    'search-input-component', 
+    'search-input-component',
     require('./components/SearchInputComponent.vue').default);
+
+Vue.component(
+    'sponsor-component',
+    require('./components/SponsorComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
