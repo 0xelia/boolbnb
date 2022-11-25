@@ -1,13 +1,17 @@
 <template>
   <div class="container">
     <!-- Jumbo -->
-    <div></div>
+    <section>
+      <div></div>
+    </section>
     <!-- Cards Appartamenti -->
-    <div v-if="apartments" class="grid h-full relative grid-cols-1 md:grid-cols-3 2xl:grid-cols-4">
-      <router-link class="h-full relative" v-for="(apartment, index) in apartments" :key="index" :to="{ name: 'apartments.show', params: { id: apartment.id }}">
-        <ApartmentCard :apartment="apartment"/>
-      </router-link>
-    </div>
+    <section>
+      <div v-if="apartments">
+        <router-link v-for="(apartment, index) in apartments" :key="index" :to="{ name: 'apartments.show', params: { id: apartment.id }}">
+          <ApartmentCard :apartment="apartment"/>
+        </router-link>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -20,7 +24,7 @@ export default {
   },
   data() {
     return {
-      apartments: [],
+      apartments: null,
     }
   },
   methods: {
@@ -28,10 +32,8 @@ export default {
       axios.get('/api/apartments/index/sponsored')
         .then(res => {
           const { apartments } = res.data
-          apartments.forEach(el => {
-            this.apartments.push(el)
-          });
-          console.log(this.apartments);
+          this.apartments = apartments;
+          console.log(this.apartments)
         })
     }
   },

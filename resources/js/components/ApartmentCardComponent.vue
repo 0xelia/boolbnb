@@ -1,12 +1,10 @@
 <template>
-    <div>
-        <figure class="overflow-hidden flex-grow rounded-xl">
-            <img class="w-full h-full object-cover object-center" :src="apartment.cover_path" alt="immagine appartamento">
-            <p>
-                {{apartment.title}}
-            </p>
+    <div class="flex flex-col h-full">
+        <figure class="flex-grow">
+            <img class="w-full h-full object-cover object-center rounded-xl" :src="apartment.cover_path" alt="immagine appartamento">
         </figure>
-        <div>
+        <span class="text-gray-700 text-xl font-bold py-2">{{apartment.title}}</span>
+        <div class="flex justify-between">
             <span>
                 {{apartment.address}}
             </span>
@@ -21,13 +19,9 @@
 <script>
 
 export default {
-    name: 'ApartmentCard',
     props:{
         apartment: Object,
     },
-    mounted() {
-        console.log(this.apartment)
-    }
 }
 </script>
 
