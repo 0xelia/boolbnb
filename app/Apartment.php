@@ -51,4 +51,11 @@ class Apartment extends Model
     public function getPicPathAttribute(){
         return Storage::url($this->image);
     }
+
+    public function GetCoverPathAttribute() 
+    {
+        return $this->image ? Storage::disk('images')->url($this->image) : null;
+    }
+
+    protected $appends = ['cover_path'];
 }
