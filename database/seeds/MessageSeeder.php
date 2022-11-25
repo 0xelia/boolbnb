@@ -22,6 +22,7 @@ class MessageSeeder extends Seeder
             $message->email = $faker->email();
             $message->name = $faker->firstName();
             $message->surname = $faker->lastName();
+            $message->viewed = false;
             $message->apartment_id = $faker->randomElement($apartment_ids);
 
             $message->save();

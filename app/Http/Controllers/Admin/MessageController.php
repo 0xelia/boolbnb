@@ -50,6 +50,8 @@ class MessageController extends Controller
      */
     public function show(Apartment $apartment, Message $message)
     {
+        $message->viewed = true;
+        $message->save();
         return view('admin.messages.show', compact('apartment','message'));
     }
 
