@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Apartments;
 
 use App\Apartment;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
@@ -13,9 +15,20 @@ class ApartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($type)
     {
-        //
+        if($type === 'sponsored') {
+            $apartments = Apartment::has('sponsors')->with('sponsors')->get()->toArray();
+            $apartmentsFiltered = array_filter($apartments, function ($apartment) {
+                $now = Carbon::now();
+                $expire_date = Carbon::parse($apartment['sponsors'][0]['pivot']['expire_date']);
+                return $now->lessThan($expire_date);
+            });
+            return response()->json([
+                'apartments' => $apartmentsFiltered,
+                'success' => true
+            ]);
+        }
     }
 
     /**
