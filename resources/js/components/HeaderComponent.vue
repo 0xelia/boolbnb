@@ -2,7 +2,7 @@
     <header class="py-6">
         <div class="container flex justify-between">
             <div class="text-brand-500 text-xl">airbnb</div>
-            <nav class="text-gray-500">
+            <nav>
                 <ul class="flex gap-6">
                     <li v-for="(link, index) in links" :key="index">
                         <a :href="link.name">{{link.text}}</a>

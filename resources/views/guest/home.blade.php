@@ -17,7 +17,7 @@
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/maps/maps-web.min.js"></script>
 
 </head>
-<body class="bg-gray-100 h-screen antialiased leading-none">
+<body class="bg-gray-100 text-gray-500 text-base h-screen antialiased leading-none">
     <div id="app"></div>
 
      <!-- Scripts -->
