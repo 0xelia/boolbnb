@@ -24,4 +24,5 @@ Route::post('orders/make/payment', 'Api\Orders\OrderController@makePayment');
 
 Route::get('sponsors', 'Api\Sponsors\SponsorController@index');
 
-Route::resource('apartments', 'Api\Apartments\ApartmentController')->only(['index', 'show']);
+Route::get('apartments/index/{type}', 'Api\Apartments\ApartmentController@index');
+Route::get('apartments/{apartment}', 'Api\Apartments\ApartmentController@show');

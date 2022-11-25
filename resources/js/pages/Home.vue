@@ -13,10 +13,11 @@ export default {
   },
   methods: {
     fetchPosts() {
-      axios.get('/api/apartments')
+      axios.get('/api/apartments/index/sponsored')
         .then(res => {
           const { apartments } = res.data
           this.apartments = apartments
+          console.log(this.apartments);
         })
     }
   },
