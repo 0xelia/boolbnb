@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,8 +22,11 @@ Auth::routes();
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
     Route::resource('apartments', 'ApartmentController');
-    Route::resource('users', 'UserController')->only(['show', 'update', 'edit']);
+    Route::get('/messages/{apartment_id}', 'MessageController@index')->name('messages.index');
+    Route::get('/messages/{apartment}/message/{message}', 'MessageController@show')->name('messages.show');
+    Route::resource('users', 'UserController')->only(['show', 'update', 'edit', 'destroy']);
     Route::resource('images', 'ImageController');
 
     Route::get('/home', 'HomeController@index')->name('home');
+
 });

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -47,7 +50,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        if(Auth::id() != $user->id){
+            return abort(403, 'Non hai i permessi per stare qui');
+        }
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -58,7 +64,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        if(Auth::id() != $user->id){
+            return abort(403, 'Non hai i permessi per stare qui');
+        }
+
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -70,7 +80,29 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $params = $request->validate([
+            'name' => 'nullable|max:255',
+            'surname' => 'nullable|max:255',
+            'email' => 'required|email:rfc',
+            'password' => 'nullable|min:8',
+            'date_of_birth' => 'nullable|date',
+            'profile_pic' => 'nullable|image|max:2048'
+        ]);
+ 
+        if($params['password']) {     
+            $params['password'] = Hash::make($params['password']);
+        } else {
+            $params['password'] = $user->password;
+        }
+
+        if(array_key_exists('profile_pic', $params) && $params['profile_pic'] !== $user->profile_pic) {
+            $img_path = Storage::disk('images')->put('profile_images', $params['profile_pic']);
+            $params['profile_pic'] = $img_path;
+        }
+
+        $user->update($params);
+
+        return redirect()->route('admin.users.show', $user);
     }
 
     /**
@@ -81,6 +113,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        Storage::delete($user->profile_pic);
+        
+        User::where('profile_pic', $user->profile_pic)->update(['profile_pic' => null]);
+
+        return redirect()->route('admin.users.show', $user);
     }
 }

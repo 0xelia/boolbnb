@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'surname', 'email', 'password', 'date_of_birth',
+        'name', 'surname', 'email', 'password', 'date_of_birth', 'profile_pic'
     ];
 
     /**
@@ -40,4 +41,11 @@ class User extends Authenticatable
     public function apartments(){
         return $this->hasMany('App\Apartment');
     }
+
+    public function getProfilePicPathAttribute()
+    {
+        return $this->profile_pic ? Storage::disk('images')->url($this->profile_pic) : null;
+    }
+
+    protected $appends = ['profile_pic_path'];
 }

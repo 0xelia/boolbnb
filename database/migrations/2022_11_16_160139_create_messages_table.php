@@ -20,6 +20,7 @@ class CreateMessagesTable extends Migration
             $table->string('email');
             $table->string('name');
             $table->string('surname');
+            $table->boolean('viewed');
         });
     }
 
