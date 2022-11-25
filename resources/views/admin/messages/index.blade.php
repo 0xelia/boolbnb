@@ -30,7 +30,7 @@
                     @php
                         $text = $message->text;
                     @endphp
-                    <tr>                        
+                    <tr class="@if($message->viewed == false) bg-red-200 @endif">                        
                         <td>
                             {{ $message->name }}
                         </td>

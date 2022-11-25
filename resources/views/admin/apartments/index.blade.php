@@ -20,9 +20,21 @@
                         <h3 class="font-bold capitalize">
                             {{ $apartment->title }}
                         </h3>
-                        <div class="absolute notification flex items-center justify-center  rounded-full h-6 w-6 text-center text-xs bg-red-500 text-white">
-                            <span> {{count($apartment->messages)}} </span>
-                        </div>
+                        @php
+                            $unviewedMessages = 0;
+                        @endphp
+                        @foreach ($apartment->messages as $message)
+                            @if ($message->viewed == false)
+                                @php
+                                    $unviewedMessages++;
+                                @endphp
+                            @endif
+                        @endforeach
+                        @if ($unviewedMessages > 0)
+                            <div class="absolute notification flex items-center justify-center  rounded-full h-6 w-6 text-center text-xs bg-red-500 text-white">
+                                <span> {{ $unviewedMessages }} </span>
+                            </div>                            
+                        @endif
                     </li>
                 </a>
             @endforeach
