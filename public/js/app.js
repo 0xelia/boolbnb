@@ -1996,27 +1996,25 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       sponsors: []
     };
   },
-  mounted: function mounted() {
-    var response = this.$axios.$get('/api/sponsors');
-    this.sponsors = response.data;
-  },
   methods: {
     fetchSponsors: function fetchSponsors() {
-      var _this = this;
-      axios.get('/api/sponsors').then(function (res) {
-        // console.log(res.data)
-        res.data.result;
-        _this.sponsors = data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/sponsors').then(function (res) {
+        var sponsors = res.sponsors;
+        console.log(res);
+        console.log(sponsors);
       });
     }
   },
-  beforeMount: function beforeMount() {
+  mounted: function mounted() {
     this.fetchSponsors();
   }
 });
@@ -2158,20 +2156,16 @@ var render = function render() {
         d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z",
         "clip-rule": "evenodd"
       }
-    })]), _vm._v(" "), _vm._m(0, true)]), _vm._v(" "), _vm._m(1, true)]);
-  }), _vm._v(" "), _vm._m(2)], 2)])]);
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "flex flex-col items-center mx-5 space-y-1"
+    }, [_c("h2", {
+      staticClass: "text-lg font-medium text-gray-700 sm:text-2xl dark:text-gray-200"
+    }, [_vm._v(_vm._s(sponsor.plane))]), _vm._v(" "), _c("div", {
+      staticClass: "px-2 text-xs text-blue-500 bg-gray-100 rounded-full sm:px-4 sm:py-1 dark:bg-gray-700"
+    }, [_vm._v("\n                                Save 20%\n                            ")])])]), _vm._v(" "), _vm._m(0, true)]);
+  }), _vm._v(" "), _vm._m(1)], 2)])]);
 };
 var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "flex flex-col items-center mx-5 space-y-1"
-  }, [_c("h2", {
-    staticClass: "text-lg font-medium text-gray-700 sm:text-2xl dark:text-gray-200"
-  }, [_vm._v("Basic")]), _vm._v(" "), _c("div", {
-    staticClass: "px-2 text-xs text-blue-500 bg-gray-100 rounded-full sm:px-4 sm:py-1 dark:bg-gray-700"
-  }, [_vm._v("\n                                Save 20%\n                            ")])]);
-}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("h2", {

@@ -17,7 +17,7 @@
                             </svg>
 
                             <div class="flex flex-col items-center mx-5 space-y-1">
-                                <h2 class="text-lg font-medium text-gray-700 sm:text-2xl dark:text-gray-200">Basic</h2>
+                                <h2 class="text-lg font-medium text-gray-700 sm:text-2xl dark:text-gray-200">{{sponsor.plane}}</h2>
                                 <div class="px-2 text-xs text-blue-500 bg-gray-100 rounded-full sm:px-4 sm:py-1 dark:bg-gray-700 ">
                                     Save 20%
                                 </div>
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default{
         data(){
             return{
@@ -79,23 +80,19 @@
             }
 
         },
-        mounted(){
-            const response = this.$axios.$get('/api/sponsors')
-            this.sponsors = response.data
-        },
         methods: {
             fetchSponsors() {
-                axios.get('/api/sponsors').
-                then((res) => {
-                // console.log(res.data)
-                res.data.result
-                this.sponsors = data
+                axios.get('/api/sponsors')
+                .then((res) => {
+                const sponsors=res.sponsors;
+                console.log(res);
+                console.log(sponsors);
                 })
             }
         },
-        beforeMount() {
+        mounted() {
             this.fetchSponsors()
-        }
+        },
     }
 </script>
 
