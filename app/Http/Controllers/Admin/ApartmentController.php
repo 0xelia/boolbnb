@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use App\Apartment;
 use App\Service;
 use App\Http\Controllers\Controller;
 use App\Image;
+use App\Sponsor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,8 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
-        return view('admin.apartments.create', compact('services'));
+        $sponsors = Sponsor::all();
+        return view('admin.apartments.create', compact('services', 'sponsors'));
     }
 
     /**
@@ -45,8 +47,6 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $key = config('tomtom');
-
         $user_id = Auth::id();
         $params = $request->validate([
             'title' => 'required|max:255',
@@ -64,24 +64,41 @@ class ApartmentController extends Controller
             ],
             'price' => 'required|numeric|min:0',
             'images.*' => 'nullable|image|max:2048',
-            'services.*' => 'nullable|exists:services,id'
+            'services.*' => 'nullable|exists:services,id',
+            'sponsors.*' => 'nullable|exists:sponsors,id',
         ]);
+
         $params['user_id'] = $user_id;
         $gallery = [];
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
+
+        $cover_path = Storage::put('cover_images', $params['image']);
+        $params['image'] = $cover_path;
+
         $apartment = Apartment::create($params);
+
         if(array_key_exists('services', $params)){
             $apartment->services()->sync($params['services']);
         }
+        
+        if(array_key_exists('sponsors', $params)){
+            $sponsor = Sponsor::where('id', $params['sponsors'])->first();
+            $actual_date = Carbon::now();
+            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
+            $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
+            $apartment->sponsors()->sync($params['sponsors']);
+        }
+
+        if(array_key_exists('images', $params)){
+            foreach($params['images'] as $image){
+                $image_params = [];
+                $image_path = Storage::put('gallery', $image);
+                $image_params['path'] = $image_path;
+                $image_params['apartment_id'] = $apartment->id;
+                $newImage = Image::create($image_params);
+            }
+        }
         return redirect()->route('admin.apartments.show', compact('apartment'));
-        // dd($apartment);
-        // foreach ($request->images as $key => $image) {
-        //     $img = Storage::put('gallery', $image);
-        //     $gallery[$key]['path'] = $img;
-        // }
-        // foreach ($gallery as $img) {
-        //     Image::create();
-        // }
     }
 
     /**
@@ -92,6 +109,10 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
+        if(Auth::id() != $apartment->user->id){
+            return abort(403, 'Non hai i permessi per stare qui');
+        }
+
         return view('admin.apartments.show', compact('apartment'));
     }
 
@@ -103,8 +124,12 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
+        if(Auth::id() != $apartment->user->id){
+            return abort(403, 'Non hai i permessi per stare qui');
+        }
         $services = Service::all();
-        return view('admin.apartments.edit', compact('apartment','services'));
+        $sponsors = Sponsor::all();
+        return view('admin.apartments.edit', compact('apartment','services', 'sponsors'));
     }
 
     /**
@@ -116,24 +141,38 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
+
+
         $params = $request->validate([
             'title' => 'required|max:255',
             'rooms_number' => 'required|integer|min:1|max:255',
             'beds_number' => 'required|integer|min:1|max:255',
             'bath_number' => 'required|integer|min:0|max:255',
+            'delete_pic.*' => 'nullable',
             'meters' => 'required|integer|min:0|max:65535',
-            //'address' => 'required|max:255',
-            'image' => 'required|image|max:2048',
+            'address' => 'max:255',
+            'latitude' => 'max:255',
+            'longitude' => 'max:255',
+            'image' => 'image|max:2048',
             'visible' => [
                 'required',
                 Rule::in(['true', 'false']),
             ],
             'price' => 'required|numeric|min:0',
             'images.*' => 'nullable|image|max:2048',
-            'services.*' => 'nullable|exists:services,id'
+            'services.*' => 'nullable|exists:services,id',
+            'sponsor' => 'nullable|exists:sponsors,id',
         ]);
 
         $params['user_id'] = Auth::id();
+    
+        if(!$params['address']){
+            $params['address'] = $apartment->address; 
+            $params['latitude'] = $apartment->latitude; 
+            $params['longitude'] = $apartment->longitude; 
+        }
+
+        $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
 
         if(array_key_exists('image', $params)){
 
@@ -148,11 +187,39 @@ class ApartmentController extends Controller
         if(array_key_exists('services', $params)){
             $apartment->services()->sync($params['services']);
         }
-
+        
+        if(array_key_exists('sponsor', $params)){
+            $sponsor = Sponsor::where('id', $params['sponsor'])->first();
+            $actual_date = Carbon::now();
+            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
+            $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
+            $apartment->sponsors()->sync($params['sponsor']);
+        }
+       
         $apartment->update($params);
 
+        if(array_key_exists('delete_pic', $params)){
+            foreach($params['delete_pic'] as $id){                
+                $img = Image::where('id', $id)->first();
+                Storage::delete($img->path);
+                $img->delete();
+            }
+        }
 
-        return redirect()->route('admin.apartments.show', $apartment);
+        if(array_key_exists('images', $params)){
+
+            foreach($params['images'] as $image){
+                $image_params = [];
+                
+                $image_path = Storage::put('gallery', $image);
+                $image_params['path'] = $image_path;
+                $image_params['apartment_id'] = $apartment->id;
+                
+                $newImage = Image::create($image_params);
+            }
+        }
+
+        return redirect()->route('admin.apartments.show', compact('apartment'));
     }
 
     /**
@@ -164,8 +231,12 @@ class ApartmentController extends Controller
     public function destroy(Apartment $apartment)
     {
         Storage::delete($apartment->image);
-        $apartment->delete();
 
+        foreach($apartment->images as $img){
+            Storage::delete($img->path);
+        }
+
+        $apartment->delete();
         return redirect()->route('admin.apartments.index');
     }
 }

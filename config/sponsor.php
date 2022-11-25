@@ -2,17 +2,17 @@
 
 return [
     [
-        'plane' => 'basic',
+        'plan' => 'Basic',
         'price' => '2.99',
         'duration' => '24',
     ],
     [
-        'plane' => 'regular',
+        'plan' => 'Regular',
         'price' => '5.99',
         'duration' => '72',
     ],
     [
-        'plane' => 'premium',
+        'plan' => 'Premium',
         'price' => '9.99',
         'duration' => '144',
     ],

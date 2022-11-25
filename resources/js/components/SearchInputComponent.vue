@@ -1,8 +1,9 @@
 <template>
-    <div>
+    <div class="address-wrapper">
         <div ref="searchWrapper" class='flex flex-col gap-2 mb-4'>
             <label class="font-bold">Indirizzo *</label>
         </div>
+        <div class="address-error"></div>
 
         <input class="p-2 flex-grow" type="hidden" name="address" v-model="address" maxlength="255" required>
 
@@ -15,7 +16,6 @@
 
 <script>
 
-import axios from 'axios';
 import { services } from '@tomtom-international/web-sdk-services';
 import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
 

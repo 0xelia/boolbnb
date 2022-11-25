@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Apartment extends Model
 {
@@ -43,5 +44,9 @@ class Apartment extends Model
 
     public function views(){
         return $this->hasMany('App\View');
+    }
+
+    public function getPicPathAttribute(){
+        return Storage::url($this->image);
     }
 }
