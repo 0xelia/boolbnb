@@ -6,6 +6,12 @@
 
 @import "@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css";
 
+/*@import "@fontsource/figtree";*/
+
+/*body {
+    font-family: "Figtree";
+}*/
+
 
 .delete_btn {
     pointer-events: none;
