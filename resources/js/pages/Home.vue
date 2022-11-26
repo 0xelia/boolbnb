@@ -42,10 +42,8 @@ export default {
         .then(res => {
           const { apartments } = res.data
           apartments.forEach(el => {
-            const newPrice = el.price.split('.')[0]
-            const newAddress = el.address.split(' ').pop();
-            el.price = newPrice;
-            el.address = newAddress
+            el.price = el.price.split('.')[0];
+            el.address = el.address.split(' ').pop();
           });
           this.apartments = apartments
         })
