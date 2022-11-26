@@ -1,11 +1,36 @@
 <template>
 	<main>
+		<!-- hero -->
 		<div class="container py-8 text-center">
 			<div class="text-sm mb-2">Risultati di ricerca per</div>
 			<SearchBox class="mx-auto" />
 		</div>
+
+		<!-- header filters -->
+		<div class="container">
+			<div class="flex flex-wrap items-center mb-4 gap-6 lg:w-3/4 lg:pl-4 lg:ml-auto">
+				<div class="font-bold">{{ apartments.length }} Appartamenti</div>
+				
+				<select class="ml-auto">
+					<option data="">Ordina per</option>
+					<option value="">Rilevanza</option>
+					<option value="">Data di aggiunta</option>
+					<option value="">Distanza</option>
+				</select>
+				
+				<div @click="toggleFilters" class="lg:hidden">
+					<i class="fa-solid fa-filter"></i>
+				</div>
+
+				<div :class="{hidden}" class="w-full mb-8 lg:hidden text-sm">
+					<AccordionFilter :class="i === categories.length -1 ? 'border-b' : ''" v-for="(category, i) in categories" :key="i" :info="category" />
+				</div>
+			</div>
+		</div>
+
+		<!-- filters & cards -->
 		<div class="container lg:flex lg:items-start lg:gap-6">
-			<div class="text-sm mb-8 lg:w-1/4">
+			<div class="hidden lg:block lg:w-1/4 text-sm">
 				<AccordionFilter :class="i === categories.length -1 ? 'border-b' : ''" v-for="(category, i) in categories" :key="i" :info="category" />
 			</div>
 			<div class="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10 xl:grid-cols-3">
@@ -23,6 +48,7 @@ import ApartmentCard from '../components/ApartmentCardComponent.vue'
 export default {
 	data() {
 		return {
+			hidden: true,
 			apartments: [],
 			categories: [
 				{
@@ -181,6 +207,9 @@ export default {
 				console.log(apartments);
 			})
 		},
+		toggleFilters() {
+			return this.hidden = !this.hidden
+		}
 	},
 	created() {
 		this.fetchApartments()
