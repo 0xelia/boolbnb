@@ -1,5 +1,5 @@
 <template>
-    <div class="search-box w-1/2 flex items-center rounded-full border-gray-700 border-2">
+    <div class="search-box flex items-center rounded-full border-gray-700 border-2">
         <i class="fa-solid fa-magnifying-glass text-xl text-gray-700"></i>
         <input class="w-full mx-3 text-base text-gray-700 font-bold" type="text" placeholder="Cerca un appartamento...">
         <i class="fa-solid fa-circle-xmark text-xl text-gray-300 hover:text-brand-300"></i>
