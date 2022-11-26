@@ -1,5 +1,5 @@
 <template>
-    <footer class="text-sm py-3">
+    <footer class="text-sm py-3 border-gray-700 bg-white hidden md:block">
         <div class="container flex justify-between">
             <ul class="flex gap-5">
                 <li v-for="(link, index) in links" :key="index">
@@ -42,5 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    
+    footer {
+        border-top: 1px solid #C3C6D1;
+    }
 </style>

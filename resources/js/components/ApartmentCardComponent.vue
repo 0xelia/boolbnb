@@ -5,12 +5,12 @@
         </figure>
         <span class="text-gray-700 text-xl font-bold py-2">{{apartment.title}}</span>
         <div class="flex justify-between">
-            <span>
+            <span class="text-sm">
                 {{apartment.address}}
             </span>
 
             <span>
-                {{apartment.price}}
+                {{apartment.price}} &euro;
             </span>
         </div>
     </div>
@@ -26,5 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    
+    img {
+        aspect-ratio: 1;
+    }
 </style>
