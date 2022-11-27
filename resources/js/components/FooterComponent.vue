@@ -18,9 +18,8 @@
         <div class="container flex flex-col">
             <div class="md:hidden">
                 <div class="support">
-                    <h4 class="text-xl">Assistenza</h4>
-                    <ul class="py-3">
-                        <li class="py-1" v-for="(support, index) in supports" :key="index">{{support}}</li>
+                    <ul class="pb-3">
+                        <li class="py-1" v-for="(support, index) in supports" :key="index"><a href="#">{{support}}</a></li>
                     </ul>
                 </div>
                 <div>
@@ -28,7 +27,7 @@
                         <li class="py-1" v-for="(setting, index) in settings" :key="index"><a href="#">{{setting.text}}</a></li>
                     </ul>
                     <ul class="pt-3">
-                        <li class="py-1" v-for="(link, index) in links" :key="index">{{link}}</li>
+                        <li class="py-1" v-for="(link, index) in links" :key="index"><a href="">{{link}}</a></li>
                     </ul>
                 </div> 
             </div>
@@ -55,8 +54,7 @@ export default {
                     class: ''
                 },
             ],
-            supports: ['Centro Assistenza', 'Accessibilità', 'Segnala un rpoblema', 'Opzioni Cancellazione'],
-
+            supports: ['Centro Assistenza', 'Accessibilità', 'Segnala un problema', 'Opzioni Cancellazione'],
         }
     }
     
