@@ -1,5 +1,5 @@
 <template>
-	<main @send-value="getInputValue">
+	<main>
 		<!-- hero -->
 		<div class="container py-8 text-center">
 			<div class="text-sm mb-2">Risultati di ricerca per</div>
@@ -10,6 +10,10 @@
 		<div class="container">
 			<div class="flex flex-wrap items-center mb-4 gap-6 lg:w-3/4 lg:pl-4 lg:ml-auto">
 				<div class="font-bold">{{ apartments.length }} Appartamenti</div>
+
+				<div>
+					<span v-for="(filter) in active_filters" :key="filter.name">{{ filter }}</span>
+				</div>
 
 				<select class="ml-auto">
 					<option data="">Ordina per</option>
@@ -23,7 +27,7 @@
 				</div>
 
 				<div v-if="show & screen < 1024" class="w-full mb-8 text-sm">
-					<AccordionFilter :class="i === new_categories.length -1 ? 'border-b' : ''" v-for="(category, i) in new_categories" :key="i" :info="category" />
+					<AccordionFilter @filter="onFilter" :class="i === new_categories.length -1 ? 'border-b' : ''" v-for="(category, i) in new_categories" :key="i" :info="category" />
 				</div>
 			</div>
 		</div>
@@ -31,10 +35,10 @@
 		<!-- filters & cards -->
 		<div class="container lg:flex lg:items-start lg:gap-6">
 			<div v-if="screen >= 1024" class="block lg:w-1/4 text-sm">
-				<AccordionFilter :class="i === new_categories.length -1 ? 'border-b' : ''" v-for="(category, i) in new_categories" :key="i" :info="category" />
+				<AccordionFilter @filter="onFilter" :class="i === new_categories.length -1 ? 'border-b' : ''" v-for="(category, i) in new_categories" :key="i" :info="category" />
 			</div>
 			<div class="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10 xl:grid-cols-3">
-				<ApartmentCard v-for="(info, i) in apartments" :key="i" :apartment="info" />
+				<ApartmentCard v-for="(info, i) in filtered_apartments" :key="i" :apartment="info" />
 			</div>
 		</div>
 	</main>
@@ -123,151 +127,11 @@ export default {
 			show: false,
 			screen: window.innerWidth,
 
-			hidden: true,
 			apartments: [],
+			filter: '',
+			active_filters: [],
+
 			service_list: [],
-			// categories: [
-			// 	{
-			// 		title: 'Stanze',
-			// 		type: 'radio',
-			// 		name: 'rooms',
-			// 		col: false,
-			// 		filters: [
-			// 			{
-			// 				label: '1',
-			// 				id: 'room-1'
-			// 			},
-			// 			{
-			// 				label: '2',
-			// 				id: 'room-2'
-			// 			},
-			// 			{
-			// 				label: '3',
-			// 				id: 'room-3'
-			// 			},
-			// 			{
-			// 				label: '4',
-			// 				id: 'room-4'
-			// 			},
-			// 			{
-			// 				label: '5',
-			// 				id: 'room-5'
-			// 			},
-			// 			{
-			// 				label: '6',
-			// 				id: 'room-6'
-			// 			},
-			// 			{
-			// 				label: '7',
-			// 				id: 'room-7'
-			// 			},
-			// 			{
-			// 				label: '8+',
-			// 				id: 'room-8'
-			// 			},
-			// 		],
-			// 	},
-			// 	{
-			// 		title: 'Letti',
-			// 		type: 'radio',
-			// 		name: 'beds',
-			// 		col: false,
-			// 		filters: [
-			// 			{
-			// 				label: '1',
-			// 				id: 'bed-1'
-			// 			},
-			// 			{
-			// 				label: '2',
-			// 				id: 'bed-2'
-			// 			},
-			// 			{
-			// 				label: '3',
-			// 				id: 'bed-3'
-			// 			},
-			// 			{
-			// 				label: '4',
-			// 				id: 'bed-4'
-			// 			},
-			// 			{
-			// 				label: '5',
-			// 				id: 'bed-5'
-			// 			},
-			// 			{
-			// 				label: '6',
-			// 				id: 'bed-6'
-			// 			},
-			// 			{
-			// 				label: '7',
-			// 				id: 'bed-7'
-			// 			},
-			// 			{
-			// 				label: '8',
-			// 				id: 'bed-8+'
-			// 			},
-			// 		],
-			// 	},
-			// 	{
-			// 		title: 'Bagni',
-			// 		type: 'radio',
-			// 		name: 'baths',
-			// 		col: false,
-			// 		filters: [
-			// 			{
-			// 				label: '1',
-			// 				id: 'bath-1'
-			// 			},
-			// 			{
-			// 				label: '2',
-			// 				id: 'bath-2'
-			// 			},
-			// 			{
-			// 				label: '3',
-			// 				id: 'bath-3'
-			// 			},
-			// 		],
-			// 	},
-			// 	{
-			// 		title: 'Distanza',
-			// 		type: 'radio',
-			// 		name: 'meters',
-			// 		col: false,
-			// 		filters: [
-			// 			{
-			// 				label: '5 km',
-			// 				id: 'meter-1'
-			// 			},
-			// 			{
-			// 				label: '10 km',
-			// 				id: 'meter-2'
-			// 			},
-			// 			{
-			// 				label: '20km',
-			// 				id: 'meter-3'
-			// 			},
-			// 		],
-			// 	},
-			// 	{
-			// 		title: 'Servizi',
-			// 		type: 'checkbox',
-			// 		name: 'services',
-			// 		col: true,
-			// 		filters: [
-			// 			{
-			// 				label: 'WiFi',
-			// 				id: 'wifi-1'
-			// 			},
-			// 			{
-			// 				label: 'Piscina',
-			// 				id: 'wifi-2'
-			// 			},
-			// 			{
-			// 				label: 'Parcheggio macchina',
-			// 				id: 'wifi-3'
-			// 			},
-			// 		],
-			// 	},
-			// ]
 		}
 	},
 	components: {
@@ -275,17 +139,32 @@ export default {
 		AccordionFilter,
 		ApartmentCard,
 	},
+	computed: {
+		filtered_apartments() {
+			const [ name, value ] = this.filter
+			
+			if (name === 'rooms_number' && value === 4 || name === 'beds_number' && value === 4) {
+				return this.apartments.filter(apartment => {
+					return apartment[name] >= value
+				})
+			}
+
+			return this.apartments.filter(apartment => {
+				return apartment[name] === value
+			})
+		}
+	},
 	methods: {
-		getInputValue(d) {
-			console.log(d);
+		onFilter(data) {
+			this.filter = data;
+			if (!this.active_filters.includes(this.filter[0]))
+				this.active_filters.push(this.filter[0])
 		},
 		fetchApartments() {
 			axios.get('api/apartments/index/all').then(res => {
 				const { apartments, service_list } = res.data
 				this.apartments = apartments
 				this.service_list = service_list
-				// console.log(apartments);
-				// console.log(service_list);
 			})
 		},
 		toggleFilters() {
@@ -303,7 +182,6 @@ export default {
 			const distances = this.setCategory('Distanza', 'distance', this.distance_filters)
 			categories.push(distances)
 
-			console.log(categories);
 			return this.new_categories = categories
 		},
 		setCategory(title, name, filters, type = 'radio') {
