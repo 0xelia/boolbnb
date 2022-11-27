@@ -10,7 +10,7 @@
 		<div class="container">
 			<div class="flex flex-wrap items-center mb-4 gap-6 lg:w-3/4 lg:pl-4 lg:ml-auto">
 				<div class="font-bold">{{ apartments.length }} Appartamenti</div>
-				
+
 				<select class="ml-auto">
 					<option data="">Ordina per</option>
 					<option value="">Rilevanza</option>
@@ -22,7 +22,7 @@
 					<i class="fa-solid fa-filter"></i>
 				</div>
 
-				<div :class="{hidden}" class="w-full mb-8 lg:hidden text-sm">
+				<div v-if="show & screen < 1024" class="w-full mb-8 text-sm">
 					<AccordionFilter :class="i === new_categories.length -1 ? 'border-b' : ''" v-for="(category, i) in new_categories" :key="i" :info="category" />
 				</div>
 			</div>
@@ -30,7 +30,7 @@
 
 		<!-- filters & cards -->
 		<div class="container lg:flex lg:items-start lg:gap-6">
-			<div class="hidden lg:block lg:w-1/4 text-sm">
+			<div v-if="screen >= 1024" class="block lg:w-1/4 text-sm">
 				<AccordionFilter :class="i === new_categories.length -1 ? 'border-b' : ''" v-for="(category, i) in new_categories" :key="i" :info="category" />
 			</div>
 			<div class="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10 xl:grid-cols-3">
@@ -119,6 +119,9 @@ export default {
 			distance_filters,
 
 			new_categories: [],
+
+			show: false,
+			screen: window.innerWidth,
 
 			hidden: true,
 			apartments: [],
@@ -286,7 +289,7 @@ export default {
 			})
 		},
 		toggleFilters() {
-			return this.hidden = !this.hidden
+			return this.show = !this.show
 		},
 		get_new_categories() {
 			const categories = []
@@ -310,11 +313,16 @@ export default {
 				type,
 				filters
 			}
-		}
+		},
 	},
 	created() {
 		this.fetchApartments()
 		this.get_new_categories()
+	},
+	mounted() {
+		window.addEventListener('resize', () => {
+			this.screen = window.innerWidth
+		})
 	}
 }
 </script>
