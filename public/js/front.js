@@ -2023,14 +2023,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     fetchServices: function fetchServices() {
       var _this2 = this;
-      axios.get("/api/services/".concat(this.apartment.id)).then(function (res) {
-        var services = res.data.services;
-        _this2.apartment = apartment;
+      axios.get('/api/services').then(function (res) {
+        _this2.services = res.data.services;
       });
     }
   },
   created: function created() {
     this.fetchDetails();
+    this.fetchServices();
   }
 });
 
@@ -2300,35 +2300,35 @@ var render = function render() {
       alt: ""
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "grid grid-cols-3 grid-rows-2 gap-6 pb-20"
+    staticClass: "grid md:grid-cols-3 gap-6 pb-20"
   }, [_c("div", {
-    staticClass: "border flex content-center rounded-lg col-span-3 md:col-span-3 row-span-3 lg:col-span-2 md:row-span-2 h-24 justify-center"
+    staticClass: "border flex lg:justify-start p-6 content-center rounded-lg col-span-3 md:col-span-3 row-span-3 lg:row-start-1 lg:col-span-2 md:row-span-2 lg:row-span-1 h-24 justify-center"
   }, [_c("div", {
-    staticClass: "pr-32 self-center"
+    staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Stanze totali")]), _vm._v(" "), _c("p", {
     staticClass: "font-bold"
   }, [_vm._v(_vm._s(_vm.apartment.rooms_number))])]), _vm._v(" "), _c("div", {
-    staticClass: "pr-32 self-center"
+    staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Camere da letto")]), _vm._v(" "), _c("p", {
     staticClass: "font-bold"
   }, [_vm._v(_vm._s(_vm.apartment.beds_number))])]), _vm._v(" "), _c("div", {
-    staticClass: "pr-32 self-center"
+    staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Bagni")]), _vm._v(" "), _c("p", {
     staticClass: "font-bold"
   }, [_vm._v(_vm._s(_vm.apartment.bath_number))])]), _vm._v(" "), _c("div", {
-    staticClass: "pr-32 self-center"
+    staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Metri quadrati")]), _vm._v(" "), _c("p", {
     staticClass: "font-bold"
   }, [_vm._v(_vm._s(_vm.apartment.meters))])])]), _vm._v(" "), _c("div", {
-    staticClass: "border rounded-lg p-6 md:col-span-3 col-span-3 lg:row-span-3 h-96 lg:col-span-1 drop-shadow-xl"
+    staticClass: "border rounded-lg p-6 md:col-span- col-span-3 lg:row-span-2 h-96 lg:col-span-1 drop-shadow-xl"
   }, [_c("div", {
     staticClass: "flex pb-8"
   }, [_c("h4", {
@@ -2377,16 +2377,8 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "text-left lg:col-span-2 lg:row-span-3"
-  }, [_c("h3", {
-    staticClass: "section-title"
-  }, [_vm._v("Cosa troverai")]), _vm._v(" "), _c("div", {
-    staticClass: "grid grid-cols-2 gap-6"
-  }, [_c("div", {
-    staticClass: "ml-10"
-  }, [_c("p", [_vm._v("abcd")]), _vm._v(" "), _c("p", [_vm._v("abcd")])]), _vm._v(" "), _c("div", {
-    staticClass: "ml-10"
-  }, [_c("p", [_vm._v("abcd")]), _vm._v(" "), _c("p", [_vm._v("abcd")])])])]);
+    staticClass: "border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2"
+  }, [_c("h3", [_vm._v("Cosa troverai")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

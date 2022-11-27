@@ -15,27 +15,27 @@
           <img class="invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1" src="https://picsum.photos/200/300" alt="">
       </div>
 
-      <div class="grid grid-cols-3 grid-rows-2 gap-6 pb-20">
-        <div class="border flex content-center rounded-lg col-span-3 md:col-span-3 row-span-3 lg:col-span-2 md:row-span-2 h-24 justify-center">
-          <div class="pr-32 self-center">
+      <div class="grid md:grid-cols-3 gap-6 pb-20">
+        <div class=" border flex lg:justify-start p-6 content-center rounded-lg col-span-3 md:col-span-3 row-span-3 lg:row-start-1 lg:col-span-2 md:row-span-2 lg:row-span-1 h-24 justify-center">
+          <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Stanze totali</h4>
             <p class="font-bold">{{apartment.rooms_number}}</p>
           </div>
-          <div class="pr-32 self-center">
+          <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Camere da letto</h4>
             <p class="font-bold">{{apartment.beds_number}}</p>
           </div>
-          <div class="pr-32 self-center">
+          <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Bagni</h4>
             <p class="font-bold">{{apartment.bath_number}}</p>
           </div>
-          <div class="pr-32 self-center ">
+          <div class="pr-13  lg:pr-16 self-center ">
             <h4 class="pb-1">Metri quadrati</h4>
             <p class="font-bold">{{apartment.meters}}</p>
           </div>
         </div>
 
-        <div class="border rounded-lg p-6 md:col-span-3 col-span-3 lg:row-span-3 h-96 lg:col-span-1 drop-shadow-xl">
+        <div class="border rounded-lg p-6 md:col-span- col-span-3 lg:row-span-2 h-96 lg:col-span-1 drop-shadow-xl">
           <div class="flex pb-8">
             <h4 class="text-brand-500">{{apartment.price}} € &nbsp; </h4>
             <p>notte</p>
@@ -62,19 +62,11 @@
           </div>
         </div>
 
-        <div class="text-left lg:col-span-2 lg:row-span-3">
-            <h3 class="section-title">Cosa troverai</h3>
-            <div class="grid grid-cols-2 gap-6">
-              <div class="ml-10">
-                <p>abcd</p>
-                <p>abcd</p>
-              </div>
-              <div class="ml-10">
-                <p>abcd</p>
-                <p>abcd</p>
-              </div>
-            </div>
+        <div class="border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2">
+          <h3>Cosa troverai</h3>
         </div>
+
+
       </div>
 
       <div>
@@ -180,16 +172,17 @@ export default {
           this.apartment = apartment
         })
     },
-    fetchServices(){
-      axios.get(`/api/services/${this.apartment.id}`)
-        .then(res => {
-          const { services } = res.data
-          this.apartment = apartment
-        })
-    }
+
+    fetchServices() {
+                axios.get('/api/services')
+                .then((res) => {
+                    this.services = res.data.services;
+                })
+            }
   },
   created() {
     this.fetchDetails()
+    this.fetchServices()
   },
 }
 </script>
