@@ -15,7 +15,7 @@ class ApartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($type, Request $request)
+    public function index($type)
     {
         if($type === 'sponsored') {
             $apartments = Apartment::has('sponsors')->with('sponsors')->get()->toArray();
