@@ -41,10 +41,10 @@ export default {
       axios.get('/api/apartments/index/sponsored')
         .then(res => {
           const { apartments } = res.data
-          apartments.forEach(el => {
-            el.price = el.price.split('.')[0];
-            el.address = el.address.split(' ').pop();
-          });
+          // apartments.forEach(el => {
+          //   el.price = el.price.split('.')[0];
+          //   el.address = el.address.split(' ').pop();
+          // });
           this.apartments = apartments
         })
     },

@@ -20,9 +20,4 @@ export default {
 </script>
 
 <style>
-  Footer{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
 </style>
