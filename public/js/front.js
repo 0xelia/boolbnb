@@ -2277,7 +2277,9 @@ var render = function render() {
     staticClass: "container"
   }, [_vm._m(0), _vm._v(" "), _vm.apartment ? _c("div", {
     staticClass: "font-semibold text-5xl"
-  }, [_c("h2", [_vm._v("\n        " + _vm._s(_vm.apartment.title) + "\n      ")])]) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_c("h2", {
+    staticClass: "text-black"
+  }, [_vm._v("\n        " + _vm._s(_vm.apartment.title) + "\n      ")])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "py-4 pb-8"
   }, [_vm._v("\n      " + _vm._s(_vm.apartment.address) + "\n    ")]), _vm._v(" "), _c("div", {
     staticClass: "md:grid gallery md:grid-cols-3 md:grid-rows-2 gap-6 pb-12"
@@ -2308,34 +2310,36 @@ var render = function render() {
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Stanze totali")]), _vm._v(" "), _c("p", {
-    staticClass: "font-bold"
+    staticClass: "font-bold text-black"
   }, [_vm._v(_vm._s(_vm.apartment.rooms_number))])]), _vm._v(" "), _c("div", {
     staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Camere da letto")]), _vm._v(" "), _c("p", {
-    staticClass: "font-bold"
+    staticClass: "font-bold text-black"
   }, [_vm._v(_vm._s(_vm.apartment.beds_number))])]), _vm._v(" "), _c("div", {
     staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Bagni")]), _vm._v(" "), _c("p", {
-    staticClass: "font-bold"
+    staticClass: "font-bold text-black"
   }, [_vm._v(_vm._s(_vm.apartment.bath_number))])]), _vm._v(" "), _c("div", {
     staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Metri quadrati")]), _vm._v(" "), _c("p", {
-    staticClass: "font-bold"
+    staticClass: "font-bold text-black"
   }, [_vm._v(_vm._s(_vm.apartment.meters))])])]), _vm._v(" "), _c("div", {
     staticClass: "border rounded-lg p-6 md:col-span- col-span-3 lg:row-span-2 h-96 lg:col-span-1 drop-shadow-xl"
   }, [_c("div", {
     staticClass: "flex pb-8"
   }, [_c("h4", {
-    staticClass: "text-brand-500"
-  }, [_vm._v(_vm._s(_vm.apartment.price) + " €   ")]), _vm._v(" "), _c("p", [_vm._v("notte")])]), _vm._v(" "), _c("div", {
+    staticClass: "text-brand-500 text-2xl font-bold"
+  }, [_vm._v(_vm._s(_vm.apartment.price) + " €   ")]), _vm._v(" "), _c("p", {
+    staticClass: "self-center"
+  }, [_vm._v("notte")])]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between pb-8"
-  }, [_c("div", [_vm._v(_vm._s(_vm.apartment.price) + " x 5 notte")]), _vm._v(" "), _c("div", [_vm._v(_vm._s(_vm.apartment.price * 5) + "   $")])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("hr", {
+  }, [_c("div", [_vm._v(_vm._s(_vm.apartment.price) + " x 5 notti")]), _vm._v(" "), _c("div", [_vm._v(_vm._s(_vm.apartment.price * 5) + "   $")])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("hr", {
     staticClass: "pb-8"
   }), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)]), _vm._v(" "), _vm._m(5)]), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7)]);
 };
@@ -2364,7 +2368,11 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "flex justify-between pb-8"
-  }, [_c("div", [_vm._v("Totale")]), _vm._v(" "), _c("div", [_vm._v("12   $")])]);
+  }, [_c("div", {
+    staticClass: "font-bold"
+  }, [_vm._v("Totale")]), _vm._v(" "), _c("div", {
+    staticClass: "font-bold"
+  }, [_vm._v("12   $")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -2378,11 +2386,15 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2"
-  }, [_c("h3", [_vm._v("Cosa troverai")])]);
+  }, [_c("p", {
+    staticClass: "text-2xl font-semibold text-black"
+  }, [_vm._v("Cosa troverai")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("h3", [_vm._v("\n        Dove ti troverai\n      ")])]);
+  return _c("div", [_c("p", {
+    staticClass: "text-2xl font-semibold text-black"
+  }, [_vm._v("\n        Dove ti troverai\n      ")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -2456,7 +2468,7 @@ var staticRenderFns = [function () {
       placeholder: "Inserisci il tuo messaggio"
     }
   })]), _vm._v(" "), _c("div", [_c("button", {
-    staticClass: "hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none"
+    staticClass: "hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-black"
   }, [_vm._v("\n              Submit\n            ")])])])])]);
 }];
 render._withStripped = true;
@@ -2542,7 +2554,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".gallery[data-v-9c99dc5e] {\n  height: 476px;\n}\nh3[data-v-9c99dc5e] {\n  font-size: large;\n}", ""]);
+exports.push([module.i, ".gallery[data-v-9c99dc5e] {\n  height: 476px;\n}", ""]);
 
 // exports
 

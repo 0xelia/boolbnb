@@ -2,7 +2,7 @@
   <div class="container">
       <div class="text-brand-500 py-7"><i class="fa-solid fa-chevron-left"></i> Torna alla pagina di ricerca</div>
       <div v-if="apartment" class="font-semibold text-5xl">
-        <h2>
+        <h2 class="text-black">
           {{ apartment.title }}
         </h2>
       </div>
@@ -19,29 +19,29 @@
         <div class=" border flex lg:justify-start p-6 content-center rounded-lg col-span-3 md:col-span-3 row-span-3 lg:row-start-1 lg:col-span-2 md:row-span-2 lg:row-span-1 h-24 justify-center">
           <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Stanze totali</h4>
-            <p class="font-bold">{{apartment.rooms_number}}</p>
+            <p class="font-bold text-black">{{apartment.rooms_number}}</p>
           </div>
           <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Camere da letto</h4>
-            <p class="font-bold">{{apartment.beds_number}}</p>
+            <p class="font-bold text-black">{{apartment.beds_number}}</p>
           </div>
           <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Bagni</h4>
-            <p class="font-bold">{{apartment.bath_number}}</p>
+            <p class="font-bold text-black">{{apartment.bath_number}}</p>
           </div>
           <div class="pr-13  lg:pr-16 self-center ">
             <h4 class="pb-1">Metri quadrati</h4>
-            <p class="font-bold">{{apartment.meters}}</p>
+            <p class="font-bold text-black">{{apartment.meters}}</p>
           </div>
         </div>
 
         <div class="border rounded-lg p-6 md:col-span- col-span-3 lg:row-span-2 h-96 lg:col-span-1 drop-shadow-xl">
           <div class="flex pb-8">
-            <h4 class="text-brand-500">{{apartment.price}} € &nbsp; </h4>
-            <p>notte</p>
+            <h4 class="text-brand-500 text-2xl font-bold">{{apartment.price}} € &nbsp; </h4>
+            <p class="self-center">notte</p>
           </div>
           <div class="flex justify-between pb-8">
-            <div>{{apartment.price}} x 5 notte</div>
+            <div>{{apartment.price}} x 5 notti</div>
             <div>{{apartment.price * 5}} &nbsp; $</div>
           </div>
           <div class="flex justify-between pb-8">
@@ -54,8 +54,8 @@
           </div>
           <hr class="pb-8">
           <div class="flex justify-between pb-8">
-            <div >Totale</div>
-            <div>12 &nbsp; $</div>
+            <div class="font-bold">Totale</div>
+            <div class="font-bold">12 &nbsp; $</div>
           </div>
           <div class="flex justify-center">
             <button class="text-white bg-brand-500 w-4/5 h-12 rounded-md">Prenota</button>
@@ -63,16 +63,16 @@
         </div>
 
         <div class="border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2">
-          <h3>Cosa troverai</h3>
+          <p class="text-2xl font-semibold text-black">Cosa troverai</p>
         </div>
 
 
       </div>
 
       <div>
-        <h3>
+        <p class="text-2xl font-semibold text-black">
           Dove ti troverai
-        </h3>
+        </p>
       </div>
 
       <div class="flex items-center justify-center">
@@ -143,8 +143,7 @@
             </div>
             <div>
               <button
-                class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none"
-              >
+                class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-black">
                 Submit
               </button>
             </div>
@@ -190,10 +189,6 @@ export default {
 <style lang="scss" scoped>
   .gallery{
     height: 476px;
-  }
-
-  h3{
-    font-size: large;
   }
 
 </style>
