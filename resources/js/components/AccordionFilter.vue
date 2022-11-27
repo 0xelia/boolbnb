@@ -4,10 +4,10 @@
             <h3 class="text-gray-700">{{ info.title }}</h3>
             <i :class="hidden ? 'fa-plus' : 'fa-minus'" class="fa-solid"></i>
         </div>
-        <ul :class="{hidden, 'flex-col': info.col, 'gap-x-0': !info.col}" class="mt-6 flex flex-wrap gap-4">
-            <li v-for="(field, i) in fields" :key="i" :class="{'w-1/2': !info.col, 'lg:w-1/4': !info.col}" class="flex gap-3">
-                <input :type="info.type" :name="info.name" :id="field.id">
-				<label class="w-full" :for="field.id">{{ field.label }}</label>
+        <ul :class="{hidden}" class="mt-6 flex flex-col gap-4">
+            <li v-for="(filter, i) in info.filters" :key="i" class="flex gap-3">
+                <input @change="$emit('send-value', selected)" v-model="selected" :value="filter.value" :type="info.type" :name="info.name" :id="filter.id">
+				<label :for="filter.id">{{ filter.label }}</label>
             </li>
         </ul>
     </div>
@@ -23,14 +23,23 @@ export default {
     },
     data() {
         return {
-            fields: this.info.filters,
+            // fields: this.info.filters,
             hidden: true,
+            selected: '',
+        }
+    },
+    computed: {
+        names() {
+
         }
     },
     methods: {
         toggleFilters() {
             return this.hidden = !this.hidden
         }
+    },
+    mounted() {
+        console.log(this.info);
     }
 }
 </script>
