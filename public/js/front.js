@@ -2009,7 +2009,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ['id'],
   data: function data() {
     return {
-      apartment: []
+      apartment: [],
+      services: []
     };
   },
   methods: {
@@ -2018,6 +2019,13 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/apartments/".concat(this.id)).then(function (res) {
         var apartment = res.data.apartment;
         _this.apartment = apartment;
+      });
+    },
+    fetchServices: function fetchServices() {
+      var _this2 = this;
+      axios.get("/api/services/".concat(this.apartment.id)).then(function (res) {
+        var services = res.data.services;
+        _this2.apartment = apartment;
       });
     }
   },
