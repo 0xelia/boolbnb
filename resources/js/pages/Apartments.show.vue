@@ -173,23 +173,25 @@ export default {
     fetchDetails() {
       axios.get(`/api/apartments/${this.id}`)
         .then(res => {
-          const { apartment } = res.data
-          this.apartment = apartment
+          // const { apartment } = res.data
+          // this.apartment = apartment
+
+          console.log(res.data)
         })
     },
 
-    fetchServices() {
-                axios.get(`/api/services/${this.id}`)
-                .then((res) => {
-                  const { services } = res.data
-                    this.services = res.data.services;
-                    console.log(this.services)
-                })
-            }
+    // fetchServices() {
+    //             axios.get(`/api/services/${this.id}`)
+    //             .then((res) => {
+    //               const { services } = res.data
+    //                 this.services = res.data.services;
+    //                 console.log(this.services)
+    //             })
+    //         }
   },
   created() {
     this.fetchDetails()
-    this.fetchServices()
+    // this.fetchServices()
   },
 }
 </script>

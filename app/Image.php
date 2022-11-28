@@ -19,4 +19,6 @@ class Image extends Model
     public function getImgPathAttribute(){
         return Storage::url($this->path); 
     }
+
+    public $appends = ['img_path'];
 }
