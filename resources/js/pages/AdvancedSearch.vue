@@ -3,7 +3,7 @@
 		<!-- hero -->
 		<div class="container py-8 text-center">
 			<div class="text-sm mb-2">Risultati di ricerca per</div>
-			<SearchBox class="mx-auto" />
+			<SearchInput class="mx-auto" />
 		</div>
 
 		<!-- header filters -->
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import SearchBox from '../components/SearchBox.vue'
+import SearchInput from '../components/SearchInputComponent.vue'
 import AccordionFilter from '../components/AccordionFilter.vue'
 import ApartmentCard from '../components/ApartmentCardComponent.vue'
 
@@ -55,6 +55,11 @@ const categories = [
 		type: 'radio',
 		name: 'rooms_number',
 		filters: [
+			{
+				label: 'Tutti',
+				id: 'room-all',
+				value: null,
+			},
 			{
 				label: '1',
 				id: 'room-1',
@@ -82,6 +87,11 @@ const categories = [
 		type: 'radio',
 		name: 'beds_number',
 		filters: [
+			{
+				label: 'Tutti',
+				id: 'beds-all',
+				value: null,
+			},
 			{
 				label: '1',
 				id: 'beds-1',
@@ -177,47 +187,59 @@ export default {
 			screen: window.innerWidth,
 			apartments: [],
 			categories,
+			service_list: [],
 			filters: {
-				rooms_number: 2,
-				beds_number: 2,
+				rooms_number: null,
+				beds_number: null,
 				distance: 20,
 				services: [],
 			},
 		}
 	},
 	components: {
-		SearchBox,
+		SearchInput,
 		AccordionFilter,
 		ApartmentCard,
 	},
 	computed: {
 		filtered_apartments() {
+			this.filtered = false
 			return this.apartments.filter(apartment => {
-				for (const key in this.filters) {
-					console.log(key + ': ' + this.filters[key])
-					if ( key.endsWith('_number') ) {
-						if (this.filters[key] < 4) {
-							return apartment[key] = this.filters[key]
+				let visible = true
+				for (const [key, value] of Object.entries(this.filters)) {
+					if(key.endsWith('_number')) {
+						if(!value) {
+							visible = visible && true
 						} else {
-							return apartment[key] >= this.filters[key]
+							if (value < 4) {
+								visible = visible && apartment[key] === value
+							} else {
+								visible = visible && apartment[key] >= value
+							}
 						}
 					}
+					if(key === 'distance') {
+						console.log(key, value);						
+					}
+					if(key === 'services') {
+						// let selectedServices = value
+						// if(selectedServices.length === 0) {
+						// 	selectedServices = this.service_list							
+						// }
+						let hasService = false
+						if(value.length === 0) {
+							hasService = true
+						} else {
+							const apartmentServices = apartment[key]
+							apartmentServices.forEach(apartmentService => {
+								hasService = hasService || value.includes(apartmentService.name)
+							})
+						}
+						visible = visible && hasService
+					}
 				}
-				// this.filters.forEach((value, key) => {
-				// 	if (key !== 'services') {
-				// 		if (key !== 'distance') {
-				// 			if (value < 4) {
-				// 				return apartment[key] = value
-				// 			} else {
-				// 				return apartment[key] >= value
-				// 			}
-				// 		} else {
-				// 				return apartment[key] = value
-				// 		}
-				// 	} else {
-				// 	}
-				// 	return apartment[key] === value
-				// })
+				this.filtered = true
+				return visible
 			})
 		},
 	},
@@ -234,11 +256,13 @@ export default {
 			} else {
 				this.filters[name] = value
 			}
+			console.log(this.filtered_apartments);
 		},
 		fetchApartments() {
 			axios.get('api/apartments/index/all').then(res => {
-				const { apartments } = res.data
+				const { apartments, service_list } = res.data
 				this.apartments = apartments
+				this.service_list = service_list
 				console.log(this.apartments);
 			})
 		},
