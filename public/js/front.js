@@ -2023,8 +2023,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     fetchServices: function fetchServices() {
       var _this2 = this;
-      axios.get('/api/services').then(function (res) {
+      axios.get("/api/services/".concat(this.id)).then(function (res) {
+        var services = res.data.services;
         _this2.services = res.data.services;
+        console.log(_this2.services);
       });
     }
   },
@@ -2339,9 +2341,19 @@ var render = function render() {
     staticClass: "self-center"
   }, [_vm._v("notte")])]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between pb-8"
-  }, [_c("div", [_vm._v(_vm._s(_vm.apartment.price) + " x 5 notti")]), _vm._v(" "), _c("div", [_vm._v(_vm._s(_vm.apartment.price * 5) + "   $")])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("hr", {
+  }, [_c("div", [_vm._v(_vm._s(_vm.apartment.price) + " x 5 notti")]), _vm._v(" "), _c("div", [_vm._v(_vm._s(_vm.apartment.price * 5) + "   $")])]), _vm._v(" "), _c("div", {
+    staticClass: "flex justify-between pb-8"
+  }, [_c("div", [_vm._v("Costi di pulizia")]), _vm._v(" "), _c("div", [_vm._v(_vm._s(Math.round(_vm.apartment.price * 5 * 0.5 / 100 * 100) / 100) + "   $")])]), _vm._v(" "), _c("div", {
+    staticClass: "flex justify-between pb-8"
+  }, [_c("div", [_vm._v("Costi del servizio")]), _vm._v(" "), _c("div", [_vm._v(_vm._s(Math.round(_vm.apartment.price * 5 * 2 / 100 * 100) / 100) + "   $")])]), _vm._v(" "), _c("hr", {
     staticClass: "pb-8"
-  }), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)]), _vm._v(" "), _vm._m(5)]), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7)]);
+  }), _vm._v(" "), _c("div", {
+    staticClass: "flex justify-between pb-8"
+  }, [_c("div", {
+    staticClass: "font-bold"
+  }, [_vm._v("Totale")]), _vm._v(" "), _c("div", {
+    staticClass: "font-bold"
+  }, [_vm._v(_vm._s(Math.round((_vm.apartment.price * 5 + _vm.apartment.price * 5 * 0.5 / 100 + _vm.apartment.price * 5 * 2 / 100) * 100) / 100) + "   $")])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -2351,28 +2363,6 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "fa-solid fa-chevron-left"
   }), _vm._v(" Torna alla pagina di ricerca")]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "flex justify-between pb-8"
-  }, [_c("div", [_vm._v("Costi di pulizia")]), _vm._v(" "), _c("div", [_vm._v("12   $")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "flex justify-between pb-8"
-  }, [_c("div", [_vm._v("Costi del servizio")]), _vm._v(" "), _c("div", [_vm._v("12   $")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "flex justify-between pb-8"
-  }, [_c("div", {
-    staticClass: "font-bold"
-  }, [_vm._v("Totale")]), _vm._v(" "), _c("div", {
-    staticClass: "font-bold"
-  }, [_vm._v("12   $")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -2394,7 +2384,7 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("div", [_c("p", {
     staticClass: "text-2xl font-semibold text-black"
-  }, [_vm._v("\n        Dove ti troverai\n      ")])]);
+  }, [_vm._v("\n        Dove ti troverai\n      ")]), _vm._v(" "), _c("div", [_c("div")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

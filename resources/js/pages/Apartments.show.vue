@@ -46,16 +46,16 @@
           </div>
           <div class="flex justify-between pb-8">
             <div>Costi di pulizia</div>
-            <div>12 &nbsp; $</div>
+            <div>{{Math.round((apartment.price * 5)*0.5/100*100)/100}} &nbsp; $</div>
           </div>
           <div class="flex justify-between pb-8">
             <div>Costi del servizio</div>
-            <div>12 &nbsp; $</div>
+            <div>{{Math.round((apartment.price * 5)*2/100*100)/100}} &nbsp; $</div>
           </div>
           <hr class="pb-8">
           <div class="flex justify-between pb-8">
             <div class="font-bold">Totale</div>
-            <div class="font-bold">12 &nbsp; $</div>
+            <div class="font-bold">{{Math.round((apartment.price * 5 + (apartment.price * 5)*0.5/100 + (apartment.price * 5)*2/100)*100)/100}} &nbsp; $</div>
           </div>
           <div class="flex justify-center">
             <button class="text-white bg-brand-500 w-4/5 h-12 rounded-md">Prenota</button>
@@ -73,6 +73,9 @@
         <p class="text-2xl font-semibold text-black">
           Dove ti troverai
         </p>
+        <div>
+          <div></div>
+        </div>
       </div>
 
       <div class="flex items-center justify-center">
@@ -173,9 +176,11 @@ export default {
     },
 
     fetchServices() {
-                axios.get('/api/services')
+                axios.get(`/api/services/${this.id}`)
                 .then((res) => {
+                  const { services } = res.data
                     this.services = res.data.services;
+                    console.log(this.services)
                 })
             }
   },

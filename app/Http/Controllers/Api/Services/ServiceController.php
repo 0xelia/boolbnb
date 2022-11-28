@@ -8,7 +8,12 @@ use App\Service;
 
 class ServiceController extends Controller
 {
-    public function index(Request $request){
+    public function index()
+    {
+
+    }
+
+    public function show(Request $request){
         $services = Service::all();
 
         return response()->json([
@@ -17,3 +22,4 @@ class ServiceController extends Controller
         ]);
     }
 }
+

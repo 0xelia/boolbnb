@@ -26,3 +26,6 @@ Route::get('sponsors', 'Api\Sponsors\SponsorController@index');
 
 Route::get('apartments/index/{type}', 'Api\Apartments\ApartmentController@index');
 Route::get('apartments/{apartment}', 'Api\Apartments\ApartmentController@show');
+
+Route::get('services/index/{type}', 'Api\Services\ServiceController@index');
+Route::get('services/{services}', 'Api\Services\ServiceController@show');
