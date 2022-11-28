@@ -63,7 +63,7 @@
 
         <div class="border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2">
           <p class="text-2xl font-semibold text-black">Cosa troverai</p>
-          <ul class="flex gap-8 justify-center">
+          <ul class="flex gap-8">
             <li v-for="(service, i) in apartment.services" :key="i">
               {{service.name}}
             </li>
@@ -92,7 +92,6 @@
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
         <div class="mx-auto w-full max-w-[550px]">
-          <form action="https://formbold.com/s/FORM_ID" method="POST">
             <div class="mb-5">
               <label
                 for="name"
@@ -102,6 +101,7 @@
               </label>
               <input
                 type="text"
+                v-model="msgName"
                 name="name"
                 id="name"
                 placeholder="Nome"
@@ -118,6 +118,7 @@
               <input
                 type="text"
                 name="name"
+                v-model="msgLastname"
                 id="name"
                 placeholder="Cognome"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -133,6 +134,7 @@
               <input
                 type="email"
                 name="email"
+                v-model="msgEmail"
                 id="email"
                 placeholder="esempio@mail.com"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -147,6 +149,7 @@
                 Messaggio
               </label>
               <textarea
+                v-model="msgTxt"
                 rows="4"
                 name="message"
                 id="message"
@@ -155,12 +158,11 @@
               ></textarea>
             </div>
             <div>
-              <button
+              <button @click="submitMessage()"
                 class=" bg-brand-500 hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white">
                 Submit
               </button>
             </div>
-          </form>
         </div>
       </div>
 
@@ -173,7 +175,10 @@ export default {
   data() {
     return {
       apartment: '',
-      // services: []
+      msgName: '',
+      msgLastname: '',
+      msgEmail: '',
+      msgTxt: '',
     }
   },
   methods: {
@@ -187,10 +192,23 @@ export default {
         })
     },
 
+    submitMessge(){
+
+      axios.post(`/api/messages/`,{
+        name: this.msgName,
+        lastName: this.msgLastname,
+        Email: this.msgEmail,
+        Text: this.msgTxt
+      }).then(res => {
+        console.log(res)
+      })
+    }
   },
   created() {
     this.fetchDetails()
     // this.fetchServices()
+
+    console.log(this.$route)
   },
 }
 </script>
