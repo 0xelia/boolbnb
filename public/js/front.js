@@ -2353,7 +2353,9 @@ var render = function render() {
     staticClass: "font-bold"
   }, [_vm._v("Totale")]), _vm._v(" "), _c("div", {
     staticClass: "font-bold"
-  }, [_vm._v(_vm._s(Math.round((_vm.apartment.price * 5 + _vm.apartment.price * 5 * 0.5 / 100 + _vm.apartment.price * 5 * 2 / 100) * 100) / 100) + "   $")])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)]);
+  }, [_vm._v(_vm._s(Math.round((_vm.apartment.price * 5 + _vm.apartment.price * 5 * 0.5 / 100 + _vm.apartment.price * 5 * 2 / 100) * 100) / 100) + "   $")])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("p", {
+    staticClass: "text-2xl font-semibold text-black"
+  }, [_vm._v("\n        Lascia un messaggio\n      ")]), _vm._v(" "), _vm._m(4)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -2458,7 +2460,7 @@ var staticRenderFns = [function () {
       placeholder: "Inserisci il tuo messaggio"
     }
   })]), _vm._v(" "), _c("div", [_c("button", {
-    staticClass: "hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-black"
+    staticClass: "bg-brand-500 hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white"
   }, [_vm._v("\n              Submit\n            ")])])])])]);
 }];
 render._withStripped = true;

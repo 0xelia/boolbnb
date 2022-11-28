@@ -78,6 +78,9 @@
         </div>
       </div>
 
+      <p class="text-2xl font-semibold text-black">
+          Lascia un messaggio
+        </p>
       <div class="flex items-center justify-center">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
@@ -146,7 +149,7 @@
             </div>
             <div>
               <button
-                class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-black">
+                class=" bg-brand-500 hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white">
                 Submit
               </button>
             </div>
