@@ -11,10 +11,6 @@ class SponsorController extends Controller
 {
     public function index(Request $request){
         $sponsors = Sponsor::all();
-
-        return response()->json([
-            'sponsors'=>$sponsors,
-            'success'=> true,
-        ]);
+        return SponsorResource::collection($sponsors);
     }
 }
