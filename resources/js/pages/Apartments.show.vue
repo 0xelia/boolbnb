@@ -74,9 +74,10 @@
           Dove ti troverai
         </p>
         <div>
-          <div></div>
+          <div id="map" class="w-full h-96" ref="map"></div>
         </div>
       </div>
+
 
       <p class="text-2xl font-semibold text-black">
           Lascia un messaggio
@@ -152,21 +153,26 @@
                 class=" bg-brand-500 hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white">
                 Submit
               </button>
-            </div>
-          </form>
+            </div>            </form>
         </div>
       </div>
+
+
 
   </div>
 </template>
 
 <script>
+import tt from '@tomtom-international/web-sdk-maps'
+
 export default {
   props: ['id'],
   data() {
     return {
       apartment: [],
-      services: []
+      services: [],
+      center: [-121.91595, 37.36729],
+      map: null,
     }
   },
   methods: {
@@ -188,9 +194,27 @@ export default {
             }
   },
   created() {
-    this.fetchDetails()
-    this.fetchServices()
-  },
+    this.fetchDetails();
+    this.fetchServices();
+  },  
+  mounted() {
+    this.map = tt.map({
+      key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+      container: this.$refs.map,
+      center: this.center,
+      zoom: 10,
+      // style: {
+      //   map: 'basic_main',
+      //   poi: 'poi_main',
+      //   trafficIncidents: 'incidents_day',
+      //   trafficFlow: 'flow_relative'
+      // }
+      // style: 'https://api.tomtom.com/style/1/style/21.1.0-*?map=basic_main&traffic_incidents=incidents_day&traffic_flow=flow_relative0&poi=poi_main',
+    })
+    this.map.on(new tt.FullscreenControl());
+    this.map.on(new tt.NavigationControl());
+    console.log(this.map)
+  }
 }
 </script>
 

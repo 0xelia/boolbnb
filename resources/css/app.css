@@ -6,6 +6,8 @@
 
 @import "@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css";
 
+@import "@tomtom-international/web-sdk-maps";
+
 /*@import "@fontsource/figtree";*/
 
 /*body {
