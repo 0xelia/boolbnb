@@ -187,22 +187,25 @@ export default {
 	},
 	computed: {
 		filtered_apartments() {
-			const [name, value] = this.filters
+			// const [name, value] = this.filters
 
 			return this.apartments.filter(apartment => {
-				if (name === 'rooms_number' && value === 4 || name === 'beds_number' && value === 4) {
-					return apartment[name] >= value
-				}
-				return apartment[name] === value
+				this.filters.forEach((value, key) => {
+					if (key === 'rooms_number' && value === 4 || key === 'beds_number' && value === 4) {
+						return apartment[key] >= value
+					}
+					return apartment[key] === value
+				})
 			})
 		},
 	},
 	methods: {
-		onFilter(data) {
+		onFilter(data) {			
 			const [ name, value ] = data
-			if (!this.filters.includes(name)) {
-				this.filters.push([name, value])
+			const obj = {
+				[name]: value
 			}
+			this.filters.push(obj)
 			console.log(this.filters);
 		},
 		fetchApartments() {
