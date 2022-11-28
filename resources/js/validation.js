@@ -9,7 +9,7 @@ const errorList = {
 };
 
 const form = document.getElementById('form');
-const address = document.querySelector('.tt-search-box-input');
+const address = document.querySelector('.address');
 
 if (form) {
     form.addEventListener('change', onChange);

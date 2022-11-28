@@ -63,17 +63,14 @@
                         </p>
                     @enderror
                 </div>
-                
-                @php
-                    $key = env('TOMTOM_API_KEY');
-                @endphp
-                <search-input-component api-key="{{ $key }}"></search-input-component>
+
+                <search-input-component></search-input-component>
                 @error('address')
                     <p class="text-red-700">
                         {{$message}}
                     </p>
                 @enderror
-
+                
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold">Servizi</label>
                     <ul>
