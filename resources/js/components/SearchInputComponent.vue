@@ -60,7 +60,7 @@
                 }
             },
             getResult(result) {
-                this.visible = false
+                this.results = null
                 this.latitude = result.position.lat
                 this.longitude = result.position.lon
                 this.address = result.address.freeformAddress
