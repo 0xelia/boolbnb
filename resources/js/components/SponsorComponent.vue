@@ -26,7 +26,6 @@
 
                         <h2 class="text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300">${{sponsor.price}} <span class="text-base font-medium">/Month</span></h2>
                     </div>
-
                     <!--<div class="flex items-center justify-between max-w-2xl px-8 py-4 mx-auto border border-blue-500 cursor-pointer rounded-xl">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600 sm:h-9 sm:w-9" viewBox="0 0 20 20" fill="currentColor">
@@ -85,6 +84,7 @@
                 axios.get('/api/sponsors')
                 .then((res) => {
                     this.sponsors = res.data.sponsors;
+                    console.log(this.sponsors);
                 })
             }
         },
