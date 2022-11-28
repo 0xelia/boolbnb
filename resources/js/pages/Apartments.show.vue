@@ -10,28 +10,27 @@
         {{ apartment.address }}
       </div>
       <div class="md:grid gallery md:grid-cols-3 md:grid-rows-2 gap-6 pb-12">
-          <img class="md:object-cover md:w-full md:h-full rounded-xl md:col-span-2 md:row-span-2" :src="apartment.image" alt="">
-          <img class="invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1" src="https://picsum.photos/200/300" alt="">
-          <img class="invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1" src="https://picsum.photos/200/300" alt="">
+          <img class="md:object-cover md:w-full md:h-full rounded-xl md:col-span-2 md:row-span-2" :src="apartment.pic_path" alt="">
+          <img class="invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1" v-for="(img, i) in apartment.images" :key="i" :src="img.img_path" alt="">
       </div>
 
       <div class="grid md:grid-cols-3 gap-6 pb-20">
         <div class=" border flex lg:justify-start p-6 content-center rounded-lg col-span-3 md:col-span-3 row-span-3 lg:row-start-1 lg:col-span-2 md:row-span-2 lg:row-span-1 h-24 justify-center">
           <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Stanze totali</h4>
-            <p class="font-bold text-black">{{apartment.rooms_number}}</p>
+            <p class="font-bold text-center text-black">{{apartment.rooms_number}}</p>
           </div>
           <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Camere da letto</h4>
-            <p class="font-bold text-black">{{apartment.beds_number}}</p>
+            <p class="font-bold text-center text-black">{{apartment.beds_number}}</p>
           </div>
           <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Bagni</h4>
-            <p class="font-bold text-black">{{apartment.bath_number}}</p>
+            <p class="font-bold text-center text-black">{{apartment.bath_number}}</p>
           </div>
           <div class="pr-13  lg:pr-16 self-center ">
             <h4 class="pb-1">Metri quadrati</h4>
-            <p class="font-bold text-black">{{apartment.meters}}</p>
+            <p class="font-bold text-center text-black">{{apartment.meters}}</p>
           </div>
         </div>
 
@@ -64,6 +63,11 @@
 
         <div class="border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2">
           <p class="text-2xl font-semibold text-black">Cosa troverai</p>
+          <ul class="flex gap-8 justify-center">
+            <li v-for="(service, i) in apartment.services" :key="i">
+              {{service.name}}
+            </li>
+          </ul>
         </div>
 
 
@@ -73,6 +77,9 @@
         <p class="text-2xl font-semibold text-black">
           Dove ti troverai
         </p>
+
+        <!-- ********  QUI VA LA MAPPA ******** -->
+
         <div>
           <div></div>
         </div>
@@ -165,29 +172,21 @@ export default {
   props: ['id'],
   data() {
     return {
-      apartment: [],
-      services: []
+      apartment: '',
+      // services: []
     }
   },
   methods: {
     fetchDetails() {
       axios.get(`/api/apartments/${this.id}`)
         .then(res => {
-          // const { apartment } = res.data
-          // this.apartment = apartment
+          const { apartment } = res.data
+          this.apartment = apartment
 
-          console.log(res.data)
+          console.log(this.apartment)
         })
     },
 
-    // fetchServices() {
-    //             axios.get(`/api/services/${this.id}`)
-    //             .then((res) => {
-    //               const { services } = res.data
-    //                 this.services = res.data.services;
-    //                 console.log(this.services)
-    //             })
-    //         }
   },
   created() {
     this.fetchDetails()
