@@ -1,5 +1,5 @@
 <template>
-	<main>
+	<main v-if="apartments">
 		<!-- hero -->
 		<div class="container py-8 text-center">
 			<div class="text-sm mb-2">Risultati di ricerca per</div>
@@ -11,9 +11,9 @@
 			<div class="flex flex-wrap items-center mb-4 gap-6 lg:w-3/4 lg:pl-4 lg:ml-auto">
 				<div class="font-bold">{{ apartments.length }} Appartamenti</div>
 
-				<div>
+				<!-- <div>
 					<span v-for="(filter, i) in filters" :key="filter[i]">{{ filter[0] }}</span>
-				</div>
+				</div> -->
 
 				<select class="ml-auto">
 					<option data="">Ordina per</option>
@@ -38,7 +38,7 @@
 				<AccordionFilter @filter="onFilter" :class="i === categories.length -1 ? 'border-b' : ''" v-for="(category, i) in categories" :key="i" :info="category" />
 			</div>
 			<div class="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10 xl:grid-cols-3">
-				<ApartmentCard v-for="(info, i) in apartments" :key="i" :apartment="info" />
+				<ApartmentCard v-for="(info, i) in filtered_apartments" :key="i" :apartment="info" />
 			</div>
 		</div>
 	</main>
@@ -112,22 +112,22 @@ const categories = [
 			{
 				label: '5 km',
 				id: 'distance-1',
-				value: 1,
+				value: 5,
 			},
 			{
 				label: '10 km',
 				id: 'distance-2',
-				value: 2,
+				value: 10,
 			},	
 			{
 				label: '20 km',
 				id: 'distance-3',
-				value: 3,
+				value: 20,
 			},
 			{
 				label: '50 km',
 				id: 'distance-4',
-				value: 4,
+				value: 50,
 			},
 		]
 	},
@@ -177,7 +177,12 @@ export default {
 			screen: window.innerWidth,
 			apartments: [],
 			categories,
-			filters: [],
+			filters: {
+				rooms_number: 2,
+				beds_number: 2,
+				distance: 20,
+				services: [],
+			},
 		}
 	},
 	components: {
@@ -187,36 +192,75 @@ export default {
 	},
 	computed: {
 		filtered_apartments() {
-			// const [name, value] = this.filters
-
 			return this.apartments.filter(apartment => {
-				this.filters.forEach((value, key) => {
-					if (key === 'rooms_number' && value === 4 || key === 'beds_number' && value === 4) {
-						return apartment[key] >= value
+				for (const key in this.filters) {
+					console.log(key + ': ' + this.filters[key])
+					if ( key.endsWith('_number') ) {
+						if (this.filters[key] < 4) {
+							return apartment[key] = this.filters[key]
+						} else {
+							return apartment[key] >= this.filters[key]
+						}
 					}
-					return apartment[key] === value
-				})
+				}
+				// this.filters.forEach((value, key) => {
+				// 	if (key !== 'services') {
+				// 		if (key !== 'distance') {
+				// 			if (value < 4) {
+				// 				return apartment[key] = value
+				// 			} else {
+				// 				return apartment[key] >= value
+				// 			}
+				// 		} else {
+				// 				return apartment[key] = value
+				// 		}
+				// 	} else {
+				// 	}
+				// 	return apartment[key] === value
+				// })
 			})
 		},
 	},
 	methods: {
 		onFilter(data) {			
 			const [ name, value ] = data
-			const obj = {
-				[name]: value
+			if (name === 'services') {
+				if (!this.filters.services.includes(value)) {
+					this.filters['services'].push(value)
+				} else {
+					const index = this.filters['services'].indexOf(value)
+					this.filters['services'].splice(index, 1)
+				}
+			} else {
+				this.filters[name] = value
 			}
-			this.filters.push(obj)
-			console.log(this.filters);
 		},
 		fetchApartments() {
 			axios.get('api/apartments/index/all').then(res => {
 				const { apartments } = res.data
 				this.apartments = apartments
+				console.log(this.apartments);
 			})
 		},
 		toggleFilters() {
 			return this.show = !this.show
 		},
+		getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+			var R = 6371; // Radius of the earth in km
+			var dLat = deg2rad(lat2-lat1);  // deg2rad below
+			var dLon = deg2rad(lon2-lon1); 
+			var a = 
+				Math.sin(dLat/2) * Math.sin(dLat/2) +
+				Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+				Math.sin(dLon/2) * Math.sin(dLon/2)
+				; 
+			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+			var d = R * c; // Distance in km
+			return d;
+		},
+		deg2rad(deg) {
+			return deg * (Math.PI/180)
+		}
 	},
 	created() {
 		this.fetchApartments()
