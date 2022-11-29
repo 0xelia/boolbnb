@@ -201,12 +201,6 @@ export default {
         zoom: 14,
       })
     },
-    // handleResults(result) {
-    //   console.log(result);
-    //   if(result.results) {
-    //     this.moveMap(result.results[0].position)
-    //   }
-    // },
     addMark() {
       const popupOffsets = {
         top: [0, 0],
