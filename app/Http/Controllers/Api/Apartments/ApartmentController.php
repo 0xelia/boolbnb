@@ -30,7 +30,8 @@ class ApartmentController extends Controller
                 'success' => true
             ]);
         }
-        else if ($type === 'all'){
+
+        if ($type === 'all'){
             $apartments = Apartment::all();
             $service_list = Service::AVAILABLE_SERVICE;
 
@@ -40,6 +41,66 @@ class ApartmentController extends Controller
                 'apartments' => $apartments,
                 'service_list' => $service_list,
                 'success' => true,
+        }
+
+        if($type === 'advanced_search') {            
+            $key = config('tomtom');
+            $tokenIpInfo = '25fd5148361122';
+            $tomtomApiUrl = 'https://api.tomtom.com/search/2/geometryFilter.json?key=' . $key;
+            $ipinfoApiUrl = 'https://ipinfo.io/json?token=' . $tokenIpInfo;
+            $response = file_get_contents($ipinfoApiUrl);
+            $response = json_decode($response, true);
+            $geometryList = [
+                [
+                    "position" => $response['loc'],
+                    "radius" => 20000,
+                    "type" => "CIRCLE",
+                ],
+            ];
+            $geometryList = json_encode($geometryList);
+            $apartments = Apartment::all()->toArray();
+            $poiList = [];
+            foreach($apartments as $apartment) {
+                $poi = [
+                    "poi" => [
+                        "name" => $apartment['title']
+                    ],
+                    "address" => [
+                        "freeformAddress" => $apartment['address']
+                    ],
+                    "position" => [
+                        "lat" => $apartment['latitude'],
+                        "lon" => $apartment['longitude']
+                    ]
+                ];
+                array_push($poiList, $poi);
+            }
+            $poiList = json_encode($poiList);             
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $tomtomApiUrl);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $headers = array(
+                "Content-Type: application/json",
+            );
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            $data = <<<DATA
+            {
+                "poiList": $poiList,
+                "geometryList": $geometryList
+            }
+            DATA;
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+            // solo per debug
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $respJSON = curl_exec($ch);
+            curl_close($ch);
+            $response = json_decode($respJSON, true);
+            return response()->json([
+                'results' => $response['results'],
+                'success' => true
             ]);
         }
     }

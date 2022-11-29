@@ -1,6 +1,6 @@
 <template>
-    <header class="py-6">
-        <div class="container flex justify-between">
+    <header class="py-7">
+        <div class="container flex items-center justify-between">
             <div class="text-brand-500 text-xl">airbnb</div>
             <nav>
                 <ul class="flex gap-6">
