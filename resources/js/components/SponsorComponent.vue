@@ -10,7 +10,7 @@
 
                 <div class="mt-6 space-y-8 xl:mt-12">
 
-                    <div class="flex items-center justify-between max-w-2xl px-8 py-4 mx-auto border cursor-pointer rounded-xl dark:border-gray-700" v-for="sponsor in fetchedSponsors" :key="sponsor.id"  :class = "sponsor.isActive = true ?'border-blue-700':'border-transparent'" @click="clicked(sponsor)">
+                    <div v-bind:class="{'border-gray-700': current === sponsor.id}" v-on:click="setCurrent(sponsor.id)" class="flex items-center justify-between max-w-2xl px-8 py-4 mx-auto border cursor-pointer rounded-xl dark:border-gray-700 classObject" v-for="sponsor in fetchedSponsors" :key="sponsor.id" @click="clicked(sponsor)">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400 sm:h-9 sm:w-9" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -78,6 +78,7 @@
             return{
                 fetchedSponsors:[],
                 isActive: false,
+                current: null
 
             }
 
@@ -103,12 +104,19 @@
                     sponsor.isActive = false
                 })
                 return sponsors
-            }
+            },
+            setCurrent(id){
+                this.current = id
+ },
         },
         mounted() {
             this.fetchSponsors()
             console.log(this.sponsors)
         },
+        computed:{
+
+        }
+
     }
 </script>
 
