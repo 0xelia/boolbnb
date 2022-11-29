@@ -25,7 +25,18 @@ class MessageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $params = $request->validate([
+            'name'=> 'required|min:3',
+            'surname'=> 'nullable|min:2',
+            'email'=> 'email:rfc,dns',
+            'text'=>'required|max:2000',
+            'apartment_id'=> 'exists:apartments,id'
+        ]);
+
+        $params['viewed'] = false;
+        $message = Message::create($params);
+
         return response()->json([
             'success' => true,
         ]);

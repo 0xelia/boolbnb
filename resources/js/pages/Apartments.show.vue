@@ -113,7 +113,7 @@
                 for="name"
                 class="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Cognome
+                Cognome (Opzionale)
               </label>
               <input
                 type="text"
@@ -135,6 +135,7 @@
                 type="email"
                 name="email"
                 v-model="msgEmail"
+                required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
                 id="email"
                 placeholder="esempio@mail.com"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -160,7 +161,7 @@
             <div>
               <button @click="submitMessage()"
                 class=" bg-brand-500 hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white">
-                Submit
+                Invia all'host
               </button>
             </div>
         </div>
@@ -187,28 +188,33 @@ export default {
         .then(res => {
           const { apartment } = res.data
           this.apartment = apartment
-
-          console.log(this.apartment)
         })
     },
 
-    submitMessge(){
+    submitMessage(){
 
-      axios.post(`/api/messages/`,{
-        name: this.msgName,
-        lastName: this.msgLastname,
-        Email: this.msgEmail,
-        Text: this.msgTxt
-      }).then(res => {
-        console.log(res)
-      })
+      if(this.msgName && this.msgEmail && this.msgTxt){
+
+        axios.post(`/api/messages/`,{
+          name: this.msgName,
+          surname: this.msgLastname,
+          email: this.msgEmail,
+          text: this.msgTxt,
+          apartment_id: this.id
+
+        }).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
+
+      }else{
+        return alert('Compila i campi mancanti!')
+      }
     }
   },
   created() {
     this.fetchDetails()
-    // this.fetchServices()
-
-    console.log(this.$route)
   },
 }
 </script>
