@@ -41,6 +41,7 @@ class ApartmentController extends Controller
                 'apartments' => $apartments,
                 'service_list' => $service_list,
                 'success' => true,
+            ]);
         }
 
         if($type === 'advanced_search') {            
