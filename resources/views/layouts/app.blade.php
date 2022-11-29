@@ -27,7 +27,7 @@
             <div class="container mx-auto px-6 md:px-0">
                 <div class="flex items-center justify-between">
                     <div class="mr-6">
-                        <a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline">
+                        <a href="{{ url('/admin') }}" class="text-lg font-semibold text-gray-100 no-underline">
                             {{ config('app.name', 'Laravel') }}
                         </a>
                     </div>

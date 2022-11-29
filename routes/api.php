@@ -25,3 +25,6 @@ Route::post('orders/make/payment', 'Api\Orders\OrderController@makePayment');
 Route::get('sponsors', 'Api\Sponsors\SponsorController@index');
 
 Route::get('search/{input}', 'Api\Search\SearchInputController@index');
+
+Route::get('apartments/index/{type}', 'Api\Apartments\ApartmentController@index');
+Route::get('apartments/{apartment}', 'Api\Apartments\ApartmentController@show');
