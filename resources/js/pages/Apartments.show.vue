@@ -88,6 +88,14 @@
       <p class="text-2xl font-semibold text-black">
           Lascia un messaggio
         </p>
+
+        <!-- POPUP MESSAGE SUCCEED -->
+        <div v-if="popup" class="fixed popup_wrapper inset-x-0 inset-y-0  flex justify-center items-center">
+          <div class="flex px-3 py-6 rounded-xl bg-white text-brand-500 text-bold">
+            Messaggio Inviato correttamente!
+          </div>
+        </div>
+
       <div class="flex items-center justify-center">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
@@ -180,6 +188,7 @@ export default {
       msgLastname: '',
       msgEmail: '',
       msgTxt: '',
+      popup: false,
     }
   },
   methods: {
@@ -188,7 +197,16 @@ export default {
         .then(res => {
           const { apartment } = res.data
           this.apartment = apartment
+
+          this.addActive(this.apartment)
+
+          console.log(this.apartment);
         })
+    },
+
+    addActive(apartment){
+      apartment.IsActive = false
+      return apartment
     },
 
     submitMessage(){
@@ -202,10 +220,22 @@ export default {
           text: this.msgTxt,
           apartment_id: this.id
 
-        }).then(res => {
-          console.log(res)
+        }).then(res => { 
+
+          this.popup = true
+          this.msgName = ''
+          this.msgLastname = ''
+          this.msgTxt = ''
+          this.msgEmail = ''
+          
+          setTimeout(()=>{
+            this.popup = false
+
+          },2000)
+
         }).catch(err => {
-          console.log(err)
+          const {response} = err.request
+          this.errors = JSON.parse(response)
         })
 
       }else{
@@ -222,6 +252,11 @@ export default {
 <style lang="scss" scoped>
   .gallery{
     height: 476px;
+  }
+
+  .popup_wrapper{
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.494);
   }
 
 </style>
