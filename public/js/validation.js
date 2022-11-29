@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -168,14 +168,14 @@ function checkAddress() {
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!******************************************!*\
   !*** multi ./resources/js/validation.js ***!
   \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/eliavanon/Desktop/progetto_bnb/resources/js/validation.js */"./resources/js/validation.js");
+module.exports = __webpack_require__(/*! C:\Users\leocv\OneDrive\Desktop\developer\boolbnb-main\resources\js\validation.js */"./resources/js/validation.js");
 
 
 /***/ })

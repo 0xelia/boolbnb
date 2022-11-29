@@ -16,7 +16,7 @@ class SponsorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'plane' => $this->plane,
+            'plan' => $this->plan,
             'price' => $this->price,
             'duration' => $this->duration
         ];

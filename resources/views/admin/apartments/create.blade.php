@@ -5,6 +5,17 @@
         <div class="mb-3">
             <a href="{{ redirect()->back()->getTargetUrl() }}">Torna indietro</a>
         </div>
+
+        <!--payment pop up-->
+        <div class="fixed object-center rounded-lg bg-white ">
+            <payment-component :authorization="tokenApi"/>
+            <div>{{$sponsors}}</div>
+            <button class="bg-red-700 text-white">
+                Procedi con l'acquisto
+            </button>
+        </div>
+
+
         <div>
             <form action="{{ route('admin.apartments.store') }}" method="post" enctype="multipart/form-data" id="form">
                 @csrf
@@ -12,7 +23,7 @@
                     <label class="mr-2 font-bold" for="title">Titolo *</label>
                     <input class="p-2 flex-grow" type="text" name="title" maxlength="255" id="title" placeholder="Inserisci un titolo" value="{{ old('title') }}" required>
                     <div class="title-error"></div>
-                    
+
                     @error('title')
                         <p class="text-red-700">
                             {{$message}}
@@ -23,7 +34,7 @@
                     <label class="mr-2 font-bold" for="rooms">Numero camere *</label>
                     <input class="p-2 flex-grow" type="number" min="1" max="255" name="rooms_number" id="rooms" placeholder="Inserisci numero delle camere" value="{{ old('rooms_number') }}" required>
                     <div class="rooms-error"></div>
-                    
+
                     @error('rooms_number')
                         <p class="text-red-700">
                             {{$message}}
@@ -34,7 +45,7 @@
                     <label class="mr-2 font-bold" for="beds">Numero letti *</label>
                     <input class="p-2 flex-grow" type="number" min="1" max="255" name="beds_number" id="beds" placeholder="Inserisci numero dei letti" value="{{ old('beds_number') }}" required>
                     <div class="beds-error"></div>
-                    
+
                     @error('beds_number')
                         <p class="text-red-700">
                             {{$message}}
@@ -45,7 +56,7 @@
                     <label class="mr-2 font-bold" for="baths">Numero bagni *</label>
                     <input class="p-2 flex-grow" type="number" min="0" max="255" name="bath_number" id="baths" placeholder="Inserisci numero dei bagni" value="{{ old('bath_number') }}" required>
                     <div class="baths-error"></div>
-                    
+
                     @error('bath_number')
                         <p class="text-red-700">
                             {{$message}}
@@ -56,14 +67,14 @@
                     <label class="mr-2 font-bold" for="meters">Metri quadri *</label>
                     <input class="p-2 flex-grow" type="number" min="0" max="65535" name="meters" id="meters" placeholder="Inserisci metri quadri" value="{{ old('meters') }}" required>
                     <div class="meters-error"></div>
-                    
+
                     @error('meters')
                         <p class="text-red-700">
                             {{$message}}
                         </p>
                     @enderror
                 </div>
-                
+
                 @php
                     $key = env('TOMTOM_API_KEY');
                 @endphp
@@ -112,7 +123,7 @@
                     <label class="mr-2 font-bold" for="price">Prezzo *</label>
                     <input class="p-2 flex-grow" type="number" min="0" name="price" id="price" placeholder="Inserisci il prezzo" value="{{ old('price') }}" required>
                     <div class="price-error"></div>
-                    
+
                     @error('price')
                         <p class="text-red-700">
                             {{$message}}

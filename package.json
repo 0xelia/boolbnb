@@ -29,6 +29,7 @@
         "@fontsource/figtree": "^4.5.2",
         "@fontsource/open-sans": "^4.5.13",
         "@tomtom-international/web-sdk-plugin-searchbox": "^3.2.0",
+        "vue-braintree": "^2.1.0",
         "vue-router": "^3.6.5"
     }
 }
