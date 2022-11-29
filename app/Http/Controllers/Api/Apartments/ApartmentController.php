@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Apartments;
 
 use App\Apartment;
 use App\Http\Controllers\Controller;
+use App\Service;
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
 use Illuminate\Http\Request;
@@ -29,6 +30,19 @@ class ApartmentController extends Controller
                 'success' => true
             ]);
         }
+
+        if ($type === 'all'){
+            $apartments = Apartment::all();
+            $service_list = Service::AVAILABLE_SERVICE;
+
+            $apartments->load('sponsors', 'services');
+            
+            return response()->json([
+                'apartments' => $apartments,
+                'service_list' => $service_list,
+                'success' => true,
+        }
+
         if($type === 'advanced_search') {            
             $key = config('tomtom');
             $tokenIpInfo = '25fd5148361122';
