@@ -29,3 +29,5 @@ Route::get('apartments/{apartment}', 'Api\Apartments\ApartmentController@show');
 
 Route::get('services/index/{type}', 'Api\Services\ServiceController@index');
 Route::get('services/{services}', 'Api\Services\ServiceController@show');
+
+Route::resource('messages', 'Api\MessageController')->only('store');

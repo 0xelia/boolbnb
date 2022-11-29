@@ -2009,8 +2009,13 @@ __webpack_require__.r(__webpack_exports__);
   props: ['id'],
   data: function data() {
     return {
-      apartment: [],
-      services: []
+      apartment: '',
+      msgName: '',
+      msgLastname: '',
+      msgEmail: '',
+      msgTxt: '',
+      popup: false,
+      errors: ''
     };
   },
   methods: {
@@ -2021,18 +2026,36 @@ __webpack_require__.r(__webpack_exports__);
         _this.apartment = apartment;
       });
     },
-    fetchServices: function fetchServices() {
+    submitMessage: function submitMessage() {
       var _this2 = this;
-      axios.get("/api/services/".concat(this.id)).then(function (res) {
-        var services = res.data.services;
-        _this2.services = res.data.services;
-        console.log(_this2.services);
-      });
+      if (this.msgName && this.msgEmail && this.msgTxt) {
+        axios.post("/api/messages/", {
+          name: this.msgName,
+          surname: this.msgLastname,
+          email: this.msgEmail,
+          text: this.msgTxt,
+          apartment_id: this.id
+        }).then(function (res) {
+          _this2.popup = true;
+          _this2.msgName = '';
+          _this2.msgLastname = '';
+          _this2.msgTxt = '';
+          _this2.msgEmail = '';
+          setTimeout(function () {
+            _this2.popup = false;
+          }, 2000);
+        })["catch"](function (err) {
+          var response = err.request.response;
+          var errors = JSON.parse(response);
+          _this2.errors = errors.errors;
+        });
+      } else {
+        return alert('Compila i campi mancanti!');
+      }
     }
   },
   created: function created() {
     this.fetchDetails();
-    this.fetchServices();
   }
 });
 
@@ -2277,7 +2300,16 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "container"
-  }, [_vm._m(0), _vm._v(" "), _vm.apartment ? _c("div", {
+  }, [_c("router-link", {
+    staticClass: "text-brand-500 py-7",
+    attrs: {
+      to: {
+        name: "home"
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-chevron-left fa-solid"
+  }), _vm._v(" Torna alla pagina di ricerca ")]), _vm._v(" "), _vm.apartment ? _c("div", {
     staticClass: "font-semibold text-5xl"
   }, [_c("h2", {
     staticClass: "text-black"
@@ -2288,22 +2320,19 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "md:object-cover md:w-full md:h-full rounded-xl md:col-span-2 md:row-span-2",
     attrs: {
-      src: _vm.apartment.image,
+      src: _vm.apartment.pic_path,
       alt: ""
     }
-  }), _vm._v(" "), _c("img", {
-    staticClass: "invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1",
-    attrs: {
-      src: "https://picsum.photos/200/300",
-      alt: ""
-    }
-  }), _vm._v(" "), _c("img", {
-    staticClass: "invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1",
-    attrs: {
-      src: "https://picsum.photos/200/300",
-      alt: ""
-    }
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm._l(_vm.apartment.images, function (img, i) {
+    return _c("img", {
+      key: i,
+      staticClass: "invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1",
+      attrs: {
+        src: img.img_path,
+        alt: ""
+      }
+    });
+  })], 2), _vm._v(" "), _c("div", {
     staticClass: "grid md:grid-cols-3 gap-6 pb-20"
   }, [_c("div", {
     staticClass: "border flex lg:justify-start p-6 content-center rounded-lg col-span-3 md:col-span-3 row-span-3 lg:row-start-1 lg:col-span-2 md:row-span-2 lg:row-span-1 h-24 justify-center"
@@ -2312,25 +2341,25 @@ var render = function render() {
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Stanze totali")]), _vm._v(" "), _c("p", {
-    staticClass: "font-bold text-black"
+    staticClass: "font-bold text-center text-black"
   }, [_vm._v(_vm._s(_vm.apartment.rooms_number))])]), _vm._v(" "), _c("div", {
     staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Camere da letto")]), _vm._v(" "), _c("p", {
-    staticClass: "font-bold text-black"
+    staticClass: "font-bold text-center text-black"
   }, [_vm._v(_vm._s(_vm.apartment.beds_number))])]), _vm._v(" "), _c("div", {
     staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Bagni")]), _vm._v(" "), _c("p", {
-    staticClass: "font-bold text-black"
+    staticClass: "font-bold text-center text-black"
   }, [_vm._v(_vm._s(_vm.apartment.bath_number))])]), _vm._v(" "), _c("div", {
     staticClass: "pr-13 lg:pr-16 self-center"
   }, [_c("h4", {
     staticClass: "pb-1"
   }, [_vm._v("Metri quadrati")]), _vm._v(" "), _c("p", {
-    staticClass: "font-bold text-black"
+    staticClass: "font-bold text-center text-black"
   }, [_vm._v(_vm._s(_vm.apartment.meters))])])]), _vm._v(" "), _c("div", {
     staticClass: "border rounded-lg p-6 md:col-span- col-span-3 lg:row-span-2 h-96 lg:col-span-1 drop-shadow-xl"
   }, [_c("div", {
@@ -2353,19 +2382,166 @@ var render = function render() {
     staticClass: "font-bold"
   }, [_vm._v("Totale")]), _vm._v(" "), _c("div", {
     staticClass: "font-bold"
-  }, [_vm._v(_vm._s(Math.round((_vm.apartment.price * 5 + _vm.apartment.price * 5 * 0.5 / 100 + _vm.apartment.price * 5 * 2 / 100) * 100) / 100) + "   $")])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("p", {
+  }, [_vm._v(_vm._s(Math.round((_vm.apartment.price * 5 + _vm.apartment.price * 5 * 0.5 / 100 + _vm.apartment.price * 5 * 2 / 100) * 100) / 100) + "   $")])]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c("div", {
+    staticClass: "border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2"
+  }, [_c("p", {
     staticClass: "text-2xl font-semibold text-black"
-  }, [_vm._v("\n        Lascia un messaggio\n      ")]), _vm._v(" "), _vm._m(4)]);
+  }, [_vm._v("Cosa troverai")]), _vm._v(" "), _c("ul", {
+    staticClass: "flex gap-8"
+  }, _vm._l(_vm.apartment.services, function (service, i) {
+    return _c("li", {
+      key: i
+    }, [_vm._v("\n            " + _vm._s(service.name) + "\n          ")]);
+  }), 0)])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("p", {
+    staticClass: "text-2xl font-semibold text-black"
+  }, [_vm._v("\n        Lascia un messaggio\n      ")]), _vm._v(" "), _vm.popup ? _c("div", {
+    staticClass: "fixed popup_wrapper inset-x-0 inset-y-0 flex justify-center items-center"
+  }, [_c("div", {
+    staticClass: "flex px-3 py-6 rounded-xl bg-white text-brand-500 text-bold"
+  }, [_vm._v("\n          Messaggio Inviato correttamente!\n        ")])]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "flex items-center justify-center"
+  }, [_c("div", {
+    staticClass: "mx-auto w-full max-w-[550px]"
+  }, [_c("div", {
+    staticClass: "mb-5"
+  }, [_c("label", {
+    staticClass: "mb-3 block text-base font-medium text-[#07074D]",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("\n              Nome\n            ")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.msgName,
+      expression: "msgName"
+    }],
+    staticClass: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md",
+    attrs: {
+      type: "text",
+      name: "name",
+      id: "name",
+      placeholder: "Nome"
+    },
+    domProps: {
+      value: _vm.msgName
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.msgName = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.errors.name ? _c("p", {
+    staticClass: "text-red-700 py-6"
+  }, [_vm._v("\n              Il nome deve contenere minimo 3 caratteri\n            ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-5"
+  }, [_c("label", {
+    staticClass: "mb-3 block text-base font-medium text-[#07074D]",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("\n              Cognome\n            ")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.msgLastname,
+      expression: "msgLastname"
+    }],
+    staticClass: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md",
+    attrs: {
+      type: "text",
+      name: "name",
+      id: "name",
+      placeholder: "Cognome"
+    },
+    domProps: {
+      value: _vm.msgLastname
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.msgLastname = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.errors.surname ? _c("p", {
+    staticClass: "text-red-700 py-6"
+  }, [_vm._v("\n              Il cognome deve contenere minimo 2 caratteri\n            ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-5"
+  }, [_c("label", {
+    staticClass: "mb-3 block text-base font-medium text-[#07074D]",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("\n              Email\n            ")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.msgEmail,
+      expression: "msgEmail"
+    }],
+    staticClass: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md",
+    attrs: {
+      type: "email",
+      name: "email",
+      required: "",
+      pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$",
+      id: "email",
+      placeholder: "esempio@mail.com"
+    },
+    domProps: {
+      value: _vm.msgEmail
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.msgEmail = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.errors.email ? _c("p", {
+    staticClass: "text-red-700 py-6"
+  }, [_vm._v("\n              Formato dell'email non è valido\n            ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-5"
+  }, [_c("label", {
+    staticClass: "mb-3 block text-base font-medium text-[#07074D]",
+    attrs: {
+      "for": "message"
+    }
+  }, [_vm._v("\n              Messaggio\n            ")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.msgTxt,
+      expression: "msgTxt"
+    }],
+    staticClass: "w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md",
+    attrs: {
+      rows: "4",
+      name: "message",
+      id: "message",
+      placeholder: "Inserisci il tuo messaggio"
+    },
+    domProps: {
+      value: _vm.msgTxt
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.msgTxt = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.errors.text ? _c("p", {
+    staticClass: "text-red-700 py-6"
+  }, [_vm._v("\n              Il testo è obbligatorio\n            ")]) : _vm._e()]), _vm._v(" "), _c("div", [_c("button", {
+    staticClass: "bg-brand-500 hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white",
+    on: {
+      click: function click($event) {
+        return _vm.submitMessage();
+      }
+    }
+  }, [_vm._v("\n              Invia all'host\n            ")])])])])], 1);
 };
 var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "text-brand-500 py-7"
-  }, [_c("i", {
-    staticClass: "fa-solid fa-chevron-left"
-  }), _vm._v(" Torna alla pagina di ricerca")]);
-}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
@@ -2376,92 +2552,9 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2"
-  }, [_c("p", {
-    staticClass: "text-2xl font-semibold text-black"
-  }, [_vm._v("Cosa troverai")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
   return _c("div", [_c("p", {
     staticClass: "text-2xl font-semibold text-black"
   }, [_vm._v("\n        Dove ti troverai\n      ")]), _vm._v(" "), _c("div", [_c("div")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "flex items-center justify-center"
-  }, [_c("div", {
-    staticClass: "mx-auto w-full max-w-[550px]"
-  }, [_c("form", {
-    attrs: {
-      action: "https://formbold.com/s/FORM_ID",
-      method: "POST"
-    }
-  }, [_c("div", {
-    staticClass: "mb-5"
-  }, [_c("label", {
-    staticClass: "mb-3 block text-base font-medium text-[#07074D]",
-    attrs: {
-      "for": "name"
-    }
-  }, [_vm._v("\n              Nome\n            ")]), _vm._v(" "), _c("input", {
-    staticClass: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md",
-    attrs: {
-      type: "text",
-      name: "name",
-      id: "name",
-      placeholder: "Nome"
-    }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "mb-5"
-  }, [_c("label", {
-    staticClass: "mb-3 block text-base font-medium text-[#07074D]",
-    attrs: {
-      "for": "name"
-    }
-  }, [_vm._v("\n              Cognome\n            ")]), _vm._v(" "), _c("input", {
-    staticClass: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md",
-    attrs: {
-      type: "text",
-      name: "name",
-      id: "name",
-      placeholder: "Cognome"
-    }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "mb-5"
-  }, [_c("label", {
-    staticClass: "mb-3 block text-base font-medium text-[#07074D]",
-    attrs: {
-      "for": "email"
-    }
-  }, [_vm._v("\n              Email\n            ")]), _vm._v(" "), _c("input", {
-    staticClass: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md",
-    attrs: {
-      type: "email",
-      name: "email",
-      id: "email",
-      placeholder: "esempio@mail.com"
-    }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "mb-5"
-  }, [_c("label", {
-    staticClass: "mb-3 block text-base font-medium text-[#07074D]",
-    attrs: {
-      "for": "message"
-    }
-  }, [_vm._v("\n              Messaggio\n            ")]), _vm._v(" "), _c("textarea", {
-    staticClass: "w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md",
-    attrs: {
-      rows: "4",
-      name: "message",
-      id: "message",
-      placeholder: "Inserisci il tuo messaggio"
-    }
-  })]), _vm._v(" "), _c("div", [_c("button", {
-    staticClass: "bg-brand-500 hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white"
-  }, [_vm._v("\n              Submit\n            ")])])])])]);
 }];
 render._withStripped = true;
 
@@ -2546,7 +2639,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".gallery[data-v-9c99dc5e] {\n  height: 476px;\n}", ""]);
+exports.push([module.i, ".gallery[data-v-9c99dc5e] {\n  height: 476px;\n}\n.popup_wrapper[data-v-9c99dc5e] {\n  -webkit-backdrop-filter: blur(20px);\n          backdrop-filter: blur(20px);\n  background-color: rgba(255, 255, 255, 0.494);\n}", ""]);
 
 // exports
 
@@ -19460,7 +19553,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\leocv\OneDrive\Desktop\developer\boolbnb-main\resources\js\front.js */"./resources/js/front.js");
+module.exports = __webpack_require__(/*! /Users/eliavanon/Desktop/progetto_bnb/resources/js/front.js */"./resources/js/front.js");
 
 
 /***/ })

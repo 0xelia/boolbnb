@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-      <div class="text-brand-500 py-7"><i class="fa-solid fa-chevron-left"></i> Torna alla pagina di ricerca</div>
+      
+      <router-link :to="{name: 'home'}" class="text-brand-500 py-7" > <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca </router-link>
       <div v-if="apartment" class="font-semibold text-5xl">
         <h2 class="text-black">
           {{ apartment.title }}
@@ -10,28 +11,27 @@
         {{ apartment.address }}
       </div>
       <div class="md:grid gallery md:grid-cols-3 md:grid-rows-2 gap-6 pb-12">
-          <img class="md:object-cover md:w-full md:h-full rounded-xl md:col-span-2 md:row-span-2" :src="apartment.image" alt="">
-          <img class="invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1" src="https://picsum.photos/200/300" alt="">
-          <img class="invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1" src="https://picsum.photos/200/300" alt="">
+          <img class="md:object-cover md:w-full md:h-full rounded-xl md:col-span-2 md:row-span-2" :src="apartment.pic_path" alt="">
+          <img class="invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1" v-for="(img, i) in apartment.images" :key="i" :src="img.img_path" alt="">
       </div>
 
       <div class="grid md:grid-cols-3 gap-6 pb-20">
         <div class=" border flex lg:justify-start p-6 content-center rounded-lg col-span-3 md:col-span-3 row-span-3 lg:row-start-1 lg:col-span-2 md:row-span-2 lg:row-span-1 h-24 justify-center">
           <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Stanze totali</h4>
-            <p class="font-bold text-black">{{apartment.rooms_number}}</p>
+            <p class="font-bold text-center text-black">{{apartment.rooms_number}}</p>
           </div>
           <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Camere da letto</h4>
-            <p class="font-bold text-black">{{apartment.beds_number}}</p>
+            <p class="font-bold text-center text-black">{{apartment.beds_number}}</p>
           </div>
           <div class="pr-13  lg:pr-16 self-center">
             <h4 class="pb-1">Bagni</h4>
-            <p class="font-bold text-black">{{apartment.bath_number}}</p>
+            <p class="font-bold text-center text-black">{{apartment.bath_number}}</p>
           </div>
           <div class="pr-13  lg:pr-16 self-center ">
             <h4 class="pb-1">Metri quadrati</h4>
-            <p class="font-bold text-black">{{apartment.meters}}</p>
+            <p class="font-bold text-center text-black">{{apartment.meters}}</p>
           </div>
         </div>
 
@@ -64,6 +64,11 @@
 
         <div class="border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2">
           <p class="text-2xl font-semibold text-black">Cosa troverai</p>
+          <ul class="flex gap-8">
+            <li v-for="(service, i) in apartment.services" :key="i">
+              {{service.name}}
+            </li>
+          </ul>
         </div>
 
 
@@ -73,6 +78,9 @@
         <p class="text-2xl font-semibold text-black">
           Dove ti troverai
         </p>
+
+        <!-- ******** MAPPA ******** -->
+
         <div>
           <div class="map" ref="map"></div>
         </div>
@@ -82,11 +90,18 @@
       <p class="text-2xl font-semibold text-black">
           Lascia un messaggio
         </p>
+
+        <!-- POPUP MESSAGE SUCCEED -->
+        <div v-if="popup" class="fixed popup_wrapper inset-x-0 inset-y-0  flex justify-center items-center">
+          <div class="flex px-3 py-6 rounded-xl bg-white text-brand-500 text-bold">
+            Messaggio Inviato correttamente!
+          </div>
+        </div>
+
       <div class="flex items-center justify-center">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
         <div class="mx-auto w-full max-w-[550px]">
-          <form action="https://formbold.com/s/FORM_ID" method="POST">
             <div class="mb-5">
               <label
                 for="name"
@@ -96,11 +111,15 @@
               </label>
               <input
                 type="text"
+                v-model="msgName"
                 name="name"
                 id="name"
                 placeholder="Nome"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
+              <p class="text-red-700 py-6" v-if="errors.name">
+                Il nome deve contenere minimo 3 caratteri
+              </p>
             </div>
             <div class="mb-5">
               <label
@@ -112,10 +131,16 @@
               <input
                 type="text"
                 name="name"
+                v-model="msgLastname"
                 id="name"
                 placeholder="Cognome"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
+
+              <p class="text-red-700 py-6" v-if="errors.surname">
+                Il cognome deve contenere minimo 2 caratteri
+              </p>
+
             </div>
             <div class="mb-5">
               <label
@@ -127,10 +152,16 @@
               <input
                 type="email"
                 name="email"
+                v-model="msgEmail"
+                required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
                 id="email"
                 placeholder="esempio@mail.com"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
+
+              <p class="text-red-700 py-6" v-if="errors.email">
+                Formato dell'email non è valido
+              </p>
             </div>
 
             <div class="mb-5">
@@ -141,19 +172,24 @@
                 Messaggio
               </label>
               <textarea
+                v-model="msgTxt"
                 rows="4"
                 name="message"
                 id="message"
                 placeholder="Inserisci il tuo messaggio"
                 class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               ></textarea>
+
+              <p class="text-red-700 py-6" v-if="errors.text">
+                Il testo è obbligatorio
+              </p>
             </div>
             <div>
-              <button
+              <button @click="submitMessage()"
                 class=" bg-brand-500 hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white">
-                Submit
+                Invia all'host
               </button>
-            </div>            </form>
+            </div>
         </div>
       </div>
 
@@ -170,12 +206,22 @@ export default {
   props: ['id'],
   data() {
     return {
+
       apartment: [],
       services: [],
       lat: null,
       lng: null,
       map: null,
       position:[]
+
+      apartment: '',
+      msgName: '',
+      msgLastname: '',
+      msgEmail: '',
+      msgTxt: '',
+      popup: false,
+      errors: ''
+
     }
   },
   methods: {
@@ -186,13 +232,6 @@ export default {
           this.apartment = apartment
           this.lng = apartment.longitude
           this.lat = apartment.latitude
-        })
-    },
-    fetchServices() {
-      axios.get(`/api/services/${this.id}`)
-        .then((res) => {
-          const { services } = res.data
-          this.services = res.data.services;
         })
     },
     moveMap(lnglat) {
@@ -214,10 +253,44 @@ export default {
       const popup = new tt.Popup({offset: popupOffsets}).setHTML("Il tuo appartmaento");
       mark.setPopup(popup).togglePopup();
     },
+        submitMessage(){
+
+      if(this.msgName && this.msgEmail && this.msgTxt){
+
+        axios.post(`/api/messages/`,{
+          name: this.msgName,
+          surname: this.msgLastname,
+          email: this.msgEmail,
+          text: this.msgTxt,
+          apartment_id: this.id
+
+        }).then(res => { 
+
+          this.popup = true
+          this.msgName = ''
+          this.msgLastname = ''
+          this.msgTxt = ''
+          this.msgEmail = ''
+          
+          setTimeout(()=>{
+            this.popup = false
+
+          },2000)
+
+        }).catch(err => {
+          const {response} = err.request
+          const errors = JSON.parse(response)
+          this.errors = errors.errors
+
+        })
+
+      }else{
+        return alert('Compila i campi mancanti!')
+      }
+    }
   },
   created() {
     this.fetchDetails();
-    this.fetchServices();
   },
   mounted() {
     this.map = tt.map({
@@ -226,7 +299,6 @@ export default {
     })
     this.map.on(new tt.FullscreenControl());
     this.map.on(new tt.NavigationControl());
-    console.log('montato')
   },
   watch: {
     apartment(a, b){
@@ -247,6 +319,11 @@ export default {
   .map{
     max-width: 100%;
     height: 500px;
+  }
+
+  .popup_wrapper{
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.494);
   }
 
 </style>

@@ -175,7 +175,7 @@ function checkAddress() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\leocv\OneDrive\Desktop\developer\boolbnb-main\resources\js\validation.js */"./resources/js/validation.js");
+module.exports = __webpack_require__(/*! /Users/eliavanon/Desktop/progetto_bnb/resources/js/validation.js */"./resources/js/validation.js");
 
 
 /***/ })
