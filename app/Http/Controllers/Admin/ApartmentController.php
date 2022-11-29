@@ -80,11 +80,11 @@ class ApartmentController extends Controller
         if(array_key_exists('services', $params)){
             $apartment->services()->sync($params['services']);
         }
-        
+
         if(array_key_exists('sponsors', $params)){
             $sponsor = Sponsor::where('id', $params['sponsors'])->first();
             $actual_date = Carbon::now();
-            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
+            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
             $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
             $apartment->sponsors()->sync($params['sponsors']);
         }
@@ -165,11 +165,11 @@ class ApartmentController extends Controller
         ]);
 
         $params['user_id'] = Auth::id();
-    
+
         if(!$params['address']){
-            $params['address'] = $apartment->address; 
-            $params['latitude'] = $apartment->latitude; 
-            $params['longitude'] = $apartment->longitude; 
+            $params['address'] = $apartment->address;
+            $params['latitude'] = $apartment->latitude;
+            $params['longitude'] = $apartment->longitude;
         }
 
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
@@ -187,19 +187,19 @@ class ApartmentController extends Controller
         if(array_key_exists('services', $params)){
             $apartment->services()->sync($params['services']);
         }
-        
+
         if(array_key_exists('sponsor', $params)){
             $sponsor = Sponsor::where('id', $params['sponsor'])->first();
             $actual_date = Carbon::now();
-            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
+            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
             $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
             $apartment->sponsors()->sync($params['sponsor']);
         }
-       
+
         $apartment->update($params);
 
         if(array_key_exists('delete_pic', $params)){
-            foreach($params['delete_pic'] as $id){                
+            foreach($params['delete_pic'] as $id){
                 $img = Image::where('id', $id)->first();
                 Storage::delete($img->path);
                 $img->delete();
@@ -210,11 +210,11 @@ class ApartmentController extends Controller
 
             foreach($params['images'] as $image){
                 $image_params = [];
-                
+
                 $image_path = Storage::put('gallery', $image);
                 $image_params['path'] = $image_path;
                 $image_params['apartment_id'] = $apartment->id;
-                
+
                 $newImage = Image::create($image_params);
             }
         }
