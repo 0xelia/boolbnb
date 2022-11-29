@@ -3,7 +3,7 @@
 		<!-- hero -->
 		<div class="container py-8 text-center">
 			<div class="text-sm mb-2">Risultati di ricerca per</div>
-			<SearchInput class="mx-auto" />
+			<SearchInput @positionSelected="onSelect" class="mx-auto" />
 		</div>
 
 		<!-- header filters -->
@@ -199,6 +199,8 @@ export default {
 				distance: 20,
 				services: [],
 			},
+			latitude: null,
+			longitude: null
 		}
 	},
 	components: {
@@ -220,23 +222,30 @@ export default {
 						}
 					}
 					if(key === 'distance') {
-						console.log(key, value);						
+						if(this.latitude && this.longitude) {
+							const distance = this.getDistanceFromLatLonInKm(apartment.latitude, apartment.longitude, this.latitude, this.longitude)
+							console.log(distance);
+							visible = visible && distance <= this.filters.distance
+						} else {
+							visible = visible && true
+						}
 					}
 					if(key === 'services') {
-						// let selectedServices = value
-						// if(selectedServices.length === 0) {
-						// 	selectedServices = this.service_list							
-						// }
 						let hasService = false
+						let selected = true
 						if(value.length === 0) {
 							hasService = true
 						} else {
 							const apartmentServices = apartment[key]
-							apartmentServices.forEach(apartmentService => {
-								hasService = hasService || value.includes(apartmentService.name)
+							value.forEach(filterService => {
+								hasService = false
+								apartmentServices.forEach(apartmentService => {
+									hasService = hasService || filterService === apartmentService.name									
+								})
+								selected = selected && hasService
 							})
 						}
-						visible = visible && hasService
+						visible = visible && selected
 					}
 				}
 				this.filtered = true
@@ -259,6 +268,11 @@ export default {
 			}
 			console.log(this.filtered_apartments);
 		},
+		onSelect(data) {
+			const [latitude, longitude] = data
+			this.latitude = latitude
+			this.longitude = longitude
+		},
 		fetchApartments() {
 			axios.get('api/apartments/index/all').then(res => {
 				const { apartments, service_list } = res.data
@@ -272,11 +286,11 @@ export default {
 		},
 		getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 			var R = 6371; // Radius of the earth in km
-			var dLat = deg2rad(lat2-lat1);  // deg2rad below
-			var dLon = deg2rad(lon2-lon1); 
+			var dLat = this.deg2rad(lat2-lat1);  // deg2rad below
+			var dLon = this.deg2rad(lon2-lon1); 
 			var a = 
 				Math.sin(dLat/2) * Math.sin(dLat/2) +
-				Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+				Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
 				Math.sin(dLon/2) * Math.sin(dLon/2)
 				; 
 			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
@@ -285,7 +299,7 @@ export default {
 		},
 		deg2rad(deg) {
 			return deg * (Math.PI/180)
-		}
+		},
 	},
 	created() {
 		this.fetchApartments()
