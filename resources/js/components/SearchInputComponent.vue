@@ -42,7 +42,9 @@
                     axios.get("/api/search/".concat(this.address))
                         .then(res => {
                             const { results } = res.data
-                            this.results = results.results
+                            this.results = results.results.filter(result => {
+                                return result.type != 'Cross Street'
+                            })
                         })       
                         .catch(err => {
                             this.results = null
