@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-      <div class="text-brand-500 py-7"><i class="fa-solid fa-chevron-left"></i> Torna alla pagina di ricerca</div>
+      
+      <router-link :to="{name: 'home'}" class="text-brand-500 py-7" > <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca </router-link>
       <div v-if="apartment" class="font-semibold text-5xl">
         <h2 class="text-black">
           {{ apartment.title }}
