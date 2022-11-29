@@ -80,8 +80,9 @@
           <div class="">
             <ul class="content-center gap-8 grid grid-flow-col grid-rows-2">
               <li v-for="(service, i) in apartment.services" :key="i" class="flex gap-4">
+                <!-- DA RIVEDERE -->
                 <i v-if="service.name === 'Piscina'" class="fa-solid fa-person-swimming"></i>
-                <i v-if="service.name === 'Sauna'" class="fa-solid fa-hot-tub-person"></i>
+                <i v-if="service.name === 'Sauna'" class="fa-solid fa-spa"></i>
                 <i v-if="service.name === 'Posto Macchina'" class="fa-solid fa-car"></i>
                 <i v-if="service.name === 'Portineria'" class="fa-solid fa-bell-concierge"></i>
                 <i v-if="service.name === 'Vista Mare'" class="fa-solid fa-water"></i>
