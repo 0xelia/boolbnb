@@ -7,7 +7,7 @@
     <!-- Cards Appartamenti -->
     <section>
       <div v-if="apartments">
-        <router-link v-for="(apartment, index) in apartments" :key="index" :to="{ name: 'apartments.show', params: { id: apartment.id }}">
+        <router-link v-for="(apartment, index) in apartments" :key="index" :to="{ name: 'apartments.show', params:  { id: apartment.id }}">
           <ApartmentCard :apartment="apartment"/>
         </router-link>
       </div>

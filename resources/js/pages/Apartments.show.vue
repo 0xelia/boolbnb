@@ -79,12 +79,13 @@
           Dove ti troverai
         </p>
 
-        <!-- ********  QUI VA LA MAPPA ******** -->
+        <!-- ******** MAPPA ******** -->
 
         <div>
-          <div></div>
+          <div class="map" ref="map"></div>
         </div>
       </div>
+
 
       <p class="text-2xl font-semibold text-black">
           Lascia un messaggio
@@ -192,14 +193,27 @@
         </div>
       </div>
 
+
+
   </div>
 </template>
 
 <script>
+import tt from '@tomtom-international/web-sdk-maps'
+import search from '@tomtom-international/web-sdk-services'
+
 export default {
   props: ['id'],
   data() {
     return {
+
+      apartment: [],
+      services: [],
+      lat: null,
+      lng: null,
+      map: null,
+      position:[]
+
       apartment: '',
       msgName: '',
       msgLastname: '',
@@ -207,6 +221,7 @@ export default {
       msgTxt: '',
       popup: false,
       errors: ''
+
     }
   },
   methods: {
@@ -215,10 +230,30 @@ export default {
         .then(res => {
           const { apartment } = res.data
           this.apartment = apartment
+          this.lng = apartment.longitude
+          this.lat = apartment.latitude
         })
     },
-
-    submitMessage(){
+    moveMap(lnglat) {
+      this.map.flyTo({
+        center: lnglat,
+        zoom: 14,
+      })
+    },
+    addMark() {
+      const popupOffsets = {
+        top: [0, 0],
+        bottom: [0, -30],
+        'bottom-right': [0, -30],
+        'bottom-left': [0, -30],
+        left: [25, -35],
+        right: [-25, -35]
+      };
+      const mark = new tt.Marker().setLngLat(this.position).addTo(this.map)
+      const popup = new tt.Popup({offset: popupOffsets}).setHTML("Il tuo appartmaento");
+      mark.setPopup(popup).togglePopup();
+    },
+        submitMessage(){
 
       if(this.msgName && this.msgEmail && this.msgTxt){
 
@@ -255,14 +290,35 @@ export default {
     }
   },
   created() {
-    this.fetchDetails()
+    this.fetchDetails();
   },
+  mounted() {
+    this.map = tt.map({
+      key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+      container: this.$refs.map,
+    })
+    this.map.on(new tt.FullscreenControl());
+    this.map.on(new tt.NavigationControl());
+  },
+  watch: {
+    apartment(a, b){
+      if(a != b){
+        this.position = [this.lng, this.lat]
+        this.moveMap(this.position)
+        this.addMark()
+      }
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
   .gallery{
     height: 476px;
+  }
+  .map{
+    max-width: 100%;
+    height: 500px;
   }
 
   .popup_wrapper{
