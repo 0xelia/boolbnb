@@ -200,20 +200,15 @@
 
 <script>
 import tt from '@tomtom-international/web-sdk-maps'
-import search from '@tomtom-international/web-sdk-services'
 
 export default {
   props: ['id'],
   data() {
     return {
-
-      apartment: [],
-      services: [],
       lat: null,
       lng: null,
       map: null,
-      position:[]
-
+      position:[],
       apartment: '',
       msgName: '',
       msgLastname: '',
@@ -221,7 +216,6 @@ export default {
       msgTxt: '',
       popup: false,
       errors: ''
-
     }
   },
   methods: {
@@ -253,37 +247,29 @@ export default {
       const popup = new tt.Popup({offset: popupOffsets}).setHTML("Il tuo appartmaento");
       mark.setPopup(popup).togglePopup();
     },
-        submitMessage(){
-
+    submitMessage(){
       if(this.msgName && this.msgEmail && this.msgTxt){
-
         axios.post(`/api/messages/`,{
           name: this.msgName,
           surname: this.msgLastname,
           email: this.msgEmail,
           text: this.msgTxt,
           apartment_id: this.id
-
         }).then(res => { 
-
           this.popup = true
           this.msgName = ''
           this.msgLastname = ''
           this.msgTxt = ''
-          this.msgEmail = ''
-          
+          this.msgEmail = ''        
           setTimeout(()=>{
             this.popup = false
 
           },2000)
-
         }).catch(err => {
           const {response} = err.request
           const errors = JSON.parse(response)
           this.errors = errors.errors
-
         })
-
       }else{
         return alert('Compila i campi mancanti!')
       }
