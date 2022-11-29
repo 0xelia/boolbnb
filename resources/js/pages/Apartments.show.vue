@@ -74,7 +74,7 @@
           Dove ti troverai
         </p>
         <div>
-          <div id="map" class="w-full h-96" ref="map"></div>
+          <div class="map" ref="map"></div>
         </div>
       </div>
 
@@ -164,6 +164,7 @@
 
 <script>
 import tt from '@tomtom-international/web-sdk-maps'
+import search from '@tomtom-international/web-sdk-services'
 
 export default {
   props: ['id'],
@@ -171,8 +172,10 @@ export default {
     return {
       apartment: [],
       services: [],
-      center: [-121.91595, 37.36729],
+      lat: null,
+      lng: null,
       map: null,
+      position:[]
     }
   },
   methods: {
@@ -181,17 +184,40 @@ export default {
         .then(res => {
           const { apartment } = res.data
           this.apartment = apartment
+          this.lng = apartment.longitude
+          this.lat = apartment.latitude
         })
     },
-
     fetchServices() {
-                axios.get(`/api/services/${this.id}`)
-                .then((res) => {
-                  const { services } = res.data
-                    this.services = res.data.services;
-                    console.log(this.services)
-                })
-            }
+      axios.get(`/api/services/${this.id}`)
+        .then((res) => {
+          const { services } = res.data
+          this.services = res.data.services;
+        })
+    },
+    moveMap(lnglat) {
+      this.map.flyTo({
+        center: lnglat,
+        zoom: 14,
+      })
+    },
+    // addMarker(){
+    //   this.map.Marker({
+    //   })
+    // }
+    // handleResults(result) {
+    //   console.log(result);
+    //   if(result.results) {
+    //     this.moveMap(result.results[0].position)
+    //   }
+    // },
+    // search() {
+    //   search.services.fuzzySearch({
+    //     key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
+    //     lat: this.lat,
+    //     lng: this.lng,
+    //   }).then(this.handleResults)
+    // },
   },
   created() {
     this.fetchDetails();
@@ -201,19 +227,20 @@ export default {
     this.map = tt.map({
       key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
       container: this.$refs.map,
-      center: this.center,
-      zoom: 10,
-      // style: {
-      //   map: 'basic_main',
-      //   poi: 'poi_main',
-      //   trafficIncidents: 'incidents_day',
-      //   trafficFlow: 'flow_relative'
-      // }
-      // style: 'https://api.tomtom.com/style/1/style/21.1.0-*?map=basic_main&traffic_incidents=incidents_day&traffic_flow=flow_relative0&poi=poi_main',
     })
     this.map.on(new tt.FullscreenControl());
     this.map.on(new tt.NavigationControl());
-    console.log(this.map)
+    console.log('montato')
+  },
+  watch: {
+    apartment(a, b){
+      if(a != b){
+        const lngLat = tt.LngLat(this.lng, this.lat)
+        this|position = lngLat
+        this.moveMap(this.position)
+        this.addMarker()
+      }
+    }
   }
 }
 </script>
@@ -221,6 +248,10 @@ export default {
 <style lang="scss" scoped>
   .gallery{
     height: 476px;
+  }
+  .map{
+    max-width: 100%;
+    height: 500px;
   }
 
 </style>
