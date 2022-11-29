@@ -62,6 +62,10 @@
                     this.results = null
                     this.latitude = null
                     this.longitude = null
+                    this.$emit('positionSelected', [
+                        this.latitude,
+                        this.longitude
+                    ])
                 }
             },
             getResult(result) {
@@ -69,6 +73,10 @@
                 this.latitude = result.position.lat
                 this.longitude = result.position.lon
                 this.address = result.address.freeformAddress
+                this.$emit('positionSelected', [
+                    this.latitude,
+                    this.longitude
+                ])
             }
         }
     }
