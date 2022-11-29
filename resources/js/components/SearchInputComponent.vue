@@ -21,6 +21,7 @@
 <script>
 
     export default{
+        props: ['addr'],
         data(){
             return{
                 tomtomApiUrl: 'https://api.tomtom.com/search/2/search/',
@@ -30,9 +31,9 @@
                 countrySet: "IT",
                 minFuzzyLevel: 1,
                 maxFuzzyLevel: 2,
-                address: '',
                 latitude: '',
                 longitude: '',
+                address: this.addr ? this.addr : '',
                 results: null,
             }
         },
@@ -73,10 +74,19 @@
                 this.latitude = result.position.lat
                 this.longitude = result.position.lon
                 this.address = result.address.freeformAddress
-                this.$emit('positionSelected', [
-                    this.latitude,
-                    this.longitude
-                ])
+                if(this.$route.name === 'advanced-search') {
+                    this.$emit('positionSelected', [
+                        this.latitude,
+                        this.longitude
+                    ])
+                }
+                if(this.$route.name === 'home') {
+                    this.$router.push({ name: 'advanced-search', params: {
+                        lat: this.latitude,
+                        lon: this.longitude,
+                        addr: this.address,
+                    } })
+                }
             }
         }
     }

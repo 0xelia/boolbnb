@@ -4,7 +4,7 @@
     <section class="pb-10 md:container">
       <div class="items-center bg-gradient-to-t from-brand-300 py-20 rounded-b-xl">
         <h1 class="text-5xl md:text-6xl font-bold text-gray-700 pb-12 text-center">Trova il tuo appartamento ideale</h1>
-        <SearchBox class="mx-auto bg-white"/>
+        <SearchInput class="mx-auto bg-white"/>
       </div>
     </section>
     <!-- Cards Appartamenti -->
@@ -24,12 +24,12 @@
 
 <script>
 import ApartmentCard from '../components/ApartmentCardComponent.vue';
-import SearchBox from '../components/SearchBox.vue';
+import SearchInput from '../components/SearchInputComponent.vue';
 
 export default {
   components: {
     ApartmentCard,
-    SearchBox,
+    SearchInput,
   },
   data() {
     return {
