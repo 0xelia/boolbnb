@@ -201,28 +201,30 @@ export default {
         zoom: 14,
       })
     },
-    // addMarker(){
-    //   this.map.Marker({
-    //   })
-    // }
     // handleResults(result) {
     //   console.log(result);
     //   if(result.results) {
     //     this.moveMap(result.results[0].position)
     //   }
     // },
-    // search() {
-    //   search.services.fuzzySearch({
-    //     key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
-    //     lat: this.lat,
-    //     lng: this.lng,
-    //   }).then(this.handleResults)
-    // },
+    addMark() {
+      const popupOffsets = {
+        top: [0, 0],
+        bottom: [0, -30],
+        'bottom-right': [0, -30],
+        'bottom-left': [0, -30],
+        left: [25, -35],
+        right: [-25, -35]
+      };
+      const mark = new tt.Marker().setLngLat(this.position).addTo(Map)
+      const popup = new tt.Popup({offset: popupOffsets}).setHTML("Your address!");
+      mark.setPopup(popup).togglePopup();
+    },
   },
   created() {
     this.fetchDetails();
     this.fetchServices();
-  },  
+  },
   mounted() {
     this.map = tt.map({
       key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
@@ -230,15 +232,15 @@ export default {
     })
     this.map.on(new tt.FullscreenControl());
     this.map.on(new tt.NavigationControl());
+    const mark = new tt.Marker().setLngLat(this.position).addTo(Map)
     console.log('montato')
   },
   watch: {
     apartment(a, b){
       if(a != b){
-        const lngLat = tt.LngLat(this.lng, this.lat)
-        this|position = lngLat
+        this.position = [this.lng, this.lat]
         this.moveMap(this.position)
-        this.addMarker()
+        this.addMark()
       }
     }
   }
