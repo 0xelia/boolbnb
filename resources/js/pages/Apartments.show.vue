@@ -1,93 +1,114 @@
 <template>
   <div class="container">
       
-      <router-link :to="{name: 'home'}" class="text-brand-500 py-7" > <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca </router-link>
+      <router-link :to="{name: 'home'}" class="block text-brand-500 pt-5" > <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca </router-link>
       <div v-if="apartment" class="font-semibold text-5xl">
-        <h2 class="text-black">
+        <h2 class="text-black font-bold pt-7">
           {{ apartment.title }}
         </h2>
       </div>
-      <div class="py-4 pb-8">
+      <div class="pt-6 pb-8">
         {{ apartment.address }}
       </div>
-      <div class="md:grid gallery md:grid-cols-3 md:grid-rows-2 gap-6 pb-12">
+      <!-- <div class="grid grid-cols-1 md:grid-cols-3 gallery gap-6 pb-12">
           <img class="md:object-cover md:w-full md:h-full rounded-xl md:col-span-2 md:row-span-2" :src="apartment.pic_path" alt="">
-          <img class="invisible md:visible md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1" v-for="(img, i) in apartment.images" :key="i" :src="img.img_path" alt="">
+          <div class="grid grid-rows-2 gap-y-5">
+            <img class="hidden md:block md:object-cover md:w-full md:h-full rounded-xl md:row-span-1 md:col-span-1" v-for="(img, i) in apartment.images" :key="i" :src="img.img_path" alt="">
+          </div>
+      </div> -->
+      <div class="grid grid-cols-3 gap-x-6 pb-10">
+        <div class="col-span-3 lg:col-span-2">
+          <img class="test object-cover md:w-full h-full rounded-xl" :src="apartment.pic_path" alt="">
+        </div>
+        <div class="hidden lg:block">
+          <div class="grid gap-y-5">
+            <img class="max-w-full rounded-xl" v-for="(img, i) in apartment.images" :key="i" :src="img.img_path"  alt="">
+          </div>
+        </div>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-6 pb-20">
-        <div class=" border flex lg:justify-start p-6 content-center rounded-lg col-span-3 md:col-span-3 row-span-3 lg:row-start-1 lg:col-span-2 md:row-span-2 lg:row-span-1 h-24 justify-center">
-          <div class="pr-13  lg:pr-16 self-center">
-            <h4 class="pb-1">Stanze totali</h4>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-y-5 gap-x-6 pb-10">
+        <div class="grid md:col-span-2 grid-cols-1 md:grid-cols-2 lg:col-span-2 lg:grid-cols-4 gap-y-5 border p-6 rounded-lg">
+          <div class="flex flex-col pr-13 items-start lg:pr-16 self-center">
+            <h4 class="pb-3">Stanze totali</h4>
             <p class="font-bold text-center text-black">{{apartment.rooms_number}}</p>
           </div>
-          <div class="pr-13  lg:pr-16 self-center">
-            <h4 class="pb-1">Camere da letto</h4>
+          <div class="flex flex-col pr-13 items-start lg:pr-16 self-center">
+            <h4 class="pb-3">Camere da letto</h4>
             <p class="font-bold text-center text-black">{{apartment.beds_number}}</p>
           </div>
-          <div class="pr-13  lg:pr-16 self-center">
-            <h4 class="pb-1">Bagni</h4>
+          <div class="flex flex-col pr-13 items-start lg:pr-16 self-center">
+            <h4 class="pb-3">Bagni</h4>
             <p class="font-bold text-center text-black">{{apartment.bath_number}}</p>
           </div>
-          <div class="pr-13  lg:pr-16 self-center ">
-            <h4 class="pb-1">Metri quadrati</h4>
+          <div class="flex flex-col pr-13 items-start lg:pr-16 self-center ">
+            <h4 class="pb-3">Metri quadrati</h4>
             <p class="font-bold text-center text-black">{{apartment.meters}}</p>
           </div>
         </div>
 
-        <div class="border rounded-lg p-6 md:col-span- col-span-3 lg:row-span-2 h-96 lg:col-span-1 drop-shadow-xl">
+        <div class="grid border rounded-lg p-6 md:row-span-2 h-96 lg:col-span-1 drop-shadow-xl shadow-m">
           <div class="flex pb-8">
             <h4 class="text-brand-500 text-2xl font-bold">{{apartment.price}} € &nbsp; </h4>
             <p class="self-center">notte</p>
           </div>
           <div class="flex justify-between pb-8">
             <div>{{apartment.price}} x 5 notti</div>
-            <div>{{apartment.price * 5}} &nbsp; $</div>
+            <div>{{apartment.price * 5}}&nbsp;$</div>
           </div>
           <div class="flex justify-between pb-8">
             <div>Costi di pulizia</div>
-            <div>{{Math.round((apartment.price * 5)*0.5/100*100)/100}} &nbsp; $</div>
+            <div>{{Math.round((apartment.price * 5)*0.5/100*100)/100}}&nbsp;$</div>
           </div>
           <div class="flex justify-between pb-8">
             <div>Costi del servizio</div>
-            <div>{{Math.round((apartment.price * 5)*2/100*100)/100}} &nbsp; $</div>
+            <div>{{Math.round((apartment.price * 5)*2/100*100)/100}}&nbsp;$</div>
           </div>
           <hr class="pb-8">
-          <div class="flex justify-between pb-8">
+          <div class="flex justify-between pb-3">
             <div class="font-bold">Totale</div>
-            <div class="font-bold">{{Math.round((apartment.price * 5 + (apartment.price * 5)*0.5/100 + (apartment.price * 5)*2/100)*100)/100}} &nbsp; $</div>
+            <div class="font-bold">{{Math.round((apartment.price * 5 + (apartment.price * 5)*0.5/100 + (apartment.price * 5)*2/100)*100)/100}}&nbsp;$</div>
           </div>
-          <div class="flex justify-center">
+          <!-- BUTTON PRENOTAZIONE -->
+          <!-- <div class="flex justify-center">
             <button class="text-white bg-brand-500 w-4/5 h-12 rounded-md">Prenota</button>
-          </div>
+          </div> -->
         </div>
 
-        <div class="border col-span-3 md:row-span-1 lg:row-span-2 lg:col-span-2">
-          <p class="text-2xl font-semibold text-black">Cosa troverai</p>
-          <ul class="flex gap-8">
-            <li v-for="(service, i) in apartment.services" :key="i">
-              {{service.name}}
-            </li>
-          </ul>
+        <div class="col-span-1 md:col-span-2 p-6 rounded-lg border">
+          <p class="text-2xl font-semibold text-black pb-7">Cosa troverai</p>
+          <div class="">
+            <ul class="content-center gap-8 grid grid-flow-col grid-rows-2">
+              <li v-for="(service, i) in apartment.services" :key="i" class="flex gap-4">
+                <i v-if="service.name === 'Piscina'" class="fa-solid fa-person-swimming"></i>
+                <i v-if="service.name === 'Sauna'" class="fa-solid fa-hot-tub-person"></i>
+                <i v-if="service.name === 'Posto Macchina'" class="fa-solid fa-car"></i>
+                <i v-if="service.name === 'Portineria'" class="fa-solid fa-bell-concierge"></i>
+                <i v-if="service.name === 'Vista Mare'" class="fa-solid fa-water"></i>
+                <i v-if="service.name === 'WiFi'" class="fa-solid fa-wifi"></i>
+                {{service.name}}
+              </li>
+            </ul>
+          </div>
         </div>
 
 
       </div>
 
-      <div>
-        <p class="text-2xl font-semibold text-black">
+      <div class="py-10">
+        <p class="text-2xl font-semibold text-black pb-5">
           Dove ti troverai
         </p>
 
         <!-- ******** MAPPA ******** -->
 
         <div>
-          <div class="map" ref="map"></div>
+          <div class="map h-96 rounded-xl" ref="map"></div>
         </div>
       </div>
 
 
-      <p class="text-2xl font-semibold text-black">
+      <p class="text-2xl font-semibold text-black pt-10 pb-5">
           Lascia un messaggio
         </p>
 
@@ -299,12 +320,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .gallery{
-    height: 476px;
+  .test{
+    width: 100%;
+    height: 100%;
   }
   .map{
     max-width: 100%;
-    height: 500px;
+    height: 416px;
   }
 
   .popup_wrapper{
