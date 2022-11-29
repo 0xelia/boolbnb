@@ -115,13 +115,16 @@
                 placeholder="Nome"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
+              <p class="text-red-700 py-6" v-if="errors.name">
+                Il nome deve contenere minimo 3 caratteri
+              </p>
             </div>
             <div class="mb-5">
               <label
                 for="name"
                 class="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Cognome (Opzionale)
+                Cognome
               </label>
               <input
                 type="text"
@@ -131,6 +134,11 @@
                 placeholder="Cognome"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
+
+              <p class="text-red-700 py-6" v-if="errors.surname">
+                Il cognome deve contenere minimo 2 caratteri
+              </p>
+
             </div>
             <div class="mb-5">
               <label
@@ -148,6 +156,10 @@
                 placeholder="esempio@mail.com"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
+
+              <p class="text-red-700 py-6" v-if="errors.email">
+                Formato dell'email non è valido
+              </p>
             </div>
 
             <div class="mb-5">
@@ -165,6 +177,10 @@
                 placeholder="Inserisci il tuo messaggio"
                 class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               ></textarea>
+
+              <p class="text-red-700 py-6" v-if="errors.text">
+                Il testo è obbligatorio
+              </p>
             </div>
             <div>
               <button @click="submitMessage()"
@@ -189,6 +205,7 @@ export default {
       msgEmail: '',
       msgTxt: '',
       popup: false,
+      errors: ''
     }
   },
   methods: {
@@ -197,16 +214,7 @@ export default {
         .then(res => {
           const { apartment } = res.data
           this.apartment = apartment
-
-          this.addActive(this.apartment)
-
-          console.log(this.apartment);
         })
-    },
-
-    addActive(apartment){
-      apartment.IsActive = false
-      return apartment
     },
 
     submitMessage(){
@@ -235,7 +243,9 @@ export default {
 
         }).catch(err => {
           const {response} = err.request
-          this.errors = JSON.parse(response)
+          const errors = JSON.parse(response)
+          this.errors = errors.errors
+
         })
 
       }else{

@@ -28,7 +28,7 @@ class MessageController extends Controller
     {   
         $params = $request->validate([
             'name'=> 'required|min:3',
-            'surname'=> 'nullable|min:2',
+            'surname'=> 'required|min:2',
             'email'=> 'email:rfc,dns',
             'text'=>'required|max:2000',
             'apartment_id'=> 'exists:apartments,id'
