@@ -6,7 +6,7 @@
         </div>
         <ul :class="{hidden}" class="mt-6 flex flex-col gap-4">
             <li v-for="(filter, i) in info.filters" :key="i" class="flex gap-3">
-                <input @change="$emit('filter', [info.name, filter.value])" :value="filter.value" :type="info.type" :name="info.name" :id="filter.id">
+                <input :checked="filter.checked" @change="$emit('filter', [info.name, filter.value])" :value="filter.value" :type="info.type" :name="info.name" :id="filter.id">
                 <label class="w-full" :for="filter.id">{{ filter.label }}</label>
             </li>
         </ul>

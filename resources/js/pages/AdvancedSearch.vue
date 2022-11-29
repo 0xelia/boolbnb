@@ -9,7 +9,7 @@
 		<!-- header filters -->
 		<div class="container">
 			<div class="flex flex-wrap items-center mb-4 gap-6 lg:w-3/4 lg:pl-4 lg:ml-auto">
-				<div class="font-bold">{{ apartments.length }} Appartamenti</div>
+				<div class="font-bold">{{ filtered_apartments.length }} Appartamenti</div>
 
 				<!-- <div>
 					<span v-for="(filter, i) in filters" :key="filter[i]">{{ filter[0] }}</span>
@@ -38,7 +38,9 @@
 				<AccordionFilter @filter="onFilter" :class="i === categories.length -1 ? 'border-b' : ''" v-for="(category, i) in categories" :key="i" :info="category" />
 			</div>
 			<div class="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10 xl:grid-cols-3">
-				<ApartmentCard v-for="(info, i) in filtered_apartments" :key="i" :apartment="info" />
+				<router-link v-for="(info, i) in filtered_apartments" :key="i" :to="{ name: 'apartments.show', params: { id: info.id }}">
+					<ApartmentCard :apartment="info" />
+				</router-link>
 			</div>
 		</div>
 	</main>
@@ -51,66 +53,65 @@ import ApartmentCard from '../components/ApartmentCardComponent.vue'
 
 const categories = [
 	{
-		title: 'Stanze',
+		title: 'Numero minimo di stanze',
 		type: 'radio',
 		name: 'rooms_number',
 		filters: [
-			{
-				label: 'Tutti',
-				id: 'room-all',
-				value: null,
-			},
+
 			{
 				label: '1',
 				id: 'room-1',
 				value: 1,
+				checked: true
 			},
 			{
 				label: '2',
 				id: 'room-2',
 				value: 2,
+				checked: false
 			},
 			{
 				label: '3',
 				id: 'room-3',
 				value: 3,
+				checked: false
 			},
 			{
-				label: '4+',
+				label: '4',
 				id: 'room-4',
 				value: 4,
+				checked: false
 			},
 		]
 	},
 	{
-		title: 'Letti',
+		title: 'Numero minimo di letti',
 		type: 'radio',
 		name: 'beds_number',
 		filters: [
 			{
-				label: 'Tutti',
-				id: 'beds-all',
-				value: null,
-			},
-			{
 				label: '1',
 				id: 'beds-1',
 				value: 1,
+				checked: true
 			},
 			{
 				label: '2',
 				id: 'beds-2',
 				value: 2,
+				checked: false
 			},	
 			{
 				label: '3',
 				id: 'beds-3',
 				value: 3,
+				checked: false
 			},
 			{
-				label: '4+',
+				label: '4',
 				id: 'beds-4',
 				value: 4,
+				checked: false
 			},	
 		]
 	},	
@@ -123,21 +124,25 @@ const categories = [
 				label: '5 km',
 				id: 'distance-1',
 				value: 5,
+				checked: false
 			},
 			{
 				label: '10 km',
 				id: 'distance-2',
 				value: 10,
+				checked: false
 			},	
 			{
 				label: '20 km',
 				id: 'distance-3',
 				value: 20,
+				checked: true
 			},
 			{
 				label: '50 km',
 				id: 'distance-4',
 				value: 50,
+				checked: false
 			},
 		]
 	},
@@ -210,12 +215,8 @@ export default {
 					if(key.endsWith('_number')) {
 						if(!value) {
 							visible = visible && true
-						} else {
-							if (value < 4) {
-								visible = visible && apartment[key] === value
-							} else {
-								visible = visible && apartment[key] >= value
-							}
+						} else {					
+							visible = visible && apartment[key] >= value
 						}
 					}
 					if(key === 'distance') {
