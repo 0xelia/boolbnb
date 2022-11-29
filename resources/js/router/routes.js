@@ -13,6 +13,7 @@ const routes = [
         path: '/ricerca-avanzata',
         name: 'advanced-search',
         component: AdvancedSearch,
+        props: true,
     },
     {
         path: '/appartamento/:id',

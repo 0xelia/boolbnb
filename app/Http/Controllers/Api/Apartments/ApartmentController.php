@@ -32,7 +32,7 @@ class ApartmentController extends Controller
         }
 
         if ($type === 'all'){
-            $apartments = Apartment::all();
+            $apartments = Apartment::where('visible', true)->get();
             $service_list = Service::AVAILABLE_SERVICE;
 
             $apartments->load('sponsors', 'services');

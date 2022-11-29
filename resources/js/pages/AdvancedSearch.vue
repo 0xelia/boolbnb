@@ -3,7 +3,7 @@
 		<!-- hero -->
 		<div class="container py-8 text-center">
 			<div class="text-sm mb-2">Risultati di ricerca per</div>
-			<SearchInput @positionSelected="onSelect" class="mx-auto" />
+			<SearchInput @positionSelected="onSelect" :addr="address" class="mx-auto" />
 		</div>
 
 		<!-- header filters -->
@@ -186,6 +186,7 @@ const categories = [
 ]
 
 export default {
+	props: ['lat', 'lon', 'addr'],
 	data() {
 		return {
 			show: false,
@@ -199,8 +200,9 @@ export default {
 				distance: 20,
 				services: [],
 			},
-			latitude: null,
-			longitude: null
+			latitude: this.lat ? this.lat : null,
+			longitude: this.lon ? this.lon : null,
+			address: this.addr ? this.addr : '',
 		}
 	},
 	components: {

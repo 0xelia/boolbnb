@@ -1,15 +1,23 @@
 <template>
-  <div v-if="apartment">
+  <div v-if="visible">
     {{ apartment.title }}
+  </div>
+  <div v-else>
+    <h3>Appartamento non disponibile</h3>
   </div>
 </template>
 
 <script>
 export default {
   props: ['id'],
+  computed: {
+    visible() {
+      return this.apartment && this.apartment.visible
+    }
+  },
   data() {
     return {
-      apartment: null
+      apartment: null,
     }
   },
   methods: {
