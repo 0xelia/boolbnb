@@ -216,8 +216,8 @@ export default {
         left: [25, -35],
         right: [-25, -35]
       };
-      const mark = new tt.Marker().setLngLat(this.position).addTo(Map)
-      const popup = new tt.Popup({offset: popupOffsets}).setHTML("Your address!");
+      const mark = new tt.Marker().setLngLat(this.position).addTo(this.map)
+      const popup = new tt.Popup({offset: popupOffsets}).setHTML("Il tuo appartmaento");
       mark.setPopup(popup).togglePopup();
     },
   },
@@ -232,7 +232,6 @@ export default {
     })
     this.map.on(new tt.FullscreenControl());
     this.map.on(new tt.NavigationControl());
-    const mark = new tt.Marker().setLngLat(this.position).addTo(Map)
     console.log('montato')
   },
   watch: {
