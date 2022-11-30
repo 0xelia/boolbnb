@@ -13,6 +13,13 @@ const routes = [
         path: '/ricerca-avanzata',
         name: 'advanced-search',
         component: AdvancedSearch,
+        props: route => ({ 
+            query: [
+                route.query.lat,
+                route.query.lon,
+                route.query.addr
+            ] 
+        }),
     },
     {
         path: '/appartamento/:id',

@@ -1,14 +1,18 @@
 <template>
-    <header class="py-6">
-        <div class="container flex justify-between">
-            <div class="text-brand-500 text-xl">airbnb</div>
-            <nav>
-                <ul class="flex gap-6">
-                    <li v-for="(link, index) in links" :key="index">
-                        <a :href="link.name">{{link.text}}</a>
-                    </li>
-                </ul>
-            </nav>
+    <header>
+        <div class="container">
+            <div class="flex items-center h-20">
+                <a href="/" class="text-brand-500 text-xl">airbnb</a>
+                <nav class="ml-auto">
+                    <div>
+                        <a v-if="user" href="admin/home" class="no-underline hover:underline">Home</a>
+                        <template v-else>
+                            <a href="login" class="no-underline hover:underline pr-6">Login</a>
+                            <a href="register" class="no-underline hover:underline">Register</a>
+                        </template>
+                    </div>
+                </nav>
+            </div>
         </div>
     </header>
 </template>
@@ -17,19 +21,9 @@
 export default {
     data() {
         return {
-            links: [
-                {
-                    text: 'Login',
-                    name: 'login'
-                },
-                {
-                    text: 'Register',
-                    name: 'register'
-                }
-            ]
+            user: this.$root.user,
         }
     }
-    
 }
 </script>
 

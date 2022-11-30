@@ -17,10 +17,17 @@
     <!--tom tom -->
 
 </head>
-<body class="bg-gray-100 text-gray-500 text-base h-screen antialiased leading-none">
+<body class="bg-gray-100 text-gray-500 text-base antialiased leading-none">
+    @php
+        $user = Auth::check() ? Auth::user() : null;
+    @endphp
+
     <div id="app"></div>
 
      <!-- Scripts -->
      <script src="{{ asset('js/front.js') }}" defer></script>
+     <script>
+        window.user = @json($user)
+     </script>
 </body>
 </html>

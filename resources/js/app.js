@@ -29,12 +29,14 @@ Vue.component(
     require('./components/SponsorComponent.vue').default);
 
 Vue.component(
+
     'payment-component',
     require('./components/PaymentComp.vue').default);
 
 Vue.component(
     'promotion-component',
     require('./components/PromotionComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

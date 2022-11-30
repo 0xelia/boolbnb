@@ -1,4 +1,5 @@
 <template>
+
   <div class="container">
       
       <router-link :to="{name: 'home'}" class="block text-brand-500 pt-5" > <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca </router-link>
@@ -217,6 +218,10 @@
 
 
 
+
+  </div>
+  <div v-else>
+    <h3>Appartamento non disponibile</h3>
   </div>
 </template>
 
@@ -225,8 +230,14 @@ import tt from '@tomtom-international/web-sdk-maps'
 
 export default {
   props: ['id'],
+  computed: {
+    visible() {
+      return this.apartment && this.apartment.visible
+    }
+  },
   data() {
     return {
+
       lat: null,
       lng: null,
       map: null,
@@ -238,6 +249,7 @@ export default {
       msgTxt: '',
       popup: false,
       errors: ''
+
     }
   },
   methods: {

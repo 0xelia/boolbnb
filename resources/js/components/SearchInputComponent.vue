@@ -1,14 +1,24 @@
 <template>
-    <div class="address-wrapper">
-        <div ref="searchWrapper" class='flex flex-col gap-2 mb-4'>
-            <label class="font-bold">Indirizzo *</label>
+    <div ref="searchWrapper" :class="{'size rounded-full relative z-50': guest}" class="relative address-wrapper">
+        <div>
+            <label v-if="!guest" for="address" class="font-bold block mb-2">Indirizzo *</label>
+            
+            <div class="mb-2" :class="{'search-box flex items-center rounded-full border-gray-700 border-2': guest}">
+                <i v-if="guest" class="fa-solid fa-magnifying-glass text-xl text-gray-700"></i>
+                <input @keyup="fetchResult" type="text" name="address" id="address" v-model="address" :class="{'w-full mx-3 text-base text-gray-700 font-bold outline': guest, 'address p-2 w-full': !guest}" :placeholder="guest ? 'Cerca un appartamento...' : 'Inserisci un indirizzo'" autocomplete="off">
+                <i @click="clearInput" v-if="guest" class="fa-solid fa-circle-xmark text-xl text-gray-300 hover:text-brand-300"></i>
+            </div>
         </div>
-        <div class="address-error"></div>
 
-        <input class="p-2 flex-grow" type="hidden" name="address" v-model="address" maxlength="255" required>
+        <ul class="absolute top-0 left-0 w-full mb-4 rounded bg-white results-list" v-if="results">
+            <li @click="getResult(result)" v-for="(result, index) in results" :key="index" class="result cursor-pointer px-2 py-3">
+                {{result.address.freeformAddress}}
+            </li>
+        </ul>
+        
+        <div v-if="!guest" class="address-error"></div>
 
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
-
         <input class="p-2 flex-grow" type="hidden" name="longitude" v-model="longitude">
     </div>
 </template>
@@ -16,53 +26,115 @@
 
 <script>
 
-import { services } from '@tomtom-international/web-sdk-services';
-import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
-
-
     export default{
-        props: {
-            apiKey: String,
-        },
+        props: ['addr'],
         data(){
             return{
-                address: '',
+                tomtomApiUrl: 'https://api.tomtom.com/search/2/search/',
+                typeahead: true,
+                limit: 5,
+                language: "it-IT",
+                countrySet: "IT",
+                minFuzzyLevel: 1,
+                maxFuzzyLevel: 2,
                 latitude: '',
                 longitude: '',
-                options: {
-                    searchOptions: {
-                        key: this.apiKey,
-                        language: 'it-IT',
-                        countrySet: 'IT',
-                        limit: 15
-                    },
-                    autocompleteOptions: {
-                        key: this.apiKey,
-                        language: 'it-IT'
-                    }
-                },
-                ttSearchBox: null,
-                searchBoxHTML: null,
+                address: this.addr ? this.addr : '',
+                results: null,
+                guest: false
             }
         },
         methods: {
+            clearInput() {
+                this.address = ''
+                this.fetchResult()
+            },
+            fetchResult() {
+                if(this.address) {
+                    axios.get("/api/search/".concat(this.address))
+                        .then(res => {
+                            const { results } = res.data
+                            this.results = results.results.filter(result => {
+                                return result.type != 'Cross Street'
+                            })
+                        })       
+                        .catch(err => {
+                            this.results = null
+                        })  
+                    axios.interceptors.response.use(response => {
+                        if(this.address) {
+                            return response
+                        } else {
+                            this.results = null
+                        }
+                    }, error => {
+                        return Promise.reject(error)
+                    })           
+                } else {
+                    this.results = null
+                    this.latitude = null
+                    this.longitude = null                    
+                    // this.$emit('positionSelected', [
+                    //     this.latitude,
+                    //     this.longitude
+                    // ])
+                    this.getResult(this.results)
+                }
+            },
             getResult(result) {
-                const res = result.data.result
-                this.latitude = res.position.lat
-                this.longitude = res.position.lng
-                this.address = res.address.freeformAddress
-                console.log(this.address)
-            }
-        },
-        created() {
-            this.ttSearchBox = new SearchBox(services, this.options);
-            this.ttSearchBox.on('tomtom.searchbox.resultselected', this.getResult);
-            this.searchBoxHTML = this.ttSearchBox.getSearchBoxHTML();
+                this.results = null
+                this.latitude = result ? result.position.lat : result
+                this.longitude = result ? result.position.lon : result
+                this.address = result ? result.address.freeformAddress : result
+                // if(this.$route.name === 'advanced-search') {
+                //     this.$router.push({ path: '/ricerca-avanzata', query: {
+                //         lat: this.latitude,
+                //         lon: this.longitude,
+                //         addr: this.address
+                //     } })
+                // }
+                if(this.$route.name === 'home' || this.$route.name === 'advanced-search') {
+                    this.$router.push({ path: '/ricerca-avanzata', query: {
+                        lat: this.latitude === null ? undefined : this.latitude,
+                        lon: this.longitude === null ? undefined : this.longitude,
+                        addr: this.address === null ? undefined : this.address
+                    } })
+                }
+            },
+            isFront() {
+                if (this.$route) {
+                    this.guest = true
+                }
+            },
         },
         mounted() {
-            this.$refs.searchWrapper.append(this.searchBoxHTML);
-        },
+            this.isFront()
+        }
     }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.size {
+    max-width: 640px;
+}
+.results-list {
+    top: 70px;
+    border: 2px solid black;
+    .result {
+        &:hover {
+            background-color: lightgray;
+        }
+    }
+}
+.search-box {
+    padding: 1.125rem 1.5rem;
+}
+
+input::placeholder {
+    color: #C3C6D1;
+    font-weight: 400;
+}
+.outline {
+    outline: none;
+}
+</style>
