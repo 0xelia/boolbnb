@@ -62,29 +62,31 @@
                 } else {
                     this.results = null
                     this.latitude = null
-                    this.longitude = null
-                    this.$emit('positionSelected', [
-                        this.latitude,
-                        this.longitude
-                    ])
+                    this.longitude = null                    
+                    // this.$emit('positionSelected', [
+                    //     this.latitude,
+                    //     this.longitude
+                    // ])
+                    this.getResult(this.results)
                 }
             },
             getResult(result) {
                 this.results = null
-                this.latitude = result.position.lat
-                this.longitude = result.position.lon
-                this.address = result.address.freeformAddress
-                if(this.$route.name === 'advanced-search') {
-                    this.$emit('positionSelected', [
-                        this.latitude,
-                        this.longitude
-                    ])
-                }
-                if(this.$route.name === 'home') {
-                    this.$router.push({ name: 'advanced-search', params: {
+                this.latitude = result ? result.position.lat : result
+                this.longitude = result ? result.position.lon : result
+                this.address = result ? result.address.freeformAddress : result
+                // if(this.$route.name === 'advanced-search') {
+                //     this.$router.push({ path: '/ricerca-avanzata', query: {
+                //         lat: this.latitude,
+                //         lon: this.longitude,
+                //         addr: this.address
+                //     } })
+                // }
+                if(this.$route.name === 'home' || this.$route.name === 'advanced-search') {
+                    this.$router.push({ path: '/ricerca-avanzata', query: {
                         lat: this.latitude,
                         lon: this.longitude,
-                        addr: this.address,
+                        addr: this.address
                     } })
                 }
             }

@@ -186,7 +186,6 @@ const categories = [
 ]
 
 export default {
-	props: ['lat', 'lon', 'addr'],
 	data() {
 		return {
 			show: false,
@@ -201,9 +200,9 @@ export default {
 				distance: 20,
 				services: [],
 			},
-			latitude: this.lat ? this.lat : null,
-			longitude: this.lon ? this.lon : null,
-			address: this.addr ? this.addr : '',
+			latitude: null,
+			longitude: null,
+			address: this.$route.query.addr ? this.$route.query.addr : '',
 		}
 	},
 	components: {
@@ -290,7 +289,7 @@ export default {
 				this.distances = []
 			}
 			return filtered
-		},
+		},	
 	},
 	methods: {
 		onFilter(data) {			
@@ -342,9 +341,18 @@ export default {
 		this.fetchApartments()
 	},
 	mounted() {
+		console.log(this.$route);
+		this.latitude = this.$route.query.lat ? this.$route.query.lat : null;
+		this.longitude = this.$route.query.lon ? this.$route.query.lon : null;
+		this.address = this.$route.query.addr ? this.$route.query.addr : null;
 		window.addEventListener('resize', () => {
 			this.screen = window.innerWidth
 		})
+	},
+	watch: {
+		address: function(newValue, oldValue) {
+			console.log(newValue, oldValue);
+		}
 	}
 }
 </script>
