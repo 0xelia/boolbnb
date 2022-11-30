@@ -12,6 +12,7 @@
     <div class="container mx-auto">
         <ul class="grid grid-cols-4 gap-4">
             @foreach ($apartments as $apartment)
+            <div class="flex-col">
                 <a href="{{ route('admin.apartments.show', $apartment) }}">
                     <li class="flex h-full flex-col relative">
                         <figure class="overflow-hidden flex-grow rounded-xl">
@@ -33,13 +34,16 @@
                         @if ($unviewedMessages > 0)
                             <div class="absolute notification flex items-center justify-center  rounded-full h-6 w-6 text-center text-xs bg-red-500 text-white">
                                 <span> {{ $unviewedMessages }} </span>
-                            </div>                            
+                            </div>
                         @endif
                     </li>
                 </a>
+                <promotion-component :apartment="{{$apartment}}"/>
+            </div>
             @endforeach
         </ul>
-        
+
         {{ $apartments->links() }}
     </div>
 @endsection
+
