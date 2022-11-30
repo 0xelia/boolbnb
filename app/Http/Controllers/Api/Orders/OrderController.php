@@ -37,7 +37,7 @@ class OrderController extends Controller
         if($result->success){
 
             // sync apartment sponsor params
-
+            
 
 
             $data = [
