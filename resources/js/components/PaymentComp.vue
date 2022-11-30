@@ -6,6 +6,7 @@
 
 <script>
     export default {
+        props:['id'],
         data(){
             return{
                 clientToken: '',
@@ -26,6 +27,7 @@
             makePayment(){
                 axios.post('/api/orders/make/payment', {
                     'sponsor': 3,
+                    'apartment_id': id
                 }).then(res => {
                     console.log(res.data)
                 })
@@ -34,7 +36,6 @@
 
         mounted(){
             this.fetchClientToken()
-            this.makePayment()
         }
     }
 </script>
