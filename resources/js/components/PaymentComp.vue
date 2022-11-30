@@ -9,10 +9,12 @@
 
 <script>
     export default {
+
         props: {
             apartment: Object,
             id: Number
         },
+
 
         data(){
             return{
@@ -32,8 +34,10 @@
 
             makePayment(){
                 axios.post('/api/orders/make/payment', {
+
                     'sponsor': this.id,
                     'apartment': this.apartment,
+
                 }).then(res => {
                     const {status} = res
 
