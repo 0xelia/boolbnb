@@ -5,8 +5,11 @@
                 Promuovi ora
             </button>
         </div>
-        <div v-if="planPopUpVisible">
-            <sponsor-component :visible="planPopUpVisible" :setVisible="setVisible"/>
+        <div class="border-2  border-red-600" v-if="planPopUpVisible">
+            <sponsor-component :apartment="apartment" />
+            <button class="rounded-full font-bold absolute right-0 top-0 p-4 bg-red-600 z-50" @click="showPlans()">
+                X
+            </button>
         </div>
     </div>
 </template>
@@ -15,23 +18,17 @@
 export default {
     props:[
         "apartment"
-
     ],
     data(){
         return{
-            planPopUpVisible: false
+            planPopUpVisible: false,
         }
     },
-    mounted() {
-       console.log(this.apartment);
-    },
+    
     methods:{
         showPlans(){
-            this.planPopUpVisible = true
+            this.planPopUpVisible = !this.planPopUpVisible
         },
-        setVisible(){
-            console.log()
-        }
     }
 }
 </script>
