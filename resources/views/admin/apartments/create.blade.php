@@ -5,6 +5,11 @@
         <div class="mb-3">
             <a href="{{ redirect()->back()->getTargetUrl() }}">Torna indietro</a>
         </div>
+
+        <!--payment pop up-->
+
+
+
         <div>
             <form action="{{ route('admin.apartments.store') }}" method="post" enctype="multipart/form-data" id="form">
                 @csrf
@@ -12,7 +17,7 @@
                     <label class="mr-2 font-bold" for="title">Titolo *</label>
                     <input class="p-2 flex-grow" type="text" name="title" maxlength="255" id="title" placeholder="Inserisci un titolo" value="{{ old('title') }}" required>
                     <div class="title-error"></div>
-                    
+
                     @error('title')
                         <p class="text-red-700">
                             {{$message}}
@@ -23,7 +28,7 @@
                     <label class="mr-2 font-bold" for="rooms">Numero camere *</label>
                     <input class="p-2 flex-grow" type="number" min="1" max="255" name="rooms_number" id="rooms" placeholder="Inserisci numero delle camere" value="{{ old('rooms_number') }}" required>
                     <div class="rooms-error"></div>
-                    
+
                     @error('rooms_number')
                         <p class="text-red-700">
                             {{$message}}
@@ -34,7 +39,7 @@
                     <label class="mr-2 font-bold" for="beds">Numero letti *</label>
                     <input class="p-2 flex-grow" type="number" min="1" max="255" name="beds_number" id="beds" placeholder="Inserisci numero dei letti" value="{{ old('beds_number') }}" required>
                     <div class="beds-error"></div>
-                    
+
                     @error('beds_number')
                         <p class="text-red-700">
                             {{$message}}
@@ -45,7 +50,7 @@
                     <label class="mr-2 font-bold" for="baths">Numero bagni *</label>
                     <input class="p-2 flex-grow" type="number" min="0" max="255" name="bath_number" id="baths" placeholder="Inserisci numero dei bagni" value="{{ old('bath_number') }}" required>
                     <div class="baths-error"></div>
-                    
+
                     @error('bath_number')
                         <p class="text-red-700">
                             {{$message}}
@@ -56,7 +61,7 @@
                     <label class="mr-2 font-bold" for="meters">Metri quadri *</label>
                     <input class="p-2 flex-grow" type="number" min="0" max="65535" name="meters" id="meters" placeholder="Inserisci metri quadri" value="{{ old('meters') }}" required>
                     <div class="meters-error"></div>
-                    
+
                     @error('meters')
                         <p class="text-red-700">
                             {{$message}}
@@ -64,7 +69,12 @@
                     @enderror
                 </div>
 
-                <search-input-component></search-input-component>
+
+                @php
+                    $key = env('TOMTOM_API_KEY');
+                @endphp
+                <search-input-component api-key="{{ $key }}"></search-input-component>
+         
                 @error('address')
                     <p class="text-red-700">
                         {{$message}}
@@ -109,7 +119,7 @@
                     <label class="mr-2 font-bold" for="price">Prezzo *</label>
                     <input class="p-2 flex-grow" type="number" min="0" name="price" id="price" placeholder="Inserisci il prezzo" value="{{ old('price') }}" required>
                     <div class="price-error"></div>
-                    
+
                     @error('price')
                         <p class="text-red-700">
                             {{$message}}
@@ -140,10 +150,7 @@
                         Selezione delle immagini valide. Dimensione massima 2 megabyte
                     </p>
                 </div>
-
-                <sponsor-component></sponsor-component>
-
-
+                
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold">Visibilità *</label>
                     <div>
@@ -167,4 +174,5 @@
             <div><strong>*</strong> indica un campo obbligatorio</div>
         </div>
     </div>
+
 @endsection

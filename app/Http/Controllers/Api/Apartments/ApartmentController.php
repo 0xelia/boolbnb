@@ -62,12 +62,24 @@ class ApartmentController extends Controller
      * @param  \App\Apartment  $apartment
      * @return \Illuminate\Http\Response
      */
-    public function show(Apartment $apartment)
-    {
-        return response()->json([
-            'apartment' => $apartment,
-            'success' => true
-        ]);
+    public function show($id)
+    {   
+        $apartment = Apartment::where('id', $id)->with('services', 'images')->first();
+
+        if($apartment){
+            return response()->json([
+                'apartment' => $apartment,
+                'success' => true
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+        // return response()->json([
+        //     'apartment' => $apartment,
+        //     'success' => true
+        // ]);
     }
 
     /**
