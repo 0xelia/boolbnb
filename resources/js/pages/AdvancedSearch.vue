@@ -39,7 +39,7 @@
 			</div>
 			<div class="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10 xl:grid-cols-3">
 				<router-link v-for="(info, i) in filtered_apartments" :key="i" :to="{ name: 'apartments.show', params: { id: info.id }}">
-					<ApartmentCard :apartment="info" />
+					<ApartmentCard :apartment="info" :distance="distances[i]"/>
 				</router-link>
 			</div>
 		</div>
@@ -192,6 +192,7 @@ export default {
 			show: false,
 			screen: window.innerWidth,
 			apartments: [],
+			distances: [],
 			categories,
 			service_list: [],
 			filters: {
@@ -213,7 +214,7 @@ export default {
 	computed: {
 		filtered_apartments() {
 			this.filtered = false
-			return this.apartments.filter(apartment => {
+			let filtered = this.apartments.filter(apartment => {
 				let visible = true
 				for (const [key, value] of Object.entries(this.filters)) {
 					if(key.endsWith('_number')) {
@@ -226,7 +227,6 @@ export default {
 					if(key === 'distance') {
 						if(this.latitude && this.longitude) {
 							const distance = this.getDistanceFromLatLonInKm(apartment.latitude, apartment.longitude, this.latitude, this.longitude)
-							console.log(distance);
 							visible = visible && distance <= this.filters.distance
 						} else {
 							visible = visible && true
@@ -253,6 +253,43 @@ export default {
 				this.filtered = true
 				return visible
 			})
+			filtered.sort((ap1, ap2) => {
+				let date1 = null
+				let date2 = null
+				const now = new Date()
+				const distance1 = this.getDistanceFromLatLonInKm(this.latitude, this.longitude, ap1.latitude, ap1.longitude)
+				const distance2 = this.getDistanceFromLatLonInKm(this.latitude, this.longitude, ap2.latitude, ap2.longitude)
+				if(ap1.sponsors.length > 0) {
+					date1 = new Date(ap1.sponsors[0].pivot.expire_date)
+					date1 = now < date1 ? date1 : null
+				}											
+				if(ap2.sponsors.length > 0) {
+					date2 = new Date(ap2.sponsors[0].pivot.expire_date)
+					date2 = now < date2 ? date2 : null
+				}	
+				if(date1 && !date2) {
+					return -1
+				} else if(!date1 && date2) {
+					return 1
+				} else {
+					if(distance1 > distance2) {
+						return 1
+					}
+					if(distance1 < distance2) {
+						return -1
+					}
+					return 0
+				}
+			})
+			if(this.latitude && this.longitude) {
+				this.distances = filtered.map(apartment => {
+					const distance = this.getDistanceFromLatLonInKm(apartment.latitude, apartment.longitude, this.latitude, this.longitude)
+					return Math.round(distance)
+				})
+			} else {
+				this.distances = []
+			}
+			return filtered
 		},
 	},
 	methods: {
@@ -268,7 +305,6 @@ export default {
 			} else {
 				this.filters[name] = value
 			}
-			console.log(this.filtered_apartments);
 		},
 		onSelect(data) {
 			const [latitude, longitude] = data
@@ -280,7 +316,6 @@ export default {
 				const { apartments, service_list } = res.data
 				this.apartments = apartments
 				this.service_list = service_list
-				console.log(this.apartments);
 			})
 		},
 		toggleFilters() {
