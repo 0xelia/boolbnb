@@ -27,9 +27,7 @@
             <div class="container mx-auto px-6 md:px-0">
                 <div class="flex items-center justify-between">
                     <div class="mr-6">
-                        <a href="{{ url('/admin') }}" class="text-lg font-semibold text-gray-100 no-underline">
-                            {{ config('app.name', 'Laravel') }}
-                        </a>
+                        <a href="/" class="text-lg font-semibold text-gray-100 no-underline">airbnb</a>
                     </div>
                     <div class="flex gap-3 space-between items-center text-right ali">
                         @guest

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header/>
+    <Header />
     <router-view></router-view>
     <Footer/>
   </div>
@@ -14,8 +14,8 @@ export default {
   components: {
     Header,
     Footer,
-  }
-
+  },
+  props: ['user']
 }
 </script>
 

@@ -17,6 +17,7 @@
 export default {
     data() {
         return {
+            user: this.$root.user,
             links: [
                 {
                     text: 'Login',
