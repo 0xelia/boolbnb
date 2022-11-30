@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api\Orders;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Orders\OrderRequest;
+use App\Apartment;
 use App\Sponsor;
 use Braintree\Gateway;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -37,9 +39,17 @@ class OrderController extends Controller
         if($result->success){
 
             // sync apartment sponsor params
+            $apartment = Apartment::where('id', $request->apartment['id'])->first();
+            $actual_date = Carbon::now();
+            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
             
-
-
+            $apartment->sponsors()->attach($sponsor->id, 
+            [
+                'transaction_id' => $result->transaction->id,
+                'expire_date' => $expire_date
+            ]);
+            $apartment->sponsors()->sync($sponsor->id);
+    
             $data = [
                 'success' => true,
                 'message' => 'Transazione eseguita con successo',
