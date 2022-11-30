@@ -1,5 +1,5 @@
 <template>
-    <div class="accordion py-6 border-t border-gray-300">
+    <div class="accordion py-6 border-t border-gray-300 select-none">
         <div @click="toggleFilters" class="py-6 -my-6 flex justify-between gap-4">
             <h3 class="text-gray-700">{{ info.title }}</h3>
             <i :class="hidden ? 'fa-plus' : 'fa-minus'" class="fa-solid"></i>
