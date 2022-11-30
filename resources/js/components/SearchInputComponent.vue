@@ -2,7 +2,7 @@
     <div class="address-wrapper">
         <div ref="searchWrapper" class='flex flex-col gap-2 mb-4 relative'>
             <label for="address" class="font-bold">Indirizzo *</label>
-            <input @keyup="fetchResult" type="text" name="address" id="address" v-model="address" class="address p-2 flex-grow" placeholder="Inserisci un indirizzo">
+            <input @keyup="fetchResult" type="text" name="address" id="address" v-model="address" class="address p-2 flex-grow" placeholder="Inserisci un indirizzo" autocomplete="off">
             <ul class="absolute w-full rounded bg-white results-list" v-if="results">
                 <li @click="getResult(result)" v-for="(result, index) in results" :key="index" class="result cursor-pointer px-2 py-3">
                     {{result.address.freeformAddress}}
