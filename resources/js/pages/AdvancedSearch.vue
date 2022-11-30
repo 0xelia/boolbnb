@@ -186,7 +186,6 @@ const categories = [
 ]
 
 export default {
-	props: ['lat', 'lon', 'addr'],
 	data() {
 		return {
 			show: false,
@@ -201,9 +200,9 @@ export default {
 				distance: 20,
 				services: [],
 			},
-			latitude: this.lat ? this.lat : null,
-			longitude: this.lon ? this.lon : null,
-			address: this.addr ? this.addr : '',
+			latitude: null,
+			longitude: null,
+			address: this.$route.query.addr ? this.$route.query.addr : '',
 		}
 	},
 	components: {
@@ -212,6 +211,15 @@ export default {
 		ApartmentCard,
 	},
 	computed: {
+		urlAddress() {
+			return this.$route.query.addr
+		},
+		urlLat() {
+			return this.$route.query.lat
+		},
+		urlLon() {
+			return this.$route.query.lon
+		},
 		filtered_apartments() {
 			this.filtered = false
 			let filtered = this.apartments.filter(apartment => {
@@ -290,7 +298,7 @@ export default {
 				this.distances = []
 			}
 			return filtered
-		},
+		},	
 	},
 	methods: {
 		onFilter(data) {			
@@ -342,9 +350,30 @@ export default {
 		this.fetchApartments()
 	},
 	mounted() {
+		console.log(this);
+		this.latitude = this.$route.query.lat ? this.$route.query.lat : null;
+		this.longitude = this.$route.query.lon ? this.$route.query.lon : null;
+		this.address = this.$route.query.addr ? this.$route.query.addr : null;
 		window.addEventListener('resize', () => {
 			this.screen = window.innerWidth
 		})
+	},
+	watch: {
+		urlAddress: function(newValue, oldValue) {
+			if(newValue != oldValue) {
+				this.address = this.urlAddress
+			}
+		},
+		urlLat: function(newValue, oldValue) {
+			if(newValue != oldValue) {
+				this.latitude = this.urlLat
+			}
+		},
+		urlLon: function(newValue, oldValue) {
+			if(newValue != oldValue) {
+				this.longitude = this.urlLon
+			}
+		},
 	}
 }
 </script>
