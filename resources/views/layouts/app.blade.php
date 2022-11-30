@@ -12,7 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/validation.js') }}" defer></script>
-
+    <script src="https://js.braintreegateway.com/web/dropin/1.33.7/js/dropin.min.js"></script>
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 

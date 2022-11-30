@@ -7,13 +7,7 @@
         </div>
 
         <!--payment pop up-->
-        <div class="fixed object-center rounded-lg bg-white ">
-            <payment-component :authorization="tokenApi"/>
-            <div>{{$sponsors}}</div>
-            <button class="bg-red-700 text-white">
-                Procedi con l'acquisto
-            </button>
-        </div>
+
 
 
         <div>
@@ -154,10 +148,7 @@
                         Selezione delle immagini valide. Dimensione massima 2 megabyte
                     </p>
                 </div>
-
-                <sponsor-component></sponsor-component>
-
-
+                
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold">Visibilità *</label>
                     <div>
@@ -181,4 +172,5 @@
             <div><strong>*</strong> indica un campo obbligatorio</div>
         </div>
     </div>
+
 @endsection
