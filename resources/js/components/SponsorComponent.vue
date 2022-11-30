@@ -50,29 +50,32 @@
                 .then((res) => {
                     this.fetchedSponsors = res.data.sponsors;
                     this.addActive(this.fetchedSponsors)
-                    console.log(this.fetchedSponsors)
                 })
             },
+
+
             clicked(sponsor){
                 this.fetchedSponsors.forEach(sponsor=>{
                     sponsor.isActive = false
                 })
                 sponsor.isActive = true
-                console.log(sponsor)
             },
+
             addActive(sponsors){
                 sponsors.forEach(sponsor=>{
                     sponsor.isActive = false
                 })
                 return sponsors
             },
+
             setCurrent(id){
                 this.current = id
  },
         },
         mounted() {
             this.fetchSponsors()
-            console.log(this.sponsors)
+
+
         },
         computed:{
 

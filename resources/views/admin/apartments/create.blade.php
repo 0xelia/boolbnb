@@ -149,9 +149,9 @@
                     </p>
                 </div>
 
-                {{-- <sponsor-component></sponsor-component> --}}
-                <payment-comp />
-
+                <sponsor-component></sponsor-component>
+                <payment-comp></payment-comp>
+                
 
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold">Visibilità *</label>
@@ -176,4 +176,5 @@
             <div><strong>*</strong> indica un campo obbligatorio</div>
         </div>
     </div>
+
 @endsection
