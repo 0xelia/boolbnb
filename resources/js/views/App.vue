@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Header/>
-    <router-view></router-view>
+  <div class="flex min-h-screen flex-col">
+    <Header />
+    <router-view class="flex-grow"></router-view>
     <Footer/>
   </div>
 </template>
@@ -14,8 +14,8 @@ export default {
   components: {
     Header,
     Footer,
-  }
-
+  },
+  props: ['user']
 }
 </script>
 
