@@ -18,8 +18,9 @@ class CreateApartmentSponsorTable extends Migration
             $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
             $table->unsignedBigInteger('sponsor_id');
             $table->foreign('sponsor_id')->references('id')->on('sponsors')->onDelete('cascade');
-            $table->primary(['apartment_id','sponsor_id']);
-
+            
+            $table->string('transaction_id');
+            $table->primary('transaction_id');
             $table->dateTime('expire_date');
             $table->timestamps();
         });

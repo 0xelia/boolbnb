@@ -148,11 +148,7 @@
                         Selezione delle immagini valide. Dimensione massima 2 megabyte
                     </p>
                 </div>
-
-                <sponsor-component></sponsor-component>
-                <payment-comp></payment-comp>
                 
-
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="mr-2 font-bold">Visibilità *</label>
                     <div>

@@ -28,13 +28,18 @@ class OrderController extends Controller
         $result = $gateway->transaction()->sale([
             'amount' => $sponsor->price,
             //token inviato dal frontend, diverso dall'altro
-            'paymentMethodNonce' => $request->payment_nonce,
+            'paymentMethodNonce' => 'fake-valid-nonce',
             'options' => [
                 'submitForSettlement' => true
             ]
         ]);
 
         if($result->success){
+
+            // sync apartment sponsor params
+
+
+
             $data = [
                 'success' => true,
                 'message' => 'Transazione eseguita con successo',
@@ -48,6 +53,5 @@ class OrderController extends Controller
             ];
             return response()->json($data, 401);
         }
-        //return 'make payment';
     }
 }

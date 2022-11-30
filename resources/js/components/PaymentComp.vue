@@ -26,7 +26,6 @@
             makePayment(){
                 axios.post('/api/orders/make/payment', {
                     'sponsor': 3,
-                    'payment_nonce': 4012000033330620
                 }).then(res => {
                     console.log(res.data)
                 })
