@@ -1,5 +1,5 @@
 <template>
-    <div ref="searchWrapper" :class="{'address-wrapper relative z-50': guest}" class="relative">
+    <div ref="searchWrapper" :class="{'size relative z-50': guest}" class="relative address-wrapper">
         <div>
             <label v-if="!guest" for="address" class="font-bold block mb-2">Indirizzo *</label>
             
@@ -109,7 +109,7 @@
 </script>
 
 <style lang="scss" scoped>
-.address-wrapper {
+.size {
     max-width: 640px;
 }
 .results-list {
