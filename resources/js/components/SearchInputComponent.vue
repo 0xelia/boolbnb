@@ -84,9 +84,9 @@
                 // }
                 if(this.$route.name === 'home' || this.$route.name === 'advanced-search') {
                     this.$router.push({ path: '/ricerca-avanzata', query: {
-                        lat: this.latitude,
-                        lon: this.longitude,
-                        addr: this.address
+                        lat: this.latitude === null ? undefined : this.latitude,
+                        lon: this.longitude === null ? undefined : this.longitude,
+                        addr: this.address === null ? undefined : this.address
                     } })
                 }
             }
