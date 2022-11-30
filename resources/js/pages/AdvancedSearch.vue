@@ -211,6 +211,15 @@ export default {
 		ApartmentCard,
 	},
 	computed: {
+		urlAddress() {
+			return this.$route.query.addr
+		},
+		urlLat() {
+			return this.$route.query.lat
+		},
+		urlLon() {
+			return this.$route.query.lon
+		},
 		filtered_apartments() {
 			this.filtered = false
 			let filtered = this.apartments.filter(apartment => {
@@ -341,7 +350,7 @@ export default {
 		this.fetchApartments()
 	},
 	mounted() {
-		console.log(this.$route);
+		console.log(this);
 		this.latitude = this.$route.query.lat ? this.$route.query.lat : null;
 		this.longitude = this.$route.query.lon ? this.$route.query.lon : null;
 		this.address = this.$route.query.addr ? this.$route.query.addr : null;
@@ -350,9 +359,21 @@ export default {
 		})
 	},
 	watch: {
-		address: function(newValue, oldValue) {
-			console.log(newValue, oldValue);
-		}
+		urlAddress: function(newValue, oldValue) {
+			if(newValue != oldValue) {
+				this.address = this.urlAddress
+			}
+		},
+		urlLat: function(newValue, oldValue) {
+			if(newValue != oldValue) {
+				this.latitude = this.urlLat
+			}
+		},
+		urlLon: function(newValue, oldValue) {
+			if(newValue != oldValue) {
+				this.longitude = this.urlLon
+			}
+		},
 	}
 }
 </script>
