@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-braintree
-            authorization="sandbox_s9m8th2b_6thm2yxvhq57thys"
+            :authorization="authorization"
             @success="onSuccess"
             @error="onError"
             locale="it_IT"
@@ -10,6 +10,11 @@
 </template>
 
 <script>
+    /*import Vue from 'vue'
+    import vue-braintree from 'vue-braintree'
+
+    Vue.use(vue-braintree)*/
+
     export default{
         props:{
             authorization:{

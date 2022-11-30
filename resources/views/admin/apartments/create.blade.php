@@ -10,6 +10,7 @@
         <div class="fixed object-center rounded-lg bg-white ">
             <payment-component :authorization="tokenApi"/>
             <div>{{$sponsors}}</div>
+            <div>{{tokenApi}}</div>
             <button class="bg-red-700 text-white">
                 Procedi con l'acquisto
             </button>
@@ -182,3 +183,20 @@
         </div>
     </div>
 @endsection
+
+<script>
+    export default{
+        data(){
+            return{
+                tokenApi:'',
+
+
+            }
+        },
+        async mounted() {
+            let response = await this.$axios.$get('/api/order/generate')
+            this.tokenApi = response.token;
+        },
+
+    }
+</script>
