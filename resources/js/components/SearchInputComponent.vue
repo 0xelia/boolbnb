@@ -1,18 +1,24 @@
 <template>
-    <div class="address-wrapper">
-        <div ref="searchWrapper" class='flex flex-col gap-2 mb-4 relative'>
-            <label for="address" class="font-bold">Indirizzo *</label>
-            <input @keyup="fetchResult" type="text" name="address" id="address" v-model="address" class="address p-2 flex-grow" placeholder="Inserisci un indirizzo" autocomplete="off">
-            <ul class="absolute w-full rounded bg-white results-list" v-if="results">
-                <li @click="getResult(result)" v-for="(result, index) in results" :key="index" class="result cursor-pointer px-2 py-3">
-                    {{result.address.freeformAddress}}
-                </li>
-            </ul>
+    <div ref="searchWrapper" :class="{'address-wrapper relative z-50': guest}" class="relative">
+        <div>
+            <label v-if="!guest" for="address" class="font-bold block mb-2">Indirizzo *</label>
+            
+            <div class="mb-2" :class="{'search-box flex items-center rounded-full border-gray-700 border-2': guest}">
+                <i v-if="guest" class="fa-solid fa-magnifying-glass text-xl text-gray-700"></i>
+                <input @keyup="fetchResult" type="text" name="address" id="address" v-model="address" :class="{'w-full mx-3 text-base text-gray-700 font-bold': guest, 'address p-2 w-full': !guest}" :placeholder="guest ? 'Cerca un appartamento...' : 'Inserisci un indirizzo'" autocomplete="off">
+                <i v-if="guest" class="fa-solid fa-circle-xmark text-xl text-gray-300 hover:text-brand-300"></i>
+            </div>
         </div>
-        <div class="address-error"></div>
+
+        <ul class="absolute top-0 left-0 w-full mb-4 rounded bg-white results-list" v-if="results">
+            <li @click="getResult(result)" v-for="(result, index) in results" :key="index" class="result cursor-pointer px-2 py-3">
+                {{result.address.freeformAddress}}
+            </li>
+        </ul>
+        
+        <div v-if="!guest" class="address-error"></div>
 
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
-
         <input class="p-2 flex-grow" type="hidden" name="longitude" v-model="longitude">
     </div>
 </template>
@@ -35,6 +41,7 @@
                 longitude: '',
                 address: this.addr ? this.addr : '',
                 results: null,
+                guest: false
             }
         },
         methods: {
@@ -87,12 +94,24 @@
                         addr: this.address,
                     } })
                 }
-            }
+            },
+            isFront() {
+                if (this.$route) {
+                    this.guest = true
+                }
+                console.log(this.guest)
+            },
+        },
+        mounted() {
+            this.isFront()
         }
     }
 </script>
 
 <style lang="scss" scoped>
+.address-wrapper {
+    max-width: 640px;
+}
 .results-list {
     top: 70px;
     border: 2px solid black;
@@ -101,5 +120,13 @@
             background-color: lightgray;
         }
     }
+}
+.search-box {
+    padding: 1.125rem 1.5rem;
+}
+
+input::placeholder {
+    color: #C3C6D1;
+    font-weight: 400;
 }
 </style>
