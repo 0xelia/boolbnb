@@ -107,7 +107,7 @@
             },
             setCurrent(id){
                 this.current = id
- },
+                },
         },
         mounted() {
             this.fetchSponsors()
