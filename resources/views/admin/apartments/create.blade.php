@@ -7,13 +7,7 @@
         </div>
 
         <!--payment pop up-->
-        <div class="fixed object-center rounded-lg bg-white ">
-            <payment-component :authorization="tokenApi"/>
-            <div>{{$sponsors}}</div>
-            <button class="bg-red-700 text-white">
-                Procedi con l'acquisto
-            </button>
-        </div>
+
 
 
         <div>
@@ -155,7 +149,8 @@
                     </p>
                 </div>
 
-                <sponsor-component></sponsor-component>
+                {{-- <sponsor-component></sponsor-component> --}}
+                <payment-comp />
 
 
                 <div class="flex flex-col gap-2 mb-4">
