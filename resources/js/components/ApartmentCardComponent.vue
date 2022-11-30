@@ -17,7 +17,7 @@
             Dista {{distance}} km
         </div>
         <div class="absolute sponsored" v-if="checkDate(apartment)">
-            <p>Sponsorizzato</p>
+            <p>In evidenza</p>
         </div>
     </div>
 </template>
