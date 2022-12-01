@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/validation.js') }}" defer></script>
+    <script src="{{ asset('js/header.js') }}" defer></script>
     <script src="https://js.braintreegateway.com/web/dropin/1.33.7/js/dropin.min.js"></script>
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -24,20 +25,24 @@
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none">
     <div id="app">
-        <nav class="bg-blue-900 shadow mb-8 py-6">
+        <nav class="bg-brand-500 shadow mb-8 py-6">
             <div class="container mx-auto px-6 md:px-0">
                 <div class="flex items-center justify-between">
                     <div class="mr-6">
-                        <a href="/" class="text-lg font-semibold text-gray-100 no-underline">airbnb</a>
+                        <a href="/" class="text-lg font-bold text-white capitalize no-underline">airbnb</a>
                     </div>
-                    <div class="flex gap-3 space-between items-center text-right ali">
+
+                    {{-- HEADER FULLWIDTH --}}
+                    <div class="hidden lg:flex gap-3 space-between items-center text-right ali">
                         @guest
-                            <a class="no-underline hover:underline text-gray-300 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="no-underline hover:underline text-white text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
-                                <a class="no-underline hover:underline text-gray-300 text-sm p-3" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="no-underline hover:underline text-white text-sm p-3" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
                         @else
-                            <a class="text-white mr-5" href="{{ route('admin.apartments.index')}}">I miei appartamenti</a>
+                            @if(Route::currentRouteName() != 'admin.apartments.index')
+                                <a class="text-white mr-5" href="{{ route('admin.apartments.index')}}">I miei appartamenti</a>    
+                            @endif
                             <div>
                                 <a class="text-white flex items-center" href="{{ route('admin.users.show', Auth::user())}}">
                                     <span class="text-sm pr-4">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
@@ -47,7 +52,7 @@
                                 </a>
                             </div>
                             <a href="{{ route('logout') }}"
-                               class="no-underline hover:underline text-gray-300 text-sm p-3"
+                               class="no-underline hover:underline text-white text-sm p-3"
                                onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
@@ -55,6 +60,55 @@
                             </form>
                         @endguest
                     </div>
+
+
+                    {{-- DROPDOWN MENU --}}
+                    <div class="humburger  flex lg:hidden flex-col gap-2">
+                        <span class="line"></span>
+                        <span class="line"></span>
+                        <span class="line"></span>
+                    </div>
+
+                    <div class="drop_menu lg:hidden flex text-white fixed top-0 bottom-0 left-0 right-0  justify-center items-center">
+                        <div class="links_wrapper flex flex-col gap-4">
+
+
+                            @guest
+                                <a class="no-underline hover:underline text-white text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                @if (Route::has('register'))
+                                    <a class="no-underline hover:underline text-white text-sm p-3" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                @endif
+                                @else
+                                @if(Route::currentRouteName() != 'admin.apartments.index')
+                                    <a class="text-white text-xl font-bold" href="{{ route('admin.apartments.index')}}">I miei appartamenti</a>    
+                                @endif
+
+                                @if (Route::currentRouteName() != 'admin.users.show')
+                                    
+                                    <div class="text-center">
+                                        <a class="text-white flex flex-col text-center items-center" href="{{ route('admin.users.show', Auth::user())}}">
+                                            <img style="width: 40px; height: 40px; border-radius: 50%;"  class="items-center" src="{{ auth::user()->profile_pic_path }}" alt="">
+                                            <span class="text-xl  font-bold">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
+                                            @if(auth::user()->profile_pic)
+                                            @endif
+                                        </a>
+                                    </div>
+                                @endif
+
+
+                                <a href="{{ route('logout') }}"
+                                    class="no-underline hover:underline text-xl text-center font-bold text-white"
+                                    onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                                    {{ csrf_field() }}
+                                </form>
+                            @endguest
+
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </nav>

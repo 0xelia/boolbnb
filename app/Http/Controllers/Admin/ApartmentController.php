@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class ApartmentController extends Controller
 {
@@ -23,8 +24,10 @@ class ApartmentController extends Controller
     public function index()
     {
         $user_id = Auth::id();
+        $route_name = Route::currentRouteName();
+
         $apartments = Apartment::where('user_id', $user_id)->paginate(8);
-        return view('admin.apartments.index', compact('apartments'));
+        return view('admin.apartments.index', compact('apartments', 'route_name'));
     }
 
     /**

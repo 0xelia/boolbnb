@@ -8,6 +8,8 @@
 
 @import "@tomtom-international/web-sdk-maps";
 
+@import 'animate.css';
+
 /*@import "@fontsource/figtree";*/
 
 /*body {
@@ -88,4 +90,23 @@ display: block;
 .notification{
     top: -8px;
     right: -8px;
+}
+
+.humburger {
+    position: relative;
+    z-index: 101;
+}
+
+.humburger .line {
+    height: 4px;
+    width: 30px;
+    background-color: white;
+    border-radius: 999px;
+}
+
+.drop_menu {
+    background-color: #FF385C;
+    z-index: 100;
+    transform: translateX(100%);
+    
 }
