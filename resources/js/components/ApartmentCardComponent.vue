@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col h-full relative">
         <figure class="flex-grow">
-            <img class="w-full h-full object-cover object-center rounded-xl" :src="apartment.cover_path" alt="immagine appartamento">
+            <img class="w-full h-full object-cover object-center rounded-xl" :src="apartment.pic_path" alt="immagine appartamento">
         </figure>
         <span class="text-gray-700 text-xl font-bold py-2">{{apartment.title}}</span>
         <div class="flex justify-between">
