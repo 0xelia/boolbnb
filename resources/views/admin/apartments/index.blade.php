@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto flex items-center mb-3">
+    <div class="container mx-auto flex items-center mb-6">
         <div>
             <h2 class="text-3xl">Appartamenti</h1>
         </div>
@@ -14,17 +14,15 @@
             @foreach ($apartments as $apartment)
             <div class="flex-col">
                 <li class="flex h-full flex-col relative">
-                    <figure class="static overflow-hidden flex-grow rounded-xl">
-                        <a href="{{ route('admin.apartments.show', $apartment) }}">
-                            <img class="w-full h-full object-cover object-center" src="{{ $apartment->pic_path }}" alt="">
-                        </a>
-                        <promotion-component class="absolute bottom-6 right-3 " :apartment="{{$apartment}}"/>
-                    </figure>
                     <a href="{{ route('admin.apartments.show', $apartment) }}">
+                        <figure class="pb-2/3 relative mb-3">
+                            <img class="absolute w-full h-full object-cover object-center rounded-xl" src="{{ $apartment->pic_path }}" alt="">
+                        </figure>
                         <h3 class="font-bold capitalize">
                             {{ $apartment->title }}
                         </h3>
                     </a>
+                    <promotion-component class="absolute right-3 promotion" :apartment="{{$apartment}}"/>
                     @php
                         $unviewedMessages = 0;
                     @endphp
