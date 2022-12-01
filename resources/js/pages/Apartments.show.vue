@@ -50,25 +50,25 @@
 
         <div class="grid border rounded-lg p-6 md:row-span-2 h-96 lg:col-span-1 drop-shadow-xl shadow-m">
           <div class="flex pb-8">
-            <h4 class="text-brand-500 text-2xl font-bold">{{apartment.price}} € &nbsp; </h4>
+            <h4 class="text-brand-500 text-2xl font-bold">{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(apartment.price)}} &nbsp; </h4>
             <p class="self-center">notte</p>
           </div>
           <div class="flex justify-between pb-8">
-            <div>{{apartment.price}} x 5 notti</div>
-            <div>{{apartment.price * 5}}&nbsp;$</div>
+            <div>{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(apartment.price)}} x 5 notti</div>
+            <div>{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(apartment.price * 5)}}</div>
           </div>
           <div class="flex justify-between pb-8">
             <div>Costi di pulizia</div>
-            <div>{{Math.round((apartment.price * 5)*0.5/100*100)/100}}&nbsp;$</div>
+            <div>{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Math.round((apartment.price * 5)*0.5/100*100)/100)}}</div>
           </div>
           <div class="flex justify-between pb-8">
             <div>Costi del servizio</div>
-            <div>{{Math.round((apartment.price * 5)*2/100*100)/100}}&nbsp;$</div>
+            <div>{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Math.round((apartment.price * 5)*2/100*100)/100)}}</div>
           </div>
           <hr class="pb-8">
           <div class="flex justify-between pb-3">
             <div class="font-bold">Totale</div>
-            <div class="font-bold">{{Math.round((apartment.price * 5 + (apartment.price * 5)*0.5/100 + (apartment.price * 5)*2/100)*100)/100}}&nbsp;$</div>
+            <div class="font-bold">{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Math.round((apartment.price * 5 + (apartment.price * 5)*0.5/100 + (apartment.price * 5)*2/100)*100)/100)}}</div>
           </div>
           <!-- BUTTON PRENOTAZIONE -->
           <!-- <div class="flex justify-center">
