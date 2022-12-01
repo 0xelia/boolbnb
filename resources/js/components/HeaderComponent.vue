@@ -5,7 +5,7 @@
                 <a href="/" class="text-brand-500 text-xl">airbnb</a>
                 <nav class="ml-auto">
                     <div>
-                        <a v-if="user" href="admin/home" class="no-underline hover:underline">Home</a>
+                        <a v-if="user" href="admin/apartments" class="no-underline hover:underline">I miei appartamenti</a>
                         <template v-else>
                             <a href="login" class="no-underline hover:underline pr-6">Login</a>
                             <a href="register" class="no-underline hover:underline">Register</a>
