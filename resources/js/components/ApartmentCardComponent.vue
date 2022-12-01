@@ -42,12 +42,7 @@ export default {
             }
             return date
         }
-    },
-
-    mounted(){
-        console.log(this.apartment)
-    }
-    
+    },   
 }
 </script>
 
