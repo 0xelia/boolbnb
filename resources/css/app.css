@@ -92,6 +92,7 @@ display: block;
     right: -8px;
 }
 
+<<<<<<< HEAD
 .humburger {
     position: relative;
     z-index: 101;
@@ -109,4 +110,8 @@ display: block;
     z-index: 100;
     transform: translateX(100%);
     
+}
+
+.promotion {
+    top: 0.5rem;
 }
