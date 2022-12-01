@@ -1,7 +1,7 @@
 <template>
 	<main v-if="apartments">
 		<!-- hero -->
-		<div class="container py-8 text-center">
+		<div class="container py-8 mb-10 text-center">
 			<div class="text-sm mb-2">Risultati di ricerca per</div>
 			<SearchInput @positionSelected="onSelect" :addr="address" class="mx-auto" />
 		</div>
@@ -15,12 +15,12 @@
 					<span v-for="(filter, i) in filters" :key="filter[i]">{{ filter[0] }}</span>
 				</div> -->
 
-				<select class="ml-auto">
+				<!-- <select class="ml-auto">
 					<option data="">Ordina per</option>
 					<option value="">Rilevanza</option>
 					<option value="">Data di aggiunta</option>
 					<option value="">Distanza</option>
-				</select>
+				</select> -->
 				
 				<div @click="toggleFilters" class="lg:hidden">
 					<i class="fa-solid fa-filter"></i>
