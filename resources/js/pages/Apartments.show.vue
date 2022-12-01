@@ -1,7 +1,7 @@
 <template>
 
   <div class="container">
-      
+
       <router-link :to="{name: 'home'}" class="block text-brand-500 pt-5" > <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca </router-link>
       <div v-if="apartment" class="font-semibold text-5xl">
         <h2 class="text-black font-bold pt-7">
@@ -115,9 +115,9 @@
         </p>
 
         <!-- POPUP MESSAGE SUCCEED -->
-        <div v-if="popup" class="fixed popup_wrapper inset-x-0 inset-y-0  flex justify-center items-center">
-          <div class="flex px-3 py-6 rounded-xl bg-white text-brand-500 text-bold">
-            Messaggio Inviato correttamente!
+        <div v-if="popup" class="fixed popup_wrapper inset-x-0 inset-y-0  flex justify-center items-center z-10">
+          <div class="flex px-3 py-6 rounded-xl bg-white text-brand-500 text-bold text-3xl">
+            Messaggio inviato correttamente!
           </div>
         </div>
 
@@ -289,12 +289,12 @@ export default {
           email: this.msgEmail,
           text: this.msgTxt,
           apartment_id: this.id
-        }).then(res => { 
+        }).then(res => {
           this.popup = true
           this.msgName = ''
           this.msgLastname = ''
           this.msgTxt = ''
-          this.msgEmail = ''        
+          this.msgEmail = ''
           setTimeout(()=>{
             this.popup = false
 
