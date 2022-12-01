@@ -89,7 +89,7 @@ display: block;
 
 .notification{
     top: -8px;
-    left: 0px;
+    right: -6px;
     z-index: 200;
 }
 
