@@ -29,7 +29,7 @@
             <div class="container mx-auto px-6 md:px-0">
                 <div class="flex items-center justify-between">
                     <div class="mr-6">
-                        <a href="/" class="text-lg font-bold text-white capitalize no-underline">airbnb</a>
+                        <a href="/" class="text-lg relative brand-logo font-bold text-white capitalize no-underline">airbnb</a>
                     </div>
 
                     {{-- HEADER FULLWIDTH --}}
@@ -64,12 +64,10 @@
 
                     {{-- DROPDOWN MENU --}}
                     <div class="humburger  flex lg:hidden flex-col gap-2">
-                        <span class="line"></span>
-                        <span class="line"></span>
-                        <span class="line"></span>
+                        <span class="bar"></span>
                     </div>
 
-                    <div class="drop_menu lg:hidden flex text-white fixed top-0 bottom-0 left-0 right-0  justify-center items-center">
+                    <div class="drop_menu lg:hidden translate-x flex text-white fixed  justify-center items-center">
                         <div class="links_wrapper flex flex-col gap-4">
 
 

@@ -89,29 +89,60 @@ display: block;
 
 .notification{
     top: -8px;
-    right: -8px;
+    left: 0px;
+    z-index: 200;
 }
 
-<<<<<<< HEAD
 .humburger {
     position: relative;
     z-index: 101;
 }
 
-.humburger .line {
+.brand-logo{
+    z-index: 101;
+}
+
+.humburger .bar, .humburger::before, .humburger::after {
+    content: '';
+    display: block;
     height: 4px;
     width: 30px;
     background-color: white;
     border-radius: 999px;
+    transition:all 500ms ease-in-out;
+}
+
+
+.humburger.active::before{
+    transform: rotate(45deg) translate(3px, 14px);
+}
+
+.humburger.active::after{
+    transform: rotate(-45deg) translate(3px, -14px);
+}
+
+.humburger.active .bar{
+    width: 0 ;
 }
 
 .drop_menu {
     background-color: #FF385C;
     z-index: 100;
-    transform: translateX(100%);
     
 }
 
 .promotion {
     top: 0.5rem;
+}
+
+.drop_menu {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 200%;
+    transition: ease-in-out 500ms;
+}
+
+.drop_menu.active{
+    left: 0;
 }

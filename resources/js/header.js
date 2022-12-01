@@ -1,7 +1,9 @@
-const humburger = document.querySelector('.humburger');
-const dropMenu = document.querySelector('.drop_menu');
+const humburger = document.querySelector('.humburger')
+const dropMenu = document.querySelector('.drop_menu')
+
 
 
 humburger.addEventListener('click', function(){
-    dropMenu.classList.add('animate__slideInRight', 'animate__animated');
+        dropMenu.classList.toggle('active');
+        humburger.classList.toggle('active');
 });
