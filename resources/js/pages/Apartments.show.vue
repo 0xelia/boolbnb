@@ -1,6 +1,6 @@
 <template>
 
-  <div class="container">
+  <div v-if="apartment" class="container">
       
       <router-link :to="{name: 'home'}" class="block text-brand-500 pt-5" > <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca </router-link>
       <div v-if="apartment" class="font-semibold text-5xl">
