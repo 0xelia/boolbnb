@@ -49,35 +49,59 @@
                 this.fetchResult()
             },
             fetchResult() {
-                if(this.address) {
-                    axios.get("/api/search/".concat(this.address))
-                        .then(res => {
-                            const { results } = res.data
-                            this.results = results.results.filter(result => {
-                                return result.type != 'Cross Street'
-                            })
-                        })       
-                        .catch(err => {
-                            this.results = null
-                        })  
-                    axios.interceptors.response.use(response => {
-                        if(this.address) {
-                            return response
-                        } else {
-                            this.results = null
-                        }
-                    }, error => {
-                        return Promise.reject(error)
-                    })           
+                if(this.$route.name !== 'home') {
+                    if(this.address) {
+                        axios.get("/api/search/".concat(this.address))
+                            .then(res => {
+                                const { results } = res.data
+                                this.results = results.results.filter(result => {
+                                    return result.type != 'Cross Street'
+                                })
+                            })       
+                            .catch(err => {
+                                this.results = null
+                            })  
+                        axios.interceptors.response.use(response => {
+                            if(this.address) {
+                                return response
+                            } else {
+                                this.results = null
+                            }
+                        }, error => {
+                            return Promise.reject(error)
+                        })           
+                    } else {
+                        this.results = null
+                        this.latitude = null
+                        this.longitude = null                    
+                        // this.$emit('positionSelected', [
+                        //     this.latitude,
+                        //     this.longitude
+                        // ])
+                        this.getResult(this.results)
+                    }
                 } else {
-                    this.results = null
-                    this.latitude = null
-                    this.longitude = null                    
-                    // this.$emit('positionSelected', [
-                    //     this.latitude,
-                    //     this.longitude
-                    // ])
-                    this.getResult(this.results)
+                    if(this.address) {
+                        axios.get("/api/search/".concat(this.address))
+                            .then(res => {
+                                const { results } = res.data
+                                this.results = results.results.filter(result => {
+                                    return result.type != 'Cross Street'
+                                })
+                            })       
+                            .catch(err => {
+                                this.results = null
+                            })  
+                        axios.interceptors.response.use(response => {
+                            if(this.address) {
+                                return response
+                            } else {
+                                this.results = null
+                            }
+                        }, error => {
+                            return Promise.reject(error)
+                        })           
+                    }
                 }
             },
             getResult(result) {
