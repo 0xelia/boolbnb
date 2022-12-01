@@ -30,7 +30,6 @@
         props: ['addr'],
         data(){
             return{
-                tomtomApiUrl: 'https://api.tomtom.com/search/2/search/',
                 typeahead: true,
                 limit: 5,
                 language: "it-IT",
