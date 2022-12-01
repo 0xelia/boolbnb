@@ -193,7 +193,7 @@
                     @enderror
             </div>
 
-            <div class="flex flex-col gap-2 mb-4">
+            {{-- <div class="flex flex-col gap-2 mb-4">
                 <label class="mr-2 font-bold">Sponsorizzazione:</label>
                     <ul>
                         @foreach ($sponsors as $sponsor)
@@ -208,7 +208,7 @@
                             {{$message}}
                         </p>
                     @enderror
-            </div>
+            </div> --}}
             <input class="cursor-pointer w-full py-4 rounded-xl my-8 hover:bg-orange-500  bg-orange-400 text-white" type="submit" id="submit" value="Modifica Appartamento">
         </form>
     </section>|

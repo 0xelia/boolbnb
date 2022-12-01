@@ -9,8 +9,8 @@
     </section>
     <!-- Cards Appartamenti -->
 
-    <section>
-      <div v-if="apartments">
+    <section class="container">
+      <div v-if="apartments" class="grid grid-cols-4 gap-8">
         <router-link v-for="(apartment, index) in apartments" :key="index" :to="{ name: 'apartments.show', params:  { id: apartment.id }}">
 
           <ApartmentCard :apartment="apartment"/>

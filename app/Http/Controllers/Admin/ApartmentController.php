@@ -188,13 +188,13 @@ class ApartmentController extends Controller
             $apartment->services()->sync($params['services']);
         }
 
-        if(array_key_exists('sponsor', $params)){
-            $sponsor = Sponsor::where('id', $params['sponsor'])->first();
-            $actual_date = Carbon::now();
-            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
-            $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
-            $apartment->sponsors()->sync($params['sponsor']);
-        }
+        // if(array_key_exists('sponsor', $params)){
+        //     $sponsor = Sponsor::where('id', $params['sponsor'])->first();
+        //     $actual_date = Carbon::now();
+        //     $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
+        //     $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
+        //     $apartment->sponsors()->sync($params['sponsor']);
+        // }
 
         $apartment->update($params);
 

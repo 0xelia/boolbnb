@@ -220,9 +220,9 @@
 
 
   </div>
-  <div v-else>
+  <!-- <div v-else>
     <h3>Appartamento non disponibile</h3>
-  </div>
+  </div> -->
 </template>
 
 <script>
