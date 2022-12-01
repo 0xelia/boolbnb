@@ -5,7 +5,7 @@
             
             <div class="mb-2" :class="{'search-box flex items-center rounded-full border-gray-700 border-2': guest}">
                 <i v-if="guest" class="fa-solid fa-magnifying-glass text-xl text-gray-700"></i>
-                <input @keyup="fetchResult" type="text" name="address" id="address" v-model="address" :class="{'w-full mx-3 text-base text-gray-700 font-bold outline': guest, 'address p-2 w-full': !guest}" :placeholder="guest ? 'Cerca un appartamento...' : 'Inserisci un indirizzo'" autocomplete="off">
+                <input @keyup="showResult" type="text" name="address" id="address" v-model="address" :class="{'w-full mx-3 text-base text-gray-700 font-bold outline': guest, 'address p-2 w-full': !guest}" :placeholder="guest ? 'Cerca un appartamento...' : 'Inserisci un indirizzo'" autocomplete="off">
                 <i @click="clearInput" v-if="guest" class="fa-solid fa-circle-xmark text-xl text-gray-300 hover:text-brand-300"></i>
             </div>
         </div>
@@ -46,62 +46,30 @@
         methods: {
             clearInput() {
                 this.address = ''
-                this.fetchResult()
+                this.showResult()
             },
-            fetchResult() {
-                if(this.$route.name !== 'home') {
-                    if(this.address) {
-                        axios.get("/api/search/".concat(this.address))
-                            .then(res => {
-                                const { results } = res.data
-                                this.results = results.results.filter(result => {
-                                    return result.type != 'Cross Street'
-                                })
-                            })       
-                            .catch(err => {
-                                this.results = null
-                            })  
-                        axios.interceptors.response.use(response => {
-                            if(this.address) {
-                                return response
-                            } else {
-                                this.results = null
-                            }
-                        }, error => {
-                            return Promise.reject(error)
-                        })           
+            showResult() {
+                if(this.$route) {
+                    if(this.$route.name !== 'home') {
+                        if(this.address) {
+                            this.fetchResult()           
+                        } else {
+                            this.results = null
+                            this.latitude = null
+                            this.longitude = null                    
+                            // this.$emit('positionSelected', [
+                            //     this.latitude,
+                            //     this.longitude
+                            // ])
+                            this.getResult(this.results)
+                        }
                     } else {
-                        this.results = null
-                        this.latitude = null
-                        this.longitude = null                    
-                        // this.$emit('positionSelected', [
-                        //     this.latitude,
-                        //     this.longitude
-                        // ])
-                        this.getResult(this.results)
+                        if(this.address) {
+                            this.fetchResult()           
+                        }
                     }
                 } else {
-                    if(this.address) {
-                        axios.get("/api/search/".concat(this.address))
-                            .then(res => {
-                                const { results } = res.data
-                                this.results = results.results.filter(result => {
-                                    return result.type != 'Cross Street'
-                                })
-                            })       
-                            .catch(err => {
-                                this.results = null
-                            })  
-                        axios.interceptors.response.use(response => {
-                            if(this.address) {
-                                return response
-                            } else {
-                                this.results = null
-                            }
-                        }, error => {
-                            return Promise.reject(error)
-                        })           
-                    }
+                    this.fetchResult()
                 }
             },
             getResult(result) {
@@ -116,13 +84,36 @@
                 //         addr: this.address
                 //     } })
                 // }
-                if(this.$route.name === 'home' || this.$route.name === 'advanced-search') {
-                    this.$router.push({ path: '/ricerca-avanzata', query: {
-                        lat: this.latitude === null ? undefined : this.latitude,
-                        lon: this.longitude === null ? undefined : this.longitude,
-                        addr: this.address === null ? undefined : this.address
-                    } })
+                if(this.$route) {
+                    if(this.$route.name === 'home' || this.$route.name === 'advanced-search') {
+                        this.$router.push({ path: '/ricerca-avanzata', query: {
+                            lat: this.latitude === null ? undefined : this.latitude,
+                            lon: this.longitude === null ? undefined : this.longitude,
+                            addr: this.address === null ? undefined : this.address
+                        } })
+                    }
                 }
+            },
+            fetchResult() {
+                axios.get("/api/search/".concat(this.address))
+                    .then(res => {
+                        const { results } = res.data
+                        this.results = results.results.filter(result => {
+                            return result.type != 'Cross Street'
+                        })
+                    })       
+                    .catch(err => {
+                        this.results = null
+                    })  
+                axios.interceptors.response.use(response => {
+                    if(this.address) {
+                        return response
+                    } else {
+                        this.results = null
+                    }
+                }, error => {
+                    return Promise.reject(error)
+                })
             },
             isFront() {
                 if (this.$route) {
