@@ -374,6 +374,9 @@ export default {
 				this.longitude = this.urlLon
 			}
 		},
+	},
+	updated() {
+		console.log(this.filtered_apartments);
 	}
 }
 </script>
