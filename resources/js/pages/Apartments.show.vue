@@ -2,7 +2,7 @@
   <div class="flex flex-col container">
     <div v-if="visible">
       <p @click="goBack" class="block text-brand-500 pt-5 cursor-pointer">
-        <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca
+        <i class="fa-chevron-left fa-solid"></i> Torna indietro
       </p>
       <div v-if="apartment" class="font-semibold text-5xl">
         <h2 class="text-black font-bold pt-7">
