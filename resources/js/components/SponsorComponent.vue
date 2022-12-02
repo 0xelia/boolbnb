@@ -29,7 +29,7 @@
                                 </div>
                             </div>
 
-                            <h2 class="text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300">${{sponsor.price}}</h2>
+                            <h2 class="text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300">€{{sponsor.price}}</h2>
                         </div>
                     </div>
                 </div>

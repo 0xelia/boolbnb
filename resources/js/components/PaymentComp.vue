@@ -36,8 +36,18 @@
                 Alcuni campi sono vuoti
             </div>
         </div>
-        <div v-if="response" class="text-xl text-center text-gray-700 font-semibold">
+        <div v-if="response" class="flex flex-col items-center content-center gap-10 text-xl text-center text-gray-700 font-semibold">
             {{response.message}}
+            <div v-if="(response.success === true)">
+                <svg width="133px" height="133px" viewBox="0 0 133 133" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="check-group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <circle id="filled-circle" fill="#78B348" cx="66.5" cy="66.5" r="54.5"></circle>
+                        <circle id="white-circle" fill="#FFFFFF" cx="66.5" cy="66.5" r="55.5"></circle>
+                        <circle id="outline" stroke="#78B348" stroke-width="4" cx="66.5" cy="66.5" r="54.5"></circle>
+                        <polyline id="check" stroke="#FFFFFF" stroke-width="4" points="41 70 56 85 92 49"></polyline>
+                    </g>
+                </svg>
+            </div>
         </div>
     </div>    
 </template>
@@ -231,5 +241,75 @@ input::-webkit-inner-spin-button {
 .send{
     outline: none,
 }
+
+
+$radius: 55px;
+$circumf: 3.1416 * $radius * 2;
+$check-len: 75px;
+
+@keyframes outline {
+  from {
+    stroke-dasharray: 0, $circumf;
+  }
+  to {
+    stroke-dasharray: $circumf, $circumf;
+  }
+}
+
+#outline {
+  animation: .38s ease-in outline;
+  transform: rotate(0deg);
+  transform-origin: center;
+}
+
+@keyframes circle {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+#white-circle {
+  animation: .35s ease-in .35s forwards circle;
+  transform: none;
+  transform-origin: center;
+}
+
+@keyframes check {
+  from {
+    stroke-dasharray: 0, $check-len;
+  }
+  to {
+    stroke-dasharray: $check-len, $check-len;
+  }
+}
+
+#check {
+  animation: .34s cubic-bezier(0.65, 0, 1, 1) .8s forwards check; 
+  stroke-dasharray: 0, $check-len;
+}
+
+@keyframes check-group {
+  from {
+    transform: scale(1);
+  }
+  
+  50% {
+    transform: scale(1.09);
+  }
+  
+  to {
+    transform: scale(1);
+  }
+}
+
+#check-group {
+  animation: .32s ease-in-out 1.03s check-group;
+  transform-origin: center;
+}
+
+
 
 </style>

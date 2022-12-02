@@ -88,7 +88,7 @@
 .notification{
     top: -8px;
     right: -6px;
-    z-index: 200;
+    z-index: 2;
 }
 
 .humburger {
@@ -129,7 +129,6 @@
     
 }
 
-
 .drop_menu {
     top: 0;
     bottom: 0;
@@ -161,5 +160,3 @@
     background-position: 100%;
     color: #FF385C;
 }
-
-
