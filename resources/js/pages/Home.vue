@@ -41,6 +41,25 @@ export default {
       cities: []
     }
   },
+  computed: {
+    apartments_by_city() {
+      const data = {}
+
+      this.cities.forEach(city => {
+        data[city] = []
+      })
+
+      this.all_apartments.forEach(apartment => {
+        const { city } = apartment
+
+        if (data[city] && data[city].length < 4) {
+          data[city].push(apartment)
+        }
+      })
+
+      return data
+    }
+  },
   methods: {
     fetchPosts() {
       axios.get('/api/apartments/index/sponsored')
@@ -75,7 +94,7 @@ export default {
     this.fetchPosts()
     this.fetchPostByCity()
     this.fetchAllApartments()
-  },
+  }
 }
 </script>
 
