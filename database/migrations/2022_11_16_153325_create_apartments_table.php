@@ -23,6 +23,7 @@ class CreateApartmentsTable extends Migration
             $table->string('address');
             $table->string('latitude');
             $table->string('longitude');
+            $table->string('city');
             $table->string('image');
             $table->decimal('price');
             $table->boolean('visible')->default(true);

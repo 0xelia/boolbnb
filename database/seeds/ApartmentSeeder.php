@@ -31,6 +31,7 @@ class ApartmentSeeder extends Seeder
             $a->address = $apartment['address'];
             $a->latitude = $apartment['latitude'];
             $a->longitude = $apartment['longitude'];
+            $a->city = $apartment['city'];
             $a->image = $apartment['image'];
             $a->price = $apartment['price'];
             
