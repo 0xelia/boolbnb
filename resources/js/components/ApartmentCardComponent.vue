@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col h-full relative">
-        <figure class="flex-grow">
-            <img class="w-full h-full object-cover object-center rounded-xl" :src="apartment.pic_path" alt="immagine appartamento">
+        <figure class="pb-2/3 relative">
+            <img class="absolute w-full h-full object-cover object-center rounded-xl" :src="apartment.pic_path" alt="immagine appartamento">
         </figure>
         <span class="text-gray-700 text-xl font-bold py-2">{{apartment.title}}</span>
         <div class="flex justify-between">
@@ -42,7 +42,7 @@ export default {
             }
             return date
         }
-    }
+    },   
 }
 </script>
 

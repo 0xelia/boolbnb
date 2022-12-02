@@ -5,7 +5,7 @@
     <section class="container mx-auto">
 
         <div class="mb-3">
-            <a href="{{ redirect()->back()->getTargetUrl() }}">Torna indietro</a>
+            <a href="{{ route('admin.apartments.index') }}" class="block text-brand-500 pt-5 router-link-active"><i class="fa-chevron-left fa-solid"></i> Torna indietro</a>
         </div>
         
         <h1 class="text-5xl title font-bold mb-8">

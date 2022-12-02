@@ -1,15 +1,12 @@
 <template lang="">
-    <div>
+    <div class="static">
         <div>
-            <button @click="showPlans()">
+            <button class="p-1 rounded sponsor" @click="showPlans()">
                 Promuovi ora
             </button>
         </div>
-        <div class="border-2  border-red-600" v-if="planPopUpVisible">
-            <sponsor-component :apartment="apartment" />
-            <button class="rounded-full font-bold absolute right-0 top-0 p-4 bg-red-600 z-50" @click="showPlans()">
-                X
-            </button>
+        <div  v-if="planPopUpVisible">
+            <sponsor-component @show-plans="showPlans"  :apartment="apartment" />
         </div>
     </div>
 </template>
@@ -24,7 +21,7 @@ export default {
             planPopUpVisible: false,
         }
     },
-    
+
     methods:{
         showPlans(){
             this.planPopUpVisible = !this.planPopUpVisible
@@ -33,6 +30,8 @@ export default {
 }
 </script>
 
-<style lang="">
-
+<style lang="scss" scoped>
+    .sponsor{
+        background-color: #F5DF19;
+    }
 </style>
