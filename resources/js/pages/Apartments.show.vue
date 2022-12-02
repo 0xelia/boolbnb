@@ -1,7 +1,5 @@
 <template>
-
-  <div class="container">
-
+  <div v-if="visible" class="container">
       <router-link :to="{name: 'home'}" class="block text-brand-500 pt-5" > <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca </router-link>
       <div v-if="apartment" class="font-semibold text-5xl">
         <h2 class="text-black font-bold pt-7">
@@ -220,9 +218,11 @@
 
 
   </div>
-  <!-- <div v-else>
-    <h3>Appartamento non disponibile</h3>
-  </div> -->
+  <div v-else class="container flex flex-col gap-5 justify-center items-center h-full text-center">
+    <i class="fa-solid fa-circle-exclamation text-5xl sm:text-6xl text-gray-300"></i>
+    <h3 class="text-3xl max-w-md sm:max-w-full sm:text-4xl md:text-5xl">Appartamento non disponibile</h3>
+    <a href="/" class="text-brand-500 hover:underline">Torna alla home</a>
+  </div>
 </template>
 
 <script>
