@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <button v-if="(success === false)" class="send p-3 rounded-full border-transparent text-white bg-blue-600" @click="expDate()">
+            <button v-if="(success === false)" class="send p-3 rounded-full border-transparent text-white bg-brand-500" @click="expDate()">
                 <i v-if="send" class="animate-spin fa-solid fa-circle-notch"></i> <span v-if="(send === false)"><i class="fa-solid fa-arrow-right"></i></span>
             </button>
             <div class="absolute bottom-10 text-red-600 font-semibold" v-if="(invalidInput === true)">
@@ -62,7 +62,7 @@
                 status: '',
                 month: '',
                 year: '',
-                error: false,
+                dataError: false,
                 creditCardNumber: '',
                 cvv: '',
                 success: false,
@@ -107,21 +107,34 @@
             expDate(){
                 const today = new Date();
                 const month = today.getMonth();
-                const year = today.getFullYear();
-                console.log(year < this.year)
+                const year = String(today.getFullYear());
+                const yy = parseInt(year.slice(-2))
+                console.log(typeof(yy), yy)
+                console.log(yy)
 
-                if(this.year >= year) {
-                    if(this.month >= month && this.month <= 12){
-                        console.log('buona')
+                if(this.year > yy) {
+                    console.log('anno maggiore')
+                    // console.log(yy)
+                    if(this.month <= 12){
+                        console.log('mese ok data valida')
                         // this.error = false;
-                        this.disabled = false;
                         this.makePayment();
                     } else {
-                        console.log('scaduta')
-                        // this.error = true
+                        console.log('mese errato data non valita')
+                        this.dataError = true
+                    }
+                } else if(this.year == yy) {
+                    console.log('anno presente')
+                    if(this.month >= month && this.month <= 12) {
+                        console.log('mese ok data valida')
+                        this.makePayment();
+                    } else {
+                        console.log('mese errato data non valida')
+                        this.dataError = true
                     }
                 } else {
-                    // this.error = true
+                    console.log('anno minore data non valida')
+                    this.dataError = true
                 }
             },
 
