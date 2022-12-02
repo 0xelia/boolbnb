@@ -19,6 +19,9 @@
         </router-link>
       </div>
     </section>
+    <section v-for="(city, index) in cities" :key="index" class="container">
+      <h2>{{ city }}</h2>
+    </section>
   </main>
 </template>
 
@@ -33,7 +36,9 @@ export default {
   },
   data() {
     return {
+      all_apartments: [],
       apartments: null,
+      cities: []
     }
   },
   methods: {
@@ -48,9 +53,28 @@ export default {
           this.apartments = apartments
         })
     },
+    fetchPostByCity() {
+      axios.get('/api/apartments/index/cities').then(res => {
+        const { apartments } = res.data
+        const cities = []
+        apartments.forEach(apartment => {
+          cities.push(apartment.city)
+        });
+        this.cities = cities
+      })
+    },
+    fetchAllApartments() {
+      axios.get('/api/apartments/index/all')
+        .then(res => {
+          const { apartments } = res.data
+          this.all_apartments = apartments
+        })
+    },
   },
   created() {
     this.fetchPosts()
+    this.fetchPostByCity()
+    this.fetchAllApartments()
   },
 }
 </script>
