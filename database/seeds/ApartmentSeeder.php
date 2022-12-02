@@ -17,7 +17,7 @@ class ApartmentSeeder extends Seeder
     {
         $apartments = config('apartments');
         $user_ids = User::all()->pluck('id');
-        $services = Service::all();
+        $services = Service::all()->pluck('id')->toArray();
 
         foreach ($apartments as $apartment) {
             $a = new Apartment;
@@ -35,10 +35,11 @@ class ApartmentSeeder extends Seeder
             $a->price = $apartment['price'];
             
             $a->save();
-    
+            
+            $numRandomServices = $faker->numberBetween(1, 6);
+            $random_services = $faker->randomElements($services, $numRandomServices);
+            $a->services()->sync($random_services);
         }
-
-        $random_services = $services->shuffle()->take(3);
-        $a->services()->sync($random_services);
+        
     }
 }

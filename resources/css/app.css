@@ -30,7 +30,7 @@
     opacity: 1;
 }
 
-delete_btn {
+.delete_btn {
     pointer-events: none;
     opacity: 0;
 }
