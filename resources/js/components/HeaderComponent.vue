@@ -7,7 +7,7 @@
                     <div>
                         <template v-if="user">
                             <a href="admin/apartments" class="no-underline hover:underline">I miei appartamenti</a>
-                            <!-- <a href="logout" class="no-underline hover:underline pr-6">Logout</a>                             -->
+                            <a @click="logout" href="#" class="no-underline hover:underline pr-6">Logout</a>                            
                         </template>
                         <template v-else>
                             <a href="login" class="no-underline hover:underline pr-6">Login</a>
@@ -26,7 +26,15 @@ export default {
         return {
             user: this.$root.user,
         }
-    }
+    },
+    methods: {
+        logout() {
+            const path = this.$route.path
+            axios.post('logout').then(res => {
+                window.location.href = path
+            })
+        },
+    },
 }
 </script>
 
