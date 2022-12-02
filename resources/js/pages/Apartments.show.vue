@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col container">
     <div v-if="visible">
-      <router-link :to="{ name: 'home' }" class="block text-brand-500 pt-5">
+      <p @click="goBack" class="block text-brand-500 pt-5 cursor-pointer">
         <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca
-      </router-link>
+      </p>
       <div v-if="apartment" class="font-semibold text-5xl">
         <h2 class="text-black font-bold pt-7">
           {{ apartment.title }}
@@ -310,6 +310,11 @@ export default {
     };
   },
   methods: {
+    goBack() {
+      if(window.history.length > 0) {
+        this.$router.back();
+      }
+    },
     fetchDetails() {
       axios.get(`/api/apartments/${this.id}`).then((res) => {
         const { apartment } = res.data;
