@@ -191,3 +191,18 @@ display: block;
 .dot{
     transform: translateY(-50%);
 }
+
+.bar-1, .bar-2{
+    height: 3px;
+    width: 20px;
+    background-color: #FF385C;
+    border-radius: 9999999px;
+}
+
+.bar-1{
+    transform: rotate(90deg) translateY(-10px);
+}
+
+.bar-2{
+    transform: translateX(-10px);
+}
