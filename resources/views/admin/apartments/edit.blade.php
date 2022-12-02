@@ -5,7 +5,7 @@
         <div class="mb-3">
             <a href="{{ route('admin.apartments.index') }}" class="block text-brand-500 pt-5 router-link-active"><i class="fa-chevron-left fa-solid"></i> Annulla l'operazione</a>
         </div>
-        <h1 class="text-5xl title font-bold mb-8">
+        <h1 class="text-4xl title font-bold mb-8">
             Modifica il tuo appartamento
         </h1>
 
@@ -27,14 +27,10 @@
                 @enderror
             </div>
 
-            <div class="mb-8">
+            <div class="mb-6">
                 <label class="text-2xl block mb-4 font-bold" for="image">Modifica l'immagine di copertina *</label>
                 <input type="file" placeholder="Aggiungi l'immagine di copertina " name="image" id="image" value="{{old('image', $apartment->image)}}"
                 class="w-full px-4 py-4 rounded-xl @error('image') border border-red-700 @enderror">
-
-                <figure class="overflow-hidden rounded-xl w-full">
-                    <img class="w-full" src="{{ $apartment->pic_path }}" alt="">
-                </figure>
 
                 @error('image')
                     <p class="text-red-700">
@@ -89,9 +85,9 @@
                 </p>
             </div>
 
-            <div class="flex justify-between mb-8">
+            <div class="justify-between flex-row  md:flex md:gap-6 border p-3 rounded-lg items-center mb-4">
 
-                <div class="meters-wrapper">
+                <div class="meters-wrapper ">
                     <label class="block mb-4 font-bold" for="meters">M. quadrati *</label>
                     <input type="number" min="0" max="65535" placeholder="" name="meters" id="meters" required value="{{old('meters', $apartment->meters)}}"
                     class="w-full px-4 py-4 rounded-xl @error('meters') border border-red-700 @enderror">
@@ -145,7 +141,7 @@
 
             </div>
 
-            <div class="price-wrapper">
+            <div class="price-wrapper mb-6">
                 <label class="text-2xl block mb-4 font-bold" for="price">Prezzo *</label>
                 <input type="number" placeholder="Costo a notte" name="price" min="0" name="price" id="price" required value="{{old('price', $apartment->price)}}"
                 class="w-full px-4 py-4 rounded-xl @error('price') border border-red-700 @enderror">
@@ -161,14 +157,14 @@
             @php
             $key = env('TOMTOM_API_KEY');
             @endphp
-            <search-input-component class="text-2xl" api-key="{{ $key }}"></search-input-component>
+            <search-input-component class="text-2xl mb-6" api-key="{{ $key }}"></search-input-component>
             @error('address')
                 <p class="text-red-700">
                     {{$message}}
                 </p>
             @enderror
 
-            <div class="flex flex-col gap-2 mb-4">
+            <div class="flex flex-col gap-2 mb-6">
 
                 <label class="text-2xl mr-2 font-bold">Visibilità *</label>
                 <div>
@@ -188,9 +184,9 @@
                 @enderror
             </div>
 
-            <div class="flex flex-col gap-2 mb-4">
+            <div class="flex flex-col gap-2 mb-6">
                 <label class="text-2xl font-bold">Servizi</label>
-                    <ul>
+                    <ul class="flex-row  md:flex md:gap-6 md:justify-between border p-3 rounded-lg">
                         @foreach ($services as $service)
                             <li>
                                 <input @if(in_array($service->id, old('services', $apartment->services->pluck('id')->all()))) checked @endif class="p-2" type="checkbox" name="services[]" id="{{$service->name}}" value="{{$service->id}}">
@@ -249,4 +245,41 @@
 ._tooltip:hover ._tooltiptext {
   visibility: visible;
 }
+
+input[type="file"]::file-selector-button{
+        color: white;
+        background-color: #ff385c;
+        padding: 3px;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 5px;
+        border-color: transparent;
+    }
+
+    input[type="text"]{
+        border: 1px solid #C3C6D1;
+        border-radius: 8px;
+    }
+
+    input[type="number"]{
+        border: 1px solid #C3C6D1;
+        border-radius: 8px;
+    }
+
+    .image-preview{
+        width: 300px;
+        min-height: 100px;
+        border: 2px solid #dddddd;
+        margin-top:15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #cccccc
+    }
+
+    .image-preview__image{
+        display: none;
+        width: 100%;
+    }
 </style>

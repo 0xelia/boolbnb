@@ -7,11 +7,11 @@
         <div class="mb-3">
             <a href="{{ route('admin.apartments.index') }}" class="block text-brand-500 pt-5 router-link-active"><i class="fa-chevron-left fa-solid"></i> Torna indietro</a>
         </div>
-        
+
         <h1 class="text-5xl title font-bold mb-8">
             {{$apartment->title}}
         </h1>
-        
+
         <div class="grid grid-cols-2 pr-4">
 
             <div class="flex flex-col">
@@ -20,9 +20,9 @@
                     <img class="w-full" src="{{ $apartment->pic_path }}" alt="">
                 </figure>
 
-                
+
                 @if($apartment->images)
-                
+
                 <ul class="flex  flex-no-wrap py-4 gap-2">
                     @foreach ($apartment->images as $image)
                     <li class="gallery_pic">
@@ -61,7 +61,7 @@
             </li>
         </ul>
         <ul class="mb-8">
-            <p class="text-2xl font-bold mb-2"> Informazioni Aggiuntive </p> 
+            <p class="text-2xl font-bold mb-2"> Informazioni Aggiuntive </p>
             <li>
                 Metri Quadrati: <span class="font-bold">{{$apartment->meters}}</span>
             </li>
@@ -78,7 +78,7 @@
                     </li>
                 @empty
                     <li class="font-bold">Nessun servizio</li>
-                @endforelse 
+                @endforelse
             </ul>
         </div>
         <div class="mb-8">
@@ -90,7 +90,7 @@
                     </li>
                 @empty
                     <li class="font-bold">Nessuna sponsorizzazione</li>
-                @endforelse 
+                @endforelse
             </ul>
         </div>
         <div class="mb-8">
@@ -110,15 +110,15 @@
                         <th>
                             Testo
                         </th>
-                        <th></th>     
-                    </tr>                                 
+                        <th></th>
+                    </tr>
                 @endif
                 @forelse ($apartment->messages()->orderBy('id', 'desc')->get() as $key => $message)
                     @if ($key < 5)
                         @php
                             $text = $message->text;
                         @endphp
-                        <tr class="@if($message->viewed == false) bg-red-200 @endif">                        
+                        <tr class="@if($message->viewed == false) bg-red-200 @endif">
                             <td>
                                 {{ $message->name }}
                             </td>
@@ -137,17 +137,17 @@
                         </tr>
                     @else
                         @break
-                    @endif                    
+                    @endif
                 @empty
                     <tr>
                         <td colspan="5">
                             Nessun messaggio
                         </td>
                     </tr>
-                @endforelse 
+                @endforelse
             </table>
             @if (count($apartment->messages) > 5)
-                <a href="{{ route('admin.messages.index', $apartment->id) }}" class="rounded-lg bg-blue-400 text-white py-2 px-4">Tutti i messaggi...</a>    
+                <a href="{{ route('admin.messages.index', $apartment->id) }}" class="rounded-lg bg-blue-400 text-white py-2 px-4">Tutti i messaggi...</a>
             @endif
         </div>
         <div class="flex gap-2">

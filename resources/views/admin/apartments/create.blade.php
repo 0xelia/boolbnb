@@ -3,12 +3,13 @@
 @section('content')
     <div class="container mx-auto">
         <div class="mb-3">
-            <a href="{{ redirect()->back()->getTargetUrl() }}" class="block text-brand-500 pt-5 router-link-active"><i class="fa-chevron-left fa-solid"></i>Torna indietro</a>
+            <a href="{{ route('admin.apartments.index') }}" class="block text-brand-500 pt-5 router-link-active"><i class="fa-chevron-left fa-solid"></i>Torna indietro</a>
         </div>
 
-        <!--payment pop up-->
 
-
+        <h1 class="text-4xl title font-bold mb-8">
+            Aggiungi un appartamento
+        </h1>
 
         <div>
             <form action="{{ route('admin.apartments.store') }}" method="post" enctype="multipart/form-data" id="form">
