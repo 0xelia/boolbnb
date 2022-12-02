@@ -317,6 +317,7 @@ export default {
       key: 'as0gbWig8K0G3KPY9VcGrsNm44fzb73h',
       container: this.$refs.map,
     })
+    console.log(this.$route);
     this.map.on(new tt.FullscreenControl());
     this.map.on(new tt.NavigationControl());
   },

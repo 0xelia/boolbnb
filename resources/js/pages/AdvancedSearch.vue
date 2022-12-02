@@ -350,7 +350,6 @@ export default {
 		this.fetchApartments()
 	},
 	mounted() {
-		console.log(this);
 		this.latitude = this.$route.query.lat ? this.$route.query.lat : null;
 		this.longitude = this.$route.query.lon ? this.$route.query.lon : null;
 		this.address = this.$route.query.addr ? this.$route.query.addr : null;
@@ -375,9 +374,6 @@ export default {
 			}
 		},
 	},
-	updated() {
-		console.log(this.filtered_apartments);
-	}
 }
 </script>
 
