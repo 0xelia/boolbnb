@@ -8,7 +8,7 @@
 
 @import "@tomtom-international/web-sdk-maps";
 
-@import 'animate.css';
+
 
 /*@import "@fontsource/figtree";*/
 
@@ -79,8 +79,8 @@ display: block;
     align-items: center;
     width: 24px;
     height: 24px;
-    background-color: lightgray;
-    color: gray;
+    background-color: #FF385C;
+    color: white;
     border-radius: 9999px;
     order: 1;
     cursor: pointer;
@@ -128,7 +128,7 @@ display: block;
 .drop_menu {
     background-color: #FF385C;
     z-index: 100;
-    
+
 }
 
 .promotion {
