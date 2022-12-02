@@ -49,9 +49,12 @@ class Apartment extends Model
     }
 
     public function getPicPathAttribute(){
-        return Storage::url($this->image);
+        if (substr($this->image, 0, 4) === 'http') {
+            return $this->image;
+        } else {
+            return Storage::url($this->image);
+        }
     }
-
 
     protected $appends = ['pic_path'];
 }
