@@ -307,6 +307,7 @@ export default {
       popup: false,
       errors: "",
       mapCreation: false,
+      user: this.$root.user
     };
   },
   methods: {
@@ -387,6 +388,11 @@ export default {
   },
   created() {
     this.fetchDetails();
+    if(this.user) {
+      this.msgName = this.user.name
+      this.msgLastname = this.user.surname
+      this.msgEmail = this.user.email
+    }
   },
   updated(){
     this.createMap()
