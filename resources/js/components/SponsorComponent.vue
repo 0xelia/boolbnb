@@ -37,7 +37,7 @@
                     <payment-component :duration="duration" :apartment="apartment" :id="sponsorId"/>
                 </div>
                 <div class="absolute top-2 right-2 flex pb-8">
-                    <button class="p-2  rounded-lg mx-auto text-white" @click="close()"><i class="text-red-600 text-2xl fa-sharp fa-solid fa-circle-xmark"></i></button>
+                    <button class="p-2 close rounded-lg mx-auto text-white" @click="close()"><i class="text-red-600 text-2xl fa-sharp fa-solid fa-circle-xmark"></i></button>
                 </div>
             </div>
         </div>
@@ -100,5 +100,9 @@
 <style lang="scss" scoped>
     .wrapper{
         height: 600px;
+    }
+
+    .close{
+        outline: none,
     }
 </style>
