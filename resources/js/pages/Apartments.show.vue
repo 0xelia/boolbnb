@@ -371,22 +371,25 @@ export default {
         return alert('Compila i campi mancanti!')
       }
     },
+    createMap() {
+      if(!this.mapCreation){
+        this.position = [this.lng, this.lat]
+        this.map = tt.map({
+          key: "as0gbWig8K0G3KPY9VcGrsNm44fzb73h",
+          container: this.$refs.map,
+          center: this.position,
+        });
+        this.map.on(new tt.FullscreenControl());
+        this.map.on(new tt.NavigationControl());
+        this.mapCreation = true
+      }
+    }
   },
   created() {
     this.fetchDetails();
   },
   updated(){
-    if(!this.mapCreation){
-      this.position = [this.lng, this.lat]
-      this.map = tt.map({
-        key: "as0gbWig8K0G3KPY9VcGrsNm44fzb73h",
-        container: this.$refs.map,
-        center: this.position,
-      });
-      this.map.on(new tt.FullscreenControl());
-      this.map.on(new tt.NavigationControl());
-      this.mapCreation = true
-    }
+    this.createMap()
   },
   watch:{
     mapCreation(a,b){
@@ -394,7 +397,7 @@ export default {
         this.moveMap(this.position)
         this.addMark()
       }
-    }
+    },
   }
 };
 </script>
