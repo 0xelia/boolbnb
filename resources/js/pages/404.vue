@@ -1,6 +1,6 @@
 <template>
-    <div class="container text-center lg:text-left">
-      <div class="flex justify-between">
+    <div class="container text-center flex items-center lg:text-left">
+      <div class="flex lg:gap-5 justify-between">
         <div>
           <p class="_oops text-black">
             Oops!
@@ -19,8 +19,8 @@
             <li class="text-brand-500"><a href="/ricerca-avanzata">Cerca</a></li>
           </ul>
         </div>
-        <div class="invisible lg:visible">
-          <img src="./../../../storage/app/images/404.gif" alt="">
+        <div class="hidden lg:block">
+          <img src="./../../../resources/images/404.gif" alt="">
         </div>
       </div>
     </div>
