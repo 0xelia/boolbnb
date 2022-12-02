@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto flex items-center mb-3">
+    <div class="container mx-auto flex items-center mb-6">
         <div>
             <h2 class="text-3xl">Appartamenti</h1>
         </div>
@@ -10,38 +10,40 @@
         </div>
     </div>
     <div class="container mx-auto">
-        <ul class="grid grid-cols-4 gap-4">
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             @foreach ($apartments as $apartment)
-            <div class="flex-col">
-                <li class="flex h-full flex-col relative">
-                    <figure class="static overflow-hidden flex-grow rounded-xl">
+                <div class="flex-col">
+                    <li class="flex h-full flex-col relative">
                         <a href="{{ route('admin.apartments.show', $apartment) }}">
-                            <img class="w-full h-full object-cover object-center" src="{{ $apartment->pic_path }}" alt="">
-                        </a>
-                        <promotion-component class="absolute bottom-6 right-3 " :apartment="{{$apartment}}"/>
-                    </figure>
-                    <a href="{{ route('admin.apartments.show', $apartment) }}">
-                        <h3 class="font-bold capitalize">
-                            {{ $apartment->title }}
-                        </h3>
-                    </a>
-                    @php
-                        $unviewedMessages = 0;
-                    @endphp
-                    @foreach ($apartment->messages as $message)
-                        @if ($message->viewed == false)
-                            @php
-                                $unviewedMessages++;
-                            @endphp
-                        @endif
-                    @endforeach
-                    @if ($unviewedMessages > 0)
-                        <div class="absolute notification flex items-center justify-center  rounded-full h-6 w-6 text-center text-xs bg-red-500 text-white">
-                            <span> {{ $unviewedMessages }} </span>
-                        </div>
-                    @endif
-                </li>     
-            </div>
+                            <figure class="pb-2/3 relative mb-3">
+                                <img class="absolute w-full h-full object-cover object-center rounded-xl" src="{{ $apartment->pic_path }}" alt="">
+                            </figure>
+                        </a>                        
+                            <div class="relative">
+                                <a href="{{ route('admin.apartments.show', $apartment) }}">
+                                    <h3 class="font-bold capitalize">
+                                        {{ $apartment->title }}
+                                    </h3>
+                                </a>
+                                <promotion-component class="absolute right-2 promotion" :apartment="{{$apartment}}"/>
+                            </div>
+                        @php
+                            $unviewedMessages = 0;
+                        @endphp
+                        @foreach ($apartment->messages as $message)
+                            @if ($message->viewed == false)
+                                @php                                    
+                                    $unviewedMessages++;
+                                @endphp
+                            @endif
+                        @endforeach
+                        @if ($unviewedMessages > 0)
+                            <div class="absolute notification flex items-center justify-center  rounded-full h-6 w-6 text-center text-xs bg-red-500 text-white">
+                                <span> {{ $unviewedMessages }} </span>
+                            </div>
+                        @endif                        
+                    </li>     
+                </div>
             @endforeach
         </ul>
 

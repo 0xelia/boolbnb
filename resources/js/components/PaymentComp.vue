@@ -190,33 +190,36 @@
 
 <style lang="scss" scoped>
 .exp-wrapper {
-  position: relative;
-  display: flex;
-  width: 100px;
-  justify-content: space-around;
-  height: 36px;
-  line-height: 36px;
-  font-size: 24px;
+
+    position: relative;
+    border: 1px solid #aaa;
+    display: flex;
+    width: 120px;
+    justify-content: space-around;
+    height: 36px;
+    line-height: 36px;
+    font-size: 24px;
+
   
 }
 
 .exp-wrapper:after {
-  content: '/';
-  position: absolute;
-  left: 50%;
-  margin-left: -4px;
-  color: #aaa;
+    content: '/';
+    position: absolute;
+    left: 50%;
+    margin-left: -4px;
+    color: #aaa;
 }
 
 input.exp {
-  float: left;
-  font-family: monospace;
-  border: 0;
-  width: 30px;
-  outline: none;
-  appearance: none;
-  font-size: 14px;
-  text-align: center;
+    float: left;
+    font-family: monospace;
+    border: 0;
+    width: 30px;
+    outline: none;
+    appearance: none;
+    font-size: 14px;
+    text-align: center;
 }
 
 .cvv{
