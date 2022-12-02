@@ -24,7 +24,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="pb-2">CVV</span>
-                    <div :class="cvvCheck ? 'border-red-700' : 'border-gray-300'" class="cvv flex items-center h-full border w-10 border-gray-300 rounded-lg">
+                    <div :class="cvvCheck ? 'border-red-700' : 'border-gray-300'" class="cvv flex items-center h-full border w-10 rounded-lg">
                         <input v-model="cvv" inputmode="numerical" class="cvvInput outline-none text-center w-full" type="text" pattern="\d*" maxlength="3" name="cvv" id="cvv" placeholder="CVV">
                     </div>
                 </div>
@@ -33,13 +33,11 @@
                 <i v-if="send" class="animate-spin fa-solid fa-circle-notch"></i> <span v-if="(send === false)"><i class="fa-solid fa-arrow-right"></i></span>
             </button>
             <div class="absolute bottom-10 text-red-600 font-semibold" v-if="(invalidInput === true)">
-                Inserisci dati validi
+                Alcuni campi sono vuoti
             </div>
         </div>
         <div v-if="response" class="text-xl text-center text-gray-700 font-semibold">
             {{response.message}}
-        </div>
-        <div>
         </div>
     </div>    
 </template>
@@ -192,7 +190,6 @@
 .exp-wrapper {
 
     position: relative;
-    border: 1px solid #aaa;
     display: flex;
     width: 120px;
     justify-content: space-around;

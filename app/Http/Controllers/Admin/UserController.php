@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Apartment;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
@@ -50,10 +51,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+
+        $apartments = Apartment::where('user_id', $user->id)->get();
         if(Auth::id() != $user->id){
             return abort(403, 'Non hai i permessi per stare qui');
         }
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.show', compact('user', 'apartments'));
     }
 
     /**
