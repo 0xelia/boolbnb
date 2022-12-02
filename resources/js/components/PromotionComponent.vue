@@ -21,7 +21,7 @@ export default {
             planPopUpVisible: false,
         }
     },
-    
+
     methods:{
         showPlans(){
             this.planPopUpVisible = !this.planPopUpVisible

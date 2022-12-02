@@ -80,44 +80,25 @@
             shadow-m
           ">
           <div class="flex pb-8">
-            <h4 class="text-brand-500 text-2xl font-bold">
-              {{ apartment.price }} € &nbsp;
-            </h4>
+            <h4 class="text-brand-500 text-2xl font-bold">{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(apartment.price)}} &nbsp; </h4>
             <p class="self-center">notte</p>
           </div>
           <div class="flex justify-between pb-8">
-            <div>{{ apartment.price }} x 5 notti</div>
-            <div>{{ apartment.price * 5 }}&nbsp;$</div>
+            <div>{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(apartment.price)}} x 5 notti</div>
+            <div>{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(apartment.price * 5)}}</div>
           </div>
           <div class="flex justify-between pb-8">
             <div>Costi di pulizia</div>
-            <div>
-              {{
-                  Math.round(((apartment.price * 5 * 0.5) / 100) * 100) / 100
-              }}&nbsp;$
-            </div>
+            <div>{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Math.round((apartment.price * 5)*0.5/100*100)/100)}}</div>
           </div>
           <div class="flex justify-between pb-8">
             <div>Costi del servizio</div>
-            <div>
-              {{
-                  Math.round(((apartment.price * 5 * 2) / 100) * 100) / 100
-              }}&nbsp;$
-            </div>
+            <div>{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Math.round((apartment.price * 5)*2/100*100)/100)}}</div>
           </div>
           <hr class="pb-8" />
           <div class="flex justify-between pb-3">
             <div class="font-bold">Totale</div>
-            <div class="font-bold">
-              {{
-                  Math.round(
-                    (apartment.price * 5 +
-                      (apartment.price * 5 * 0.5) / 100 +
-                      (apartment.price * 5 * 2) / 100) *
-                    100
-                  ) / 100
-              }}&nbsp;$
-            </div>
+            <div class="font-bold">{{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Math.round((apartment.price * 5 + (apartment.price * 5)*0.5/100 + (apartment.price * 5)*2/100)*100)/100)}}</div>
           </div>
           <!-- BUTTON PRENOTAZIONE -->
           <!-- <div class="flex justify-center">
@@ -158,19 +139,12 @@
         Lascia un messaggio
       </p>
 
-      <!-- POPUP MESSAGE SUCCEED -->
-      <div v-if="popup" class="
-          fixed
-          popup_wrapper
-          inset-x-0 inset-y-0
-          flex
-          justify-center
-          items-center
-        ">
-        <div class="flex px-3 py-6 rounded-xl bg-white text-brand-500 text-bold">
-          Messaggio Inviato correttamente!
+        <!-- POPUP MESSAGE SUCCEED -->
+        <div v-if="popup" class="fixed popup_wrapper inset-x-0 inset-y-0  flex justify-center items-center z-10">
+          <div class="flex px-3 py-6 rounded-xl bg-white text-brand-500 text-bold text-3xl">
+            Messaggio inviato correttamente!
+          </div>
         </div>
-      </div>
 
       <div class="flex items-center justify-center">
         <!-- Author: FormBold Team -->
@@ -285,7 +259,6 @@
         </div>
       </div>
     </div>
-
     <div v-else class="
         container
         flex flex-col
@@ -366,33 +339,31 @@ export default {
       );
       mark.setPopup(popup).togglePopup();
     },
-    submitMessage() {
-      if (this.msgName && this.msgEmail && this.msgTxt) {
-        axios
-          .post(`/api/messages/`, {
-            name: this.msgName,
-            surname: this.msgLastname,
-            email: this.msgEmail,
-            text: this.msgTxt,
-            apartment_id: this.id,
-          })
-          .then((res) => {
-            this.popup = true;
-            this.msgName = "";
-            this.msgLastname = "";
-            this.msgTxt = "";
-            this.msgEmail = "";
-            setTimeout(() => {
-              this.popup = false;
-            }, 2000);
-          })
-          .catch((err) => {
-            const { response } = err.request;
-            const errors = JSON.parse(response);
-            this.errors = errors.errors;
-          });
-      } else {
-        return alert("Compila i campi mancanti!");
+    submitMessage(){
+      if(this.msgName && this.msgEmail && this.msgTxt){
+        axios.post(`/api/messages/`,{
+          name: this.msgName,
+          surname: this.msgLastname,
+          email: this.msgEmail,
+          text: this.msgTxt,
+          apartment_id: this.id
+        }).then(res => {
+          this.popup = true
+          this.msgName = ''
+          this.msgLastname = ''
+          this.msgTxt = ''
+          this.msgEmail = ''
+          setTimeout(()=>{
+            this.popup = false
+
+          },2000)
+        }).catch(err => {
+          const {response} = err.request
+          const errors = JSON.parse(response)
+          this.errors = errors.errors
+        })
+      }else{
+        return alert('Compila i campi mancanti!')
       }
     },
   },
@@ -403,9 +374,9 @@ export default {
     if(!this.mapCreation){
       this.position = [this.lng, this.lat]
       this.map = tt.map({
-      key: "as0gbWig8K0G3KPY9VcGrsNm44fzb73h",
-      container: this.$refs.map,
-      center: this.position,
+        key: "as0gbWig8K0G3KPY9VcGrsNm44fzb73h",
+        container: this.$refs.map,
+        center: this.position,
       });
       this.map.on(new tt.FullscreenControl());
       this.map.on(new tt.NavigationControl());
