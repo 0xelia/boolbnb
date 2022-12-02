@@ -153,3 +153,41 @@ display: block;
     box-shadow: -2.5px 2.5px 4px rgb(0 0 0 / 60%);
 
 }
+
+.gallery{
+    aspect-ratio: 16/9;
+}
+
+.gallery_list{
+    overflow-x: scroll;
+    max-width: 100%;
+}
+
+.gallery .gallery_img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.wrapper-sm{
+    height: 420px;
+    width: 300px;
+}
+
+
+.text{
+    max-width: 200px;
+}
+
+.message{
+    max-width: 250px;
+}
+
+.message:hover{
+    background-color: rgb(234, 234, 234);
+}
+
+.dot{
+    transform: translateY(-50%);
+}
