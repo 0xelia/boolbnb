@@ -21,6 +21,7 @@
 
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
         <input class="p-2 flex-grow" type="hidden" name="longitude" v-model="longitude">
+        <input v-if="isBackend" class="p-2 flex-grow" type="hidden" name="city" v-model="city">
     </div>
 </template>
 
@@ -29,6 +30,11 @@
 
     export default{
         props: ['addr', 'page'],
+        computed: {
+            isBackend() {
+                return typeof this.$route === 'undefined'
+            }
+        },
         data(){
             return{
                 typeahead: true,
@@ -39,6 +45,7 @@
                 maxFuzzyLevel: 2,
                 latitude: '',
                 longitude: '',
+                city: '',
                 address: this.addr ? this.addr : '',
                 results: null,
                 guest: false
@@ -58,6 +65,7 @@
                             this.results = null
                             this.latitude = null
                             this.longitude = null                    
+                            this.city = null                    
                             // this.$emit('positionSelected', [
                             //     this.latitude,
                             //     this.longitude
@@ -74,7 +82,8 @@
                 }
             },
             getResult(result) {
-                this.results = null
+                this.results = null                
+                this.city = result ? result.address.countrySecondarySubdivision : result
                 this.latitude = result ? result.position.lat : result
                 this.longitude = result ? result.position.lon : result
                 this.address = result ? result.address.freeformAddress : result
