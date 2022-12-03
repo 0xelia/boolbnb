@@ -13,6 +13,7 @@ module.exports = {
         },
         brand: {
           300: '#FF9CAE',
+          400: '#FF6A85',
           500: '#FF385C',
         },
       }
@@ -25,7 +26,7 @@ module.exports = {
       '3xl': ['1.875rem', '2.25rem'],
       '4xl': ['2.25rem', '2.5rem'],
       '5xl': ['3rem', '1'],
-      '6xl': ['3.75rem', '1'], 
+      '6xl': ['3.75rem', '1'],
     },
     container: {
       center: true,

@@ -188,7 +188,7 @@
                         </p>
                     @enderror
                 </div>
-                <input class="p-2 rounded-lg text-white bg-brand-500 cursor-pointer mb-3 px-8 py-3" type="submit" id="submit" value="Salva">
+                <input class="p-2 rounded-lg text-white bg-brand-400 hover:bg-brand-500 cursor-pointer mb-3 px-8 py-3" type="submit" id="submit" value="Salva">
             </form>
             <div><strong>*</strong> indica un campo obbligatorio</div>
         </div>

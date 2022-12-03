@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <section class="container mx-auto">
         <div class="mb-3">
             <a href="{{ route('admin.apartments.index') }}" class="block text-brand-500 pt-5 router-link-active"><i class="fa-chevron-left fa-solid"></i> Annulla l'operazione</a>
@@ -217,10 +218,11 @@
                         </p>
                     @enderror
             </div> --}}
-            <input class="cursor-pointer w-full py-4 rounded-xl my-8 bg-brand-500 text-white" type="submit" id="submit" value="Modifica Appartamento">
+            <input class="cursor-pointer w-full py-4 rounded-xl my-8 bg-brand-400 hover:bg-brand-500 text-white" type="submit" id="submit" value="Modifica Appartamento">
         </form>
     </section>|
 @endsection
+
 
 <style>
 
