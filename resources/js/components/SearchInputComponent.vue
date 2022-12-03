@@ -1,7 +1,8 @@
 <template>
     <div ref="searchWrapper" :class="{'size rounded-full relative z-50': guest}" class="relative address-wrapper">
         <div>
-            <label v-if="!guest" for="address" class="text-2xl font-bold block mb-2">Indirizzo *</label>
+            <label v-if="(!guest && page === 'create')" for="address" class="text-2xl font-bold block mb-2">Indirizzo *</label>
+            <label v-if="(!guest && page === 'edit')" for="address" class="text-2xl font-bold block mb-2">Indirizzo</label>
             
             <div class="mb-2" :class="{'search-box flex items-center rounded-full border-gray-700 border-2': guest}">
                 <i v-if="guest" class="fa-solid fa-magnifying-glass text-xl text-gray-700"></i>
@@ -27,7 +28,7 @@
 <script>
 
     export default{
-        props: ['addr'],
+        props: ['addr', 'page'],
         data(){
             return{
                 typeahead: true,

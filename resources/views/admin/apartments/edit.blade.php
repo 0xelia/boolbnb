@@ -91,11 +91,11 @@
                     The image failed to upload. Max size exceed.
                 </p>
             </div>
-
+            <div class="text-2xl font-bold mb-4">Informazioni: </div>
             <div class="justify-between flex-row  md:flex md:gap-6 border p-3 rounded-lg items-center mb-4">
 
                 <div class="meters-wrapper ">
-                    <label class="block mb-4 font-bold" for="meters">M. quadrati *</label>
+                    <label class="block mb-4 font-bold" for="meters">Metri quadri *</label>
                     <input type="number" min="0" max="65535" placeholder="" name="meters" id="meters" required value="{{old('meters', $apartment->meters)}}"
                     class="w-full px-4 py-4 rounded-xl @error('meters') border border-red-700 @enderror">
                     <div class="meters-error"></div>
@@ -164,7 +164,7 @@
             @php
             $key = env('TOMTOM_API_KEY');
             @endphp
-            <search-input-component class="mb-6" api-key="{{ $key }}"></search-input-component>
+            <search-input-component page="edit" class="mb-6" api-key="{{ $key }}"></search-input-component>
             @error('address')
                 <p class="text-red-700">
                     {{$message}}
@@ -226,8 +226,9 @@
                         </p>
                     @enderror
             </div> --}}
-            <input class="cursor-pointer w-full py-4 rounded-xl my-8 bg-brand-400 hover:bg-brand-500 text-white" type="submit" id="submit" value="Modifica Appartamento">
+            <input class="cursor-pointer w-full py-4 rounded-xl mb-3 bg-brand-400 hover:bg-brand-500 text-white" type="submit" id="submit" value="Modifica Appartamento">
         </form>
+        <div><strong>*</strong> indica un campo obbligatorio</div>
     </section>|
 @endsection
 

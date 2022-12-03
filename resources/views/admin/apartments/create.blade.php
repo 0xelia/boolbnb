@@ -11,7 +11,7 @@
             Aggiungi un appartamento
         </h1>
 
-        <div>
+        <div class="pb-8">
             <form action="{{ route('admin.apartments.store') }}" method="post" enctype="multipart/form-data" id="form">
                 @csrf
                 <div class="flex flex-col gap-2 mb-4 title-wrapper">
@@ -25,44 +25,44 @@
                         </p>
                     @enderror
                 </div>
+                <div class="flex flex-col gap-2 mb-6">
+                    <label class="text-2xl mr-2 font-bold">Aggiungi immagine di copertina *</label>
+                    <div class="rounded-2xl border py-4 pl-4">
+                        <input type="file" name="image" accept="image/*" id="image" onchange="loadFile(e)" required>
+                        <!--<div class="image-preview" id="imagePreview">
+                            <img src="" alt="" class="image-preview__image">
+                            <span class="image-preview__default-text">Preview</span>
+                        </div>-->
+                    </div>
+                    @error('image')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>
+                    @enderror
+                    <p class="hidden text-red-700" id="image_error">
+                        Seleziona un'immagine valida. Dimensione massima 2 megabyte
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-2 mb-6">
+                    <label class="text-2xl mr-2 font-bold">Aggiungi immagine/i alla galleria</label>
+                    <div class="rounded-2xl border py-4 pl-4">
+                        <input type="file" name="images[]" accept="image/*" id="images" multiple>
+                    </div>
+                    @error('images[]')
+                        <p class="text-red-700">
+                            {{$message}}
+                        </p>
+                    @enderror
+                    <p class="hidden text-red-700" id="images_error">
+                        Selezione delle immagini valide. Dimensione massima 2 megabyte
+                    </p>
+                </div>
                 <div class="text-2xl font-bold mb-4">Informazioni: </div>
                 <div class="flex-row  md:flex md:gap-6 justify-between border p-3 rounded-lg items-center mb-4">
-                    <div class="flex flex-col gap-2 mb-4 rooms-wrapper">
-                        <label class="mr-2 font-bold" for="rooms">Numero camere *</label>
-                        <input class="p-2 flex-grow" type="number" min="1" max="255" name="rooms_number" id="rooms" placeholder="" value="{{ old('rooms_number') }}" required>
-                        <div class="rooms-error"></div>
-
-                        @error('rooms_number')
-                            <p class="text-red-700">
-                                {{$message}}
-                            </p>
-                        @enderror
-                    </div>
-                    <div class="flex flex-col gap-2 mb-4 beds-wrapper">
-                        <label class="mr-2 font-bold" for="beds">Numero letti *</label>
-                        <input class="p-2 flex-grow" type="number" min="1" max="255" name="beds_number" id="beds" placeholder="" value="{{ old('beds_number') }}" required>
-                        <div class="beds-error"></div>
-
-                        @error('beds_number')
-                            <p class="text-red-700">
-                                {{$message}}
-                            </p>
-                        @enderror
-                    </div>
-                    <div class="flex flex-col gap-2 mb-4 baths-wrapper">
-                        <label class="mr-2 font-bold" for="baths">Numero bagni *</label>
-                        <input class="p-2 flex-grow" type="number" min="0" max="255" name="bath_number" id="baths" placeholder="" value="{{ old('bath_number') }}" required>
-                        <div class="baths-error"></div>
-
-                        @error('bath_number')
-                            <p class="text-red-700">
-                                {{$message}}
-                            </p>
-                        @enderror
-                    </div>
-                    <div class="flex flex-col gap-2 mb-4 meters-wrapper">
-                        <label class="mr-2 font-bold" for="meters">Metri quadri *</label>
-                        <input class="p-2 flex-grow" type="number" min="0" max="65535" name="meters" id="meters" placeholder="" value="{{ old('meters') }}" required>
+                    <div class="flex flex-col meters-wrapper">
+                        <label class="mb-4 font-bold" for="meters">Metri quadri *</label>
+                        <input class="px-4 py-4 flex-grow" type="number" min="0" max="65535" name="meters" id="meters" placeholder="" value="{{ old('meters') }}" required>
                         <div class="meters-error"></div>
 
                         @error('meters')
@@ -71,53 +71,40 @@
                             </p>
                         @enderror
                     </div>
+                    <div class="flex flex-col rooms-wrapper">
+                        <label class="mb-4 font-bold" for="rooms">Numero camere *</label>
+                        <input class="px-4 py-4 flex-grow" type="number" min="1" max="255" name="rooms_number" id="rooms" placeholder="" value="{{ old('rooms_number') }}" required>
+                        <div class="rooms-error"></div>
+
+                        @error('rooms_number')
+                            <p class="text-red-700">
+                                {{$message}}
+                            </p>
+                        @enderror
+                    </div>
+                    <div class="flex flex-col beds-wrapper">
+                        <label class="mb-4 font-bold" for="beds">Numero letti *</label>
+                        <input class="px-4 py-4 flex-grow" type="number" min="1" max="255" name="beds_number" id="beds" placeholder="" value="{{ old('beds_number') }}" required>
+                        <div class="beds-error"></div>
+
+                        @error('beds_number')
+                            <p class="text-red-700">
+                                {{$message}}
+                            </p>
+                        @enderror
+                    </div>
+                    <div class="flex flex-col baths-wrapper">
+                        <label class="mb-4 font-bold" for="baths">Numero bagni *</label>
+                        <input class="px-4 py-4 flex-grow" type="number" min="0" max="255" name="bath_number" id="baths" placeholder="" value="{{ old('bath_number') }}" required>
+                        <div class="baths-error"></div>
+
+                        @error('bath_number')
+                            <p class="text-red-700">
+                                {{$message}}
+                            </p>
+                        @enderror
+                    </div>
                 </div>
-
-
-                @php
-                    $key = env('TOMTOM_API_KEY');
-                @endphp
-                <search-input-component class="text-2xl" api-key="{{ $key }}"></search-input-component>
-
-                @error('address')
-                    <p class="text-red-700">
-                        {{$message}}
-                    </p>
-                @enderror
-
-                <div class="flex flex-col gap-2 mb-6">
-                    <label class="text-2xl mr-2 font-bold">Servizi</label>
-                    <ul class="flex-row  md:flex md:gap-6 md:justify-between border p-3 rounded-lg">
-                        @foreach ($services as $service)
-                            <li>
-                                <input class="p-2" type="checkbox" name="services[]" @if( in_array($service->id, old('service', []))) checked @endif id="{{$service->name}}" value="{{$service->id}}">
-                                <label class="mr-2 font-bold" for="{{$service->name}}">{{$service->name}}</label>
-                            </li>
-                        @endforeach
-                    </ul>
-                    @error('services.*')
-                        <p  class="text-red-700">
-                            {{$message}}
-                        </p>
-                    @enderror
-                </div>
-
-                <!--<div class="flex flex-col gap-2 mb-4">
-                    <label class="text-2xl mr-2 font-bold">Sponsorizzazione</label>
-                    <ul>
-                        @foreach ($sponsors as $sponsor)
-                            <li>
-                                <input class="p-2" type="radio" name="sponsors[]" @if( in_array($sponsor->id, old('sponsor', []))) checked @endif id="{{$sponsor->plan}}" value="{{$sponsor->id}}">
-                                <label class="mr-2" for="{{$sponsor->plan}}">{{$sponsor->plan}}</label>
-                            </li>
-                        @endforeach
-                    </ul>
-                    @error('sponsors.*')
-                        <p  class="text-red-700">
-                            {{$message}}
-                        </p>
-                    @enderror
-                </div>-->
 
                 <div class="flex flex-col gap-2 mb-4 price-wrapper">
                     <label class="text-2xl mr-2 font-bold" for="price">Prezzo *</label>
@@ -130,60 +117,51 @@
                         </p>
                     @enderror
                 </div>
-                <div class="flex flex-col gap-2 mb-6">
-                    <label class="text-2xl mr-2 font-bold">Aggiungi immagine di copertina *</label>
-                    <input type="file" name="image" accept="image/*" id="image" onchange="loadFile(e)" required>
-                    <!--<div class="image-preview" id="imagePreview">
-                        <img src="" alt="" class="image-preview__image">
-                        <span class="image-preview__default-text">Preview</span>
-                    </div>-->
-                    @error('image')
-                        <p class="text-red-700">
-                            {{$message}}
-                        </p>
-                    @enderror
-                    <p class="hidden text-red-700" id="image_error">
-                        Seleziona un'immagine valida. Dimensione massima 2 megabyte
+
+                @php
+                    $key = env('TOMTOM_API_KEY');
+                @endphp
+                <search-input-component page="create" class="mb-6" api-key="{{ $key }}"></search-input-component>
+
+                @error('address')
+                    <p class="text-red-700">
+                        {{$message}}
                     </p>
-                </div>
-
-                <!--galleria-->
-                <div>
-                    <img src="" alt="">
-                </div>
-
-                <div class="flex flex-col gap-2 mb-6">
-                    <label class="text-2xl mr-2 font-bold">Aggiungi immagine/i alla galleria</label>
-                    <input type="file" name="images[]" accept="image/*" id="images" multiple>
-                    @error('images[]')
-                        <p class="text-red-700">
-                            {{$message}}
-                        </p>
-                    @enderror
-                    <p class="hidden text-red-700" id="images_error">
-                        Selezione delle immagini valide. Dimensione massima 2 megabyte
-                    </p>
-                </div>
-
-                <!--galleria-->
-                <div class="flex">
-                    <img src="" alt="">
-                </div>
+                @enderror
 
                 <div class="flex flex-col gap-2 mb-4">
                     <label class="text-2xl mr-2 font-bold">Visibilità *</label>
-                    <div>
-                        <input class="p-2" type="radio" name="visible" id="visible" value="true" required>
-                        <label class="mr-2" for="visible">Visibile</label>
-                    </div>
-                    <div>
-                        <input class="p-2" type="radio" name="visible" id="hidden" value="false">
-                        <label class="mr-2" for="hidden">Nascosto</label>
+                    <div class="rounded-2xl border pl-4 py-4">
+                        <div class="mb-2">
+                            <input class="p-2" type="radio" name="visible" id="visible" value="true" required>
+                            <label class="mr-2" for="visible">Visibile</label>
+                        </div>
+                        <div>
+                            <input class="p-2" type="radio" name="visible" id="hidden" value="false">
+                            <label class="mr-2" for="hidden">Nascosto</label>
+                        </div>
                     </div>
                     <div class="visibility-error"></div>
 
                     @error('visible')
                         <p class="text-red-700">
+                            {{$message}}
+                        </p>
+                    @enderror
+                </div>
+
+                <div class="flex flex-col gap-2 mb-6">
+                    <label class="text-2xl mr-2 font-bold">Servizi</label>
+                    <ul class="flex-row  md:flex md:gap-6 md:justify-between border p-3 rounded-lg">
+                        @foreach ($services as $service)
+                            <li>
+                                <input class="p-2" type="checkbox" name="services[]" @if( in_array($service->id, old('service', []))) checked @endif id="{{$service->name}}" value="{{$service->id}}">
+                                <label class="mr-2" for="{{$service->name}}">{{$service->name}}</label>
+                            </li>
+                        @endforeach
+                    </ul>
+                    @error('services.*')
+                        <p  class="text-red-700">
                             {{$message}}
                         </p>
                     @enderror
