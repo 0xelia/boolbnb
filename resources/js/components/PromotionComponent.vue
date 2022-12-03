@@ -1,12 +1,12 @@
-<template lang="">
-    <div class="static">
+<template>
+    <div class="static rounded overflow-hidden">
         <div>
-            <button class="p-1 rounded sponsor" @click="showPlans()">
+            <button class="p-1 sponsor" @click="showPlans()">
                 Promuovi ora
             </button>
         </div>
         <div  v-if="planPopUpVisible">
-            <sponsor-component @show-plans="showPlans"  :apartment="apartment" />
+            <!-- <sponsor-component @show-plans="showPlans"  :apartment="apartment" /> -->
         </div>
     </div>
 </template>

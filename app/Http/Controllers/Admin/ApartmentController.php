@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class ApartmentController extends Controller
 {
@@ -23,8 +24,10 @@ class ApartmentController extends Controller
     public function index()
     {
         $user_id = Auth::id();
+        $route_name = Route::currentRouteName();
+
         $apartments = Apartment::where('user_id', $user_id)->paginate(8);
-        return view('admin.apartments.index', compact('apartments'));
+        return view('admin.apartments.index', compact('apartments', 'route_name'));
     }
 
     /**
@@ -55,6 +58,7 @@ class ApartmentController extends Controller
             'bath_number' => 'required|integer|min:0|max:255',
             'meters' => 'required|integer|min:0|max:65535',
             'address' => 'required|max:255',
+            'city' => 'required|max:255',
             'latitude' => 'required|max:255',
             'longitude' => 'required|max:255',
             'image' => 'required|image|max:2048',
@@ -151,6 +155,7 @@ class ApartmentController extends Controller
             'delete_pic.*' => 'nullable',
             'meters' => 'required|integer|min:0|max:65535',
             'address' => 'max:255',
+            'city' => 'max:255',
             'latitude' => 'max:255',
             'longitude' => 'max:255',
             'image' => 'image|max:2048',

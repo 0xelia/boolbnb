@@ -87,5 +87,122 @@ display: block;
 
 .notification{
     top: -8px;
-    right: -8px;
+    right: -6px;
+    z-index: 200;
+}
+
+.humburger {
+    position: relative;
+    z-index: 101;
+}
+
+.brand-logo{
+    z-index: 101;
+}
+
+.humburger .bar, .humburger::before, .humburger::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 30px;
+    background-color: white;
+    border-radius: 999px;
+    transition:all 500ms ease-in-out;
+}
+
+
+.humburger.active::before{
+    transform: rotate(45deg) translate(3px, 14px);
+}
+
+.humburger.active::after{
+    transform: rotate(-45deg) translate(3px, -14px);
+}
+
+.humburger.active .bar{
+    width: 0 ;
+}
+
+.drop_menu {
+    background-color: #FF385C;
+    z-index: 100;
+    
+}
+
+.promotion {
+
+    top: -2.8rem;
+    transition: all 200ms ease-in-out;
+}
+
+.drop_menu {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 200%;
+    transition: ease-in-out 500ms;
+}
+
+.drop_menu.active{
+    left: 0;
+
+}
+
+.promotion:hover {
+    transform: scale(1.1);
+    box-shadow: -2.5px 2.5px 4px rgb(0 0 0 / 60%);
+
+}
+
+.gallery{
+    aspect-ratio: 16/9;
+}
+
+.gallery_list{
+    overflow-x: scroll;
+    max-width: 100%;
+}
+
+.gallery .gallery_img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.wrapper-sm{
+    height: 420px;
+    width: 300px;
+}
+
+
+.text{
+    max-width: 200px;
+}
+
+.message{
+    max-width: 250px;
+}
+
+.message:hover{
+    background-color: rgb(234, 234, 234);
+}
+
+.dot{
+    transform: translateY(-50%);
+}
+
+.bar-1, .bar-2{
+    height: 3px;
+    width: 20px;
+    background-color: #FF385C;
+    border-radius: 9999999px;
+}
+
+.bar-1{
+    transform: rotate(90deg) translateY(-10px);
+}
+
+.bar-2{
+    transform: translateX(-10px);
 }

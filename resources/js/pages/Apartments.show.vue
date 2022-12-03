@@ -2,7 +2,7 @@
   <div class="flex flex-col container">
     <div v-if="visible">
       <p @click="goBack" class="block text-brand-500 pt-5 cursor-pointer">
-        <i class="fa-chevron-left fa-solid"></i> Torna alla pagina di ricerca
+        <i class="fa-chevron-left fa-solid"></i> Torna indietro
       </p>
       <div v-if="apartment" class="font-semibold text-5xl">
         <h2 class="text-black font-bold pt-7">
@@ -307,6 +307,7 @@ export default {
       popup: false,
       errors: "",
       mapCreation: false,
+      user: this.$root.user
     };
   },
   methods: {
@@ -371,22 +372,30 @@ export default {
         return alert('Compila i campi mancanti!')
       }
     },
+    createMap() {
+      if(!this.mapCreation){
+        this.position = [this.lng, this.lat]
+        this.map = tt.map({
+          key: "as0gbWig8K0G3KPY9VcGrsNm44fzb73h",
+          container: this.$refs.map,
+          center: this.position,
+        });
+        this.map.on(new tt.FullscreenControl());
+        this.map.on(new tt.NavigationControl());
+        this.mapCreation = true
+      }
+    }
   },
   created() {
     this.fetchDetails();
+    if(this.user) {
+      this.msgName = this.user.name
+      this.msgLastname = this.user.surname
+      this.msgEmail = this.user.email
+    }
   },
   updated(){
-    if(!this.mapCreation){
-      this.position = [this.lng, this.lat]
-      this.map = tt.map({
-        key: "as0gbWig8K0G3KPY9VcGrsNm44fzb73h",
-        container: this.$refs.map,
-        center: this.position,
-      });
-      this.map.on(new tt.FullscreenControl());
-      this.map.on(new tt.NavigationControl());
-      this.mapCreation = true
-    }
+    this.createMap()
   },
   watch:{
     mapCreation(a,b){
@@ -394,7 +403,7 @@ export default {
         this.moveMap(this.position)
         this.addMark()
       }
-    }
+    },
   }
 };
 </script>
