@@ -146,7 +146,6 @@
     padding: 3px 3px;
     color: black;
     background-color: white;
-    /* border: 3px solid #EFE842; */
     background-image: -webkit-linear-gradient(30deg, #EFE842 50%, transparent 0%);
     background-image: linear-gradient(30deg, #EFE842 50%, transparent 0%);
     background-size: 500px;
@@ -160,3 +159,11 @@
     background-position: 100%;
     color: #FF385C;
 }
+
+/* .user_apartment{
+    transition: 300ms ease-in-out;
+}
+
+.user_apartment:hover{
+    color: #FF385C;
+} */

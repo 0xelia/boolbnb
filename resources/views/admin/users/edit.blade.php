@@ -4,7 +4,7 @@
 
     <div class="container mx-auto">
         <div class="relative grid grid-cols-1 gap-8">
-            <h2 class="bolder">Modifica profilo</h2>
+            <h2 class="font-bold text-3xl text-gray-700">Modifica profilo</h2>
             <form action="{{ route('admin.users.update', $user) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -71,32 +71,32 @@
                             </div>
                         @enderror
                     </div>
-                </div>
-
-                <div class="flex flex-wrap -mx-3 mt-6">
-                  <div class="w-full md:w-3/3 px-3 mb-6 md:mb-0">
-                    <label class="block tracking-wide text-gray-700 text-xs font-bold mb-2" for="profile_pic">
-                      <span class="uppercase">Immagine Profilo </span> <span class="text-sm">(max 2mb)</span> 
-                    </label>
-                    <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="file" name="profile_pic" id="profile_pic">
-                    @error('profile_pic')
-                          <div id="profile_pic" class="invalid-feedback">
-                              {{ $message }}
-                          </div>
-                      @enderror
                   </div>
-                </div>
+
+                  <div class="flex flex-wrap -mx-3 mt-6">
+                    <div class="w-full md:w-3/3 px-3 mb-6 md:mb-0">
+                      <label class="block tracking-wide text-gray-700 text-xs font-bold mb-2" for="profile_pic">
+                        <span class="uppercase">Immagine Profilo </span> <span class="text-sm">(max 2mb)</span> 
+                      </label>
+                      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="file" name="profile_pic" id="profile_pic">
+                      @error('profile_pic')
+                            <div id="profile_pic" class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                  </div>
 
                 
                 <input type="submit" class="bg-blue-500 p-3 mt-5 rounded text-white" value="Slava">
-              </form>
-              @if($user->profile_pic)
-                  <form class="absolute bottom-0 left-20" action="{{ route('admin.users.destroy', $user)}}" method="POST">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="bg-red-500 p-3 mt-5 rounded text-white cursor-pointer"><i class="fa-solid fa-xmark"></i> Elimina immagine</button>
-                  </form>
-              @endif
+            </form>
+            @if($user->profile_pic)
+                <form class="absolute bottom-0 left-20" action="{{ route('admin.users.destroy', $user)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 p-3 mt-5 rounded text-white cursor-pointer"><i class="fa-solid fa-xmark"></i> Elimina immagine</button>
+                </form>
+            @endif
             
         </div>
     </div>

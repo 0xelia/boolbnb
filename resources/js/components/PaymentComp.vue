@@ -48,6 +48,9 @@
                     </g>
                 </svg>
             </div>
+            <div v-if="(response.success === false)" class="flex flex-col items-center content-center gap-10 text-xl text-center text-gray-700 font-semibold">
+                {{response.message}}
+            </div>
         </div>
     </div>    
 </template>
@@ -109,6 +112,7 @@
                     this.checkCardNumber()
                     this.expDate()
                     this.checkCvv()
+                    this.invalidInput = false
                     if(!this.dataCheck && !this.cvvCheck && !this.cardCheck && !this.nameCheck) {
                         this.makePayment()
                         this.invalidInput = false
@@ -158,7 +162,6 @@
 
             checkCardNumber(){
                 const card = this.creditCardNumber
-                console.log(card)
                 const newCard = card.replace(/-/g, '')
                 if(newCard.length === 16){
                     if(newCard.match(/^[0-9]+$/) == null) {
@@ -206,8 +209,6 @@
     height: 36px;
     line-height: 36px;
     font-size: 24px;
-
-  
 }
 
 .exp-wrapper:after {
