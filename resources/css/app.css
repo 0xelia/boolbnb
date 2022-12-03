@@ -30,7 +30,7 @@
     opacity: 1;
 }
 
-delete_btn {
+.delete_btn {
     pointer-events: none;
     opacity: 0;
 }
@@ -93,7 +93,7 @@ display: block;
 
 .humburger {
     position: relative;
-    z-index: 101;
+    z-index: 251;
 }
 
 .brand-logo{
@@ -123,12 +123,6 @@ display: block;
     width: 0 ;
 }
 
-.drop_menu {
-    background-color: #FF385C;
-    z-index: 100;
-
-}
-
 .promotion {
 
     top: -2.8rem;
@@ -136,6 +130,8 @@ display: block;
 }
 
 .drop_menu {
+    background-color: #FF385C;
+    z-index: 250;
     top: 0;
     bottom: 0;
     right: 0;

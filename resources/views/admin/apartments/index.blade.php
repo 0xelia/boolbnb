@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto flex flex-wrap gap-y-6 items-center justify-between mb-6">
+    <div class="container mx-auto flex flex-wrap gap-y-3 items-center justify-between mb-6">
         <div>
             <h2 class="text-3xl">Appartamenti</h1>
         </div>
-        <div>
+        <div class="hidden sm:block">
             <a class="py-3 px-6 bg-white text-brand-500 shadow-md rounded-lg" href="{{ route('admin.apartments.create') }}">Aggiungi appartamento</a>
         </div>
-        <a class="" href="{{ route('admin.apartments.create') }}">
-            <div class="ml-auto flex justify-center items-center shadow-md lg:hidden h-10 w-10 rounded-full font-bold text-brand-500 bg-white">
+        <a class="sm:hidden" href="{{ route('admin.apartments.create') }}">
+            <div class="ml-auto flex justify-center items-center shadow-md h-10 w-10 rounded-full font-bold text-brand-500 bg-white">
                 <span class="bar-1"></span>
                 <span class="bar-2"></span>
             </div>

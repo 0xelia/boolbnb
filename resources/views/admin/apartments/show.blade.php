@@ -16,7 +16,7 @@
         {{-- gallery slider --}}
         <div class="flex flex-col items-center mb-12">
 
-            <figure class="overflow-hidden gallery rounded-xl h-full  lg:h-xl ">
+            <figure class="overflow-hidden gallery rounded-xl">
                 <img class="gallery_img" src="{{ $apartment->pic_path }}" alt="">
             </figure>
 
@@ -96,9 +96,9 @@
             {{-- servizi --}}
             <div class="p-10 shadow-md rounded-lg flex-grow">
                 <p class="text-2xl text-gray-700 font-bold mb-2"> Servizi </p>
-                <ul class="flex justify-around items-center h-full gap-6">
+                <ul class="flex md:justify-around flex-wrap sm:flex-nowrap items-center h-full gap-6">
                     @forelse ($apartment->services as $service)
-                    <li class="font-bold text-xl text-gray-700">
+                    <li class="font-bold text-lg text-gray-700">
                         {{$service->name}}
                     </li>
                     @empty
@@ -109,7 +109,7 @@
             
             {{-- ultimi messaggi --}}
             
-            <div class="p-10 wrapper-sm shadow-md rounded-lg relative overflow-scroll flex-grow lg:flex-grow-0">
+            <div class="p-10 wrapper-sm shadow-md rounded-lg relative overflow-scroll flex-grow">
                 <p class="text-2xl text-gray-700 font-bold "> Ultimi messaggi </p>
                 <ul class="">
                     @forelse ($apartment->messages()->orderBy('created_at', 'desc')->get() as $key => $message)
@@ -130,7 +130,7 @@
                         </li>
                     </a>
                     @empty
-                    <p class="text-gray-500 text-xl text-center">
+                    <p class="text-gray-500 text-xl pt-6 text-center">
                         Ancora Nessun Messaggio
                     </p>
                     @endforelse 
@@ -195,15 +195,15 @@
                 <a href="{{ route('admin.messages.index', $apartment->id) }}" class="rounded-lg bg-blue-400 text-white py-2 px-4">Tutti i messaggi...</a>
             @endif
         </div> --}}
-        <div class="flex gap-2">
+        <div class="flex flex-wrap gap-x-2 gap-y-4 py-8">
 
             <a href="{{route('admin.apartments.edit', $apartment)}}" class="flex-grow">
-                <input class="w-full  cursor-pointer py-4 px-8 rounded-xl my-8 bg-brand-500 text-white shadow-md" type="button" value="Modifica Appartamento">
+                <input class="w-full  cursor-pointer py-4 px-8 rounded-xl bg-brand-500 text-white shadow-md" type="button" value="Modifica Appartamento">
             </a>
             <form action="{{route('admin.apartments.destroy', $apartment)}}" method="post">
                 @csrf
                 @method('DELETE')
-                <input type="submit" value=" Elimina" class="cursor-pointer py-4 px-8 rounded-xl my-8 text-brand-500  bg-white shadow-md ">
+                <input type="submit" value=" Elimina" class="cursor-pointer py-4 px-8 rounded-xl text-brand-500  bg-white shadow-md ">
             </form>
         </div>
     </section>
