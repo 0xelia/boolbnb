@@ -19,7 +19,7 @@
           </div>
       </div> -->
       <div class="grid grid-cols-3 gap-x-6 pb-10">
-        <div class="col-span-3 lg:col-span-2">
+        <div class="col-span-3" :class="{'lg:col-span-2': apartment.images.length > 0}">
           <img class="test object-cover md:w-full h-full rounded-xl" :src="apartment.pic_path" alt="" />
         </div>
         <div class="hidden lg:block">

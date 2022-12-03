@@ -58,6 +58,7 @@ class ApartmentController extends Controller
             'bath_number' => 'required|integer|min:0|max:255',
             'meters' => 'required|integer|min:0|max:65535',
             'address' => 'required|max:255',
+            'city' => 'required|max:255',
             'latitude' => 'required|max:255',
             'longitude' => 'required|max:255',
             'image' => 'required|image|max:2048',
@@ -165,6 +166,7 @@ class ApartmentController extends Controller
             'delete_pic.*' => 'nullable',
             'meters' => 'required|integer|min:0|max:65535',
             'address' => 'max:255',
+            'city' => 'max:255',
             'latitude' => 'max:255',
             'longitude' => 'max:255',
             'image' => 'image|max:2048',
@@ -184,6 +186,7 @@ class ApartmentController extends Controller
             $params['address'] = $apartment->address;
             $params['latitude'] = $apartment->latitude;
             $params['longitude'] = $apartment->longitude;
+            $params['city'] = $apartment->city;
         }
 
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
