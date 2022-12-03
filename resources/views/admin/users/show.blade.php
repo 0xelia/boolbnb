@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="flex flex-col md:flex-row gap-10 container mx-auto">
+    <div class="flex flex-col pb-6 md:flex-row gap-10 container mx-auto">
         <div class="flex flex-col items-center content-start text-center shadow-md px-10 py-3 rounded-lg">
             <div class=" h-60 w-60 relative">
                 @if($user->profile_pic)

@@ -48,7 +48,7 @@
                     </g>
                 </svg>
             </div>
-            <div v-if="(response.success === false)" class="flex flex-col items-center content-center gap-10 text-xl text-center text-gray-700 font-semibold">
+            <div v-else class="flex flex-col items-center content-center gap-10 text-xl text-center text-gray-700 font-semibold">
                 {{response.message}}
             </div>
         </div>
@@ -126,7 +126,7 @@
 
             expDate(){
                 const today = new Date();
-                const month = today.getMonth();
+                const month = today.getMonth()+1;
                 const year = String(today.getFullYear());
                 const yy = parseInt(year.slice(-2))
 
