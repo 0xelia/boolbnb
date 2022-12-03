@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <ul class="absolute top-0 left-0 w-full mb-4 rounded bg-white results-list" v-if="results">
+        <ul class="absolute top-0 left-0 w-full mb-4 rounded bg-white results-list" v-if="(results && results.length > 0 && address != '')">
             <li @click="getResult(result)" v-for="(result, index) in results" :key="index" class="result cursor-pointer px-2 py-3">
                 {{result.address.freeformAddress}}
             </li>
@@ -54,7 +54,6 @@
         methods: {
             clearInput() {
                 this.address = ''
-                this.showResult()
             },
             showResult() {
                 if(this.$route) {
@@ -111,6 +110,7 @@
                         this.results = results.results.filter(result => {
                             return result.type != 'Cross Street'
                         })
+                        console.log(this.results);
                     })       
                     .catch(err => {
                         this.results = null
