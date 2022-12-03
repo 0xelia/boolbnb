@@ -1,14 +1,14 @@
 <template>
   <main>
     <!-- Jumbo -->
-    <section class="pb-10 md:container">
-      <div class="items-center bg-gradient-to-t from-brand-300 py-20 rounded-b-xl">
+    <section class="pb-10 container">
+      <div class="items-center bg-brand-300 py-20 px-6 rounded-xl">
         <h1 class="text-5xl md:text-6xl font-bold text-gray-700 pb-12 text-center">Trova il tuo appartamento ideale</h1>
         <SearchInput class="mx-auto bg-white"/>
       </div>
     </section>
     <!-- Cards Appartamenti -->
-    <section class="container pb-10">
+    <section class="container pb-10" v-if="apartments.length < 0">
       <div class="md:flex text-center justify-between items-end">
         <h2 class="text-3xl text-gray-700 font-bold">Appartamenti in Evidenza</h2>
         <!-- <a href="#" class="underline hidden md:block">Vedi tutto</a> -->
@@ -21,7 +21,7 @@
     </section>
 
     <section v-for="(city, index) in cities" :key="index" :class="index === cities.length - 1 ? 'mb-0' : 'mb-10'" class="container">
-      <h2 class="mb-2 text-3xl text-gray-700 font-bold">Appartmaneti a {{ city }}</h2>
+      <h2 class="text-center md:text-left mb-2 text-3xl text-gray-700 font-bold">Appartmaneti a {{ city }}</h2>
       <div v-if="apartments_by_city" class="grid gap-x-6 gap-y-8 grid-cols-1 md:grid-cols-2 2xl:grid-cols-4">
         <router-link v-for="apartment in apartments_by_city[city]" :key="apartment.id" :to="{ name: 'apartments.show', params: { id: apartment.id }}">
           <ApartmentCard :apartment="apartment"/>
