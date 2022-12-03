@@ -6,48 +6,43 @@
 
         <div class="mb-3">
             <a href="{{ route('admin.apartments.index') }}" class="block text-brand-500 pt-5 router-link-active"><i class="fa-chevron-left fa-solid"></i> Torna indietro</a>
-        </div>
-        
+        </div>        
         <h1 class="text-3xl lg:text-5xl  text-gray-700 title font-bold mb-4">
             {{$apartment->title}}
         </h1>
         <h3 class="text-2xl text-gray-500 mb-8">
             {{$apartment->address}}
         </h3>
-    
+        {{-- gallery slider --}}
+        <div class="flex flex-col items-center mb-12">
 
-            {{-- gallery slider --}}
-            <div class="flex flex-col items-center mb-12">
-
-                <figure class="overflow-hidden gallery rounded-xl h-full  lg:h-xl ">
-                    <img class="gallery_img" src="{{ $apartment->pic_path }}" alt="">
-                </figure>
-
-                
-                @if($apartment->images)
-                
-                <ul class="flex gallery_list flex-no-wrap py-4 gap-2 ">
-                    @foreach ($apartment->images as $image)
-                    <li class="gallery_pic">
-                        <figure class=" cursor-pointer w-40 max-h-24 overflow-hidden rounded-xl">
-                            <img class="h-full w-full object-cover object-center" src="{{$image->img_path}}" alt="">
-                        </figure>
-                        <div class="lg:flex hidden justify-center">
-                            <form action="{{route('admin.images.destroy', $image)}}" method="post">
-                                @csrf
-                                @method('DELETE')
-
-                                <input type="submit" value="Elimina" class="delete_btn mt-1 px-6 py-2 text-white bg-brand-500 rounded-xl text-xs cursor-pointer">
-                            </form>
-                            </div>
-                    </li>
-                        @endforeach
-                    </ul>
-                @endif
-
-            </div>
+            <figure class="overflow-hidden gallery rounded-xl h-full  lg:h-xl ">
+                <img class="gallery_img" src="{{ $apartment->pic_path }}" alt="">
+            </figure>
 
 
+            @if($apartment->images)                
+            <ul class="flex gallery_list flex-no-wrap py-4 gap-2 ">
+                @foreach ($apartment->images as $image)
+                <li class="gallery_pic">
+                    <figure class=" cursor-pointer w-40 max-h-24 overflow-hidden rounded-xl">
+                        <img class="h-full w-full object-cover object-center" src="{{$image->img_path}}" alt="">
+                    </figure>
+                    <div class="lg:flex hidden justify-center">
+                        <form action="{{route('admin.images.destroy', $image)}}" method="post">
+                            @csrf
+                            @method('DELETE')
+
+                            <input type="submit" value="Elimina" class="delete_btn mt-1 px-6 py-2 text-white bg-brand-500 rounded-xl text-xs cursor-pointer">
+                        </form>
+                        </div>
+                </li>
+                    @endforeach
+                </ul>
+            @endif
+
+        </div>
+            
         <div class="flex flex-wrap gap-12 mb-12">
 
             {{-- informazioni --}}
@@ -160,15 +155,15 @@
                         <th>
                             Testo
                         </th>
-                        <th></th>     
-                    </tr>                                 
+                        <th></th>
+                    </tr>
                 @endif
                 @forelse ($apartment->messages()->orderBy('id', 'desc')->get() as $key => $message)
                     @if ($key < 5)
                         @php
                             $text = $message->text;
                         @endphp
-                        <tr class="@if($message->viewed == false) bg-red-200 @endif">                        
+                        <tr class="@if($message->viewed == false) bg-red-200 @endif">
                             <td>
                                 {{ $message->name }}
                             </td>
@@ -187,17 +182,17 @@
                         </tr>
                     @else
                         @break
-                    @endif                    
+                    @endif
                 @empty
                     <tr>
                         <td colspan="5">
                             Nessun messaggio
                         </td>
                     </tr>
-                @endforelse 
+                @endforelse
             </table>
             @if (count($apartment->messages) > 5)
-                <a href="{{ route('admin.messages.index', $apartment->id) }}" class="rounded-lg bg-blue-400 text-white py-2 px-4">Tutti i messaggi...</a>    
+                <a href="{{ route('admin.messages.index', $apartment->id) }}" class="rounded-lg bg-blue-400 text-white py-2 px-4">Tutti i messaggi...</a>
             @endif
         </div> --}}
         <div class="flex gap-2">
