@@ -118,8 +118,8 @@ class ApartmentController extends Controller
             return abort(403, 'Non hai i permessi per stare qui');
         }
         $actual_date = $this->createCarbonDate(null);
-        $temp = $apartment->sponsors()->pluck('plan','expire_date');
-        foreach($temp as $expire_date => $plan) {
+        $sponsorPlanExpire = $apartment->sponsors()->pluck('plan','expire_date');
+        foreach($sponsorPlanExpire as $expire_date => $plan) {
             $expire_carbon_date = $this->createCarbonDate($expire_date);            
             if($expire_carbon_date > $actual_date) {
                 $plan_name = $plan;

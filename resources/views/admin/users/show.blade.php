@@ -44,10 +44,12 @@
                     <li>
                         <a class="flex-grow flex items-center rounded-lg gap-3 shadow-md user_apartment hover:text-brand-500" href="{{ route('admin.apartments.show', $apartment) }}">
                             <span class="flex-grow text-base md:text-xl pl-4 font-semibold ">{{$apartment->title}}</span>
-                            @forelse($apartment->sponsors as $sponsor)
-                                <span class="self-start font-semibold flex gap-2 items-center p-1 mt-3 rounded-lg shadow-md"><i class="text-2xl text-brand-500 fa-solid fa-star"></i> <span class="hidden md:block">Sponsorizzato</span></span>
-                                @empty
-                            @endforelse
+                            @foreach($apartments_with_sponsor as $apartment_id)
+                                @if ($apartment->id === $apartment_id)
+                                    <span class="self-start font-semibold flex gap-2 items-center p-1 mt-3 rounded-lg shadow-md"><i class="text-2xl text-brand-500 fa-solid fa-star"></i> <span class="hidden md:block">Sponsorizzato</span></span>                                    
+                                    @break
+                                @endif
+                            @endforeach
                             <img class=" w-28 h-28 object-cover rounded-r-lg" src="{{$apartment->pic_path}}" alt="">
                         </a>
                     </li>
