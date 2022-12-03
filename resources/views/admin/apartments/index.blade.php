@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto flex items-center mb-6">
+    <div class="container mx-auto flex flex-wrap gap-y-6 items-center justify-between mb-6">
         <div>
             <h2 class="text-3xl">Appartamenti</h1>
         </div>
-        <div class="ml-auto">
+        <div>
             <a class="p-2 border-2 rounded-lg" href="{{ route('admin.apartments.create') }}">Aggiungi appartamento</a>
         </div>
     </div>
