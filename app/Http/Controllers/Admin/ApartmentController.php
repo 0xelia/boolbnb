@@ -175,6 +175,7 @@ class ApartmentController extends Controller
             $params['address'] = $apartment->address;
             $params['latitude'] = $apartment->latitude;
             $params['longitude'] = $apartment->longitude;
+            $params['city'] = $apartment->city;
         }
 
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;

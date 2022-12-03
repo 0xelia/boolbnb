@@ -8,7 +8,7 @@
       </div>
     </section>
     <!-- Cards Appartamenti -->
-    <section class="container pb-10" v-if="apartments.length < 0">
+    <section class="container pb-10" v-if="(apartments && apartments.length < 0)">
       <div class="md:flex text-center justify-between items-end">
         <h2 class="text-3xl text-gray-700 font-bold">Appartamenti in Evidenza</h2>
         <!-- <a href="#" class="underline hidden md:block">Vedi tutto</a> -->
