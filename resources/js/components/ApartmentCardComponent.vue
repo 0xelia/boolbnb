@@ -1,16 +1,16 @@
 <template>
-    <div class="flex flex-col h-full relative">
-        <figure class="pb-2/3 relative">
+    <div class="card flex flex-col h-full relative">
+        <figure class="pb-2/3 relative overflow-hidden">
             <img class="absolute w-full h-full object-cover object-center rounded-xl" :src="apartment.pic_path" alt="immagine appartamento">
         </figure>
-        <span class="text-gray-700 text-xl font-bold py-2">{{apartment.title}}</span>
+        <span class="truncate text-gray-700 text-xl font-bold py-2">{{apartment.title}}</span>
         <div class="flex justify-between">
-            <span class="text-sm">
-                {{apartment.address}}                
+            <span>
+                {{address}}                
             </span>
 
             <span class="whitespace-no-wrap">
-                {{apartment.price}} &euro;
+                {{price}} &euro;
             </span>
         </div>
         <div v-if="(distance !== undefined)" class="text-sm">
@@ -28,6 +28,17 @@ export default {
     props:{
         apartment: Object,
         distance: Number,
+    },
+    computed: {
+        price() {
+            const [ price, decimal ] = this.apartment.price.split('.')
+            return price
+        },
+        address() {
+            const [ address, cityInfo ] = this.apartment.address.split(', ')
+            const [ postalCode , city ] = cityInfo.split(' ')
+            return `${address}, ${city}`
+        }
     },
     methods: {
         checkDate(apartment) {
@@ -47,8 +58,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    img {
-        aspect-ratio: 1;
+    // img {
+    //     aspect-ratio: 1;
+    // }
+    .card img{
+        transform: scale(1);
+        transition: transform 1s;
+    }
+    .card:hover img {
+        transform: scale(1.2);
     }
     .sponsored {
         top: 5px;
