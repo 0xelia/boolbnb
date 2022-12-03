@@ -47,7 +47,9 @@
                                 <a class="text-white flex items-center" href="{{ route('admin.users.show', Auth::user())}}">
                                     <span class="text-sm pr-4">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
                                     @if(auth::user()->profile_pic)
-                                        <img style="width: 40px; height: 40px; border-radius: 50%;"  class="items-center" src="{{ auth::user()->profile_pic_path }}" alt="">
+                                        <img class="w-10 h-10 rounded-full object-cover" src="{{ auth::user()->profile_pic_path }}" alt="">
+                                    @else 
+                                        <img class="w-10 h-10 rounded-full object-cover" src="https://cdn-icons-png.flaticon.com/512/1144/1144709.png" alt="">
                                     @endif
                                 </a>
                             </div>

@@ -78,14 +78,12 @@
             <div class="p-10 flex-grow lg:flex-grow-0 shadow-md wrapper-sm rounded-lg overflow-hidden">
                     <p class="text-2xl text-center text-gray-700 font-bold mb-2"> Sponsorizazzione </p>
                     <ul class="flex justify-center h-full items-center gap-6">
-                        @forelse ($apartment->sponsors as $sponsor)
-                        <li class="font-bold text-xl text-gray-700">
-                            {{$sponsor->plan}}
-                            <div><p class="text-gray-500">Valido fino: {{$sponsor->expire_date}}</p></div>
-                        </li>
-                        @empty
-                        <li class="font-bold h-full flex items-center text-gray-500 text-center">Nessuna sponsorizzazione</li>
-                        @endforelse 
+                        <li>
+                            <p>{{$plan_name}}</p>
+                            @if ($expire !== '')
+                                <p>Data di scadenza: {{$expire}}</p>
+                            @endif
+                        </li> 
                     </ul>
             </div>
         </div>
@@ -102,7 +100,7 @@
                         {{$service->name}}
                     </li>
                     @empty
-                    <li class="font-bold text-3xl text-gray-500">Nessun servizio</li>
+                      <li class="font-bold text-3xl text-gray-500">Nessun servizio</li>
                     @endforelse 
                 </ul>
             </div>

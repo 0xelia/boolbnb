@@ -113,11 +113,22 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
+        $plan_name = 'Nessuna sponsorizzazione';
+        $expire = '';
         if(Auth::id() != $apartment->user->id){
             return abort(403, 'Non hai i permessi per stare qui');
         }
-
-        return view('admin.apartments.show', compact('apartment'));
+        $actual_date = $this->createCarbonDate(null);
+        $sponsorPlanExpire = $apartment->sponsors()->pluck('plan','expire_date');
+        foreach($sponsorPlanExpire as $expire_date => $plan) {
+            $expire_carbon_date = $this->createCarbonDate($expire_date);            
+            if($expire_carbon_date > $actual_date) {
+                $plan_name = $plan;
+                $expire = $expire_carbon_date->format('d/m/y H:i');
+                break;
+            }
+        }
+        return view('admin.apartments.show', compact('apartment','plan_name', 'expire'));
     }
 
     /**
@@ -244,5 +255,15 @@ class ApartmentController extends Controller
 
         $apartment->delete();
         return redirect()->route('admin.apartments.index');
+    }
+
+    public function createCarbonDate($date) {
+        $result = null;
+        if($date) {
+            $result = Carbon::parse($date);
+        } else {
+            $result = Carbon::now();
+        }
+        return $result;
     }
 }

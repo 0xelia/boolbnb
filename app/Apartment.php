@@ -29,7 +29,7 @@ class Apartment extends Model
 
     public function sponsors(){
         return $this->belongsToMany('App\Sponsor')
-            ->withPivot(['expire_date']);
+            ->withPivot(['expire_date'])->orderBy('expire_date');
             //->withTimestamp();
     }
 

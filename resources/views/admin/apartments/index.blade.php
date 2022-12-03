@@ -31,7 +31,7 @@
                                         {{ $apartment->title }}
                                     </h3>
                                 </a>
-                                <promotion-component class="absolute right-2 promotion" :apartment="{{$apartment}}"/>
+                                <promotion-component class="px-1 absolute right-2 promotion" :apartment="{{$apartment}}"/>
                             </div>
                         @php
                             $unviewedMessages = 0;

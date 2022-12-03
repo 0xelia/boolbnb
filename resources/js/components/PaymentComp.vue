@@ -24,7 +24,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="pb-2">CVV</span>
-                    <div :class="cvvCheck ? 'border-red-700' : 'border-gray-300'" class="cvv flex items-center h-full border w-10 border-gray-300 rounded-lg">
+                    <div :class="cvvCheck ? 'border-red-700' : 'border-gray-300'" class="cvv flex items-center h-full border w-10 rounded-lg">
                         <input v-model="cvv" inputmode="numerical" class="cvvInput outline-none text-center w-full" type="text" pattern="\d*" maxlength="3" name="cvv" id="cvv" placeholder="CVV">
                     </div>
                 </div>
@@ -33,13 +33,24 @@
                 <i v-if="send" class="animate-spin fa-solid fa-circle-notch"></i> <span v-if="(send === false)"><i class="fa-solid fa-arrow-right"></i></span>
             </button>
             <div class="absolute bottom-10 text-red-600 font-semibold" v-if="(invalidInput === true)">
-                Inserisci dati validi
+                Alcuni campi sono vuoti
             </div>
         </div>
-        <div v-if="response" class="text-xl text-center text-gray-700 font-semibold">
+        <div v-if="response" class="flex flex-col items-center content-center gap-10 text-xl text-center text-gray-700 font-semibold">
             {{response.message}}
-        </div>
-        <div>
+            <div v-if="(response.success === true)">
+                <svg width="133px" height="133px" viewBox="0 0 133 133" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="check-group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <circle id="filled-circle" fill="#78B348" cx="66.5" cy="66.5" r="54.5"></circle>
+                        <circle id="white-circle" fill="#FFFFFF" cx="66.5" cy="66.5" r="55.5"></circle>
+                        <circle id="outline" stroke="#78B348" stroke-width="4" cx="66.5" cy="66.5" r="54.5"></circle>
+                        <polyline id="check" stroke="#FFFFFF" stroke-width="4" points="41 70 56 85 92 49"></polyline>
+                    </g>
+                </svg>
+            </div>
+            <div v-else class="flex flex-col items-center content-center gap-10 text-xl text-center text-gray-700 font-semibold">
+                {{response.message}}
+            </div>
         </div>
     </div>    
 </template>
@@ -101,6 +112,7 @@
                     this.checkCardNumber()
                     this.expDate()
                     this.checkCvv()
+                    this.invalidInput = false
                     if(!this.dataCheck && !this.cvvCheck && !this.cardCheck && !this.nameCheck) {
                         this.makePayment()
                         this.invalidInput = false
@@ -114,7 +126,7 @@
 
             expDate(){
                 const today = new Date();
-                const month = today.getMonth();
+                const month = today.getMonth()+1;
                 const year = String(today.getFullYear());
                 const yy = parseInt(year.slice(-2))
 
@@ -150,7 +162,6 @@
 
             checkCardNumber(){
                 const card = this.creditCardNumber
-                console.log(card)
                 const newCard = card.replace(/-/g, '')
                 if(newCard.length === 16){
                     if(newCard.match(/^[0-9]+$/) == null) {
@@ -192,15 +203,12 @@
 .exp-wrapper {
 
     position: relative;
-    border: 1px solid #aaa;
     display: flex;
     width: 120px;
     justify-content: space-around;
     height: 36px;
     line-height: 36px;
     font-size: 24px;
-
-  
 }
 
 .exp-wrapper:after {
@@ -234,5 +242,75 @@ input::-webkit-inner-spin-button {
 .send{
     outline: none,
 }
+
+
+$radius: 55px;
+$circumf: 3.1416 * $radius * 2;
+$check-len: 75px;
+
+@keyframes outline {
+  from {
+    stroke-dasharray: 0, $circumf;
+  }
+  to {
+    stroke-dasharray: $circumf, $circumf;
+  }
+}
+
+#outline {
+  animation: .38s ease-in outline;
+  transform: rotate(0deg);
+  transform-origin: center;
+}
+
+@keyframes circle {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+#white-circle {
+  animation: .35s ease-in .35s forwards circle;
+  transform: none;
+  transform-origin: center;
+}
+
+@keyframes check {
+  from {
+    stroke-dasharray: 0, $check-len;
+  }
+  to {
+    stroke-dasharray: $check-len, $check-len;
+  }
+}
+
+#check {
+  animation: .34s cubic-bezier(0.65, 0, 1, 1) .8s forwards check; 
+  stroke-dasharray: 0, $check-len;
+}
+
+@keyframes check-group {
+  from {
+    transform: scale(1);
+  }
+  
+  50% {
+    transform: scale(1.09);
+  }
+  
+  to {
+    transform: scale(1);
+  }
+}
+
+#check-group {
+  animation: .32s ease-in-out 1.03s check-group;
+  transform-origin: center;
+}
+
+
 
 </style>
