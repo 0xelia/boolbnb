@@ -1,7 +1,7 @@
 <template>
     <div class="card flex flex-col h-full relative">
-        <figure class="pb-2/3 relative overflow-hidden">
-            <img class="absolute w-full h-full object-cover object-center rounded-xl" :src="apartment.pic_path" alt="immagine appartamento">
+        <figure class="pb-2/3 relative rounded-xl overflow-hidden">
+            <img class="absolute w-full h-full object-cover object-center" :src="apartment.pic_path" alt="immagine appartamento">
         </figure>
         <span class="truncate text-gray-700 text-xl font-bold py-2">{{apartment.title}}</span>
         <div class="flex justify-between">
