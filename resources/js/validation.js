@@ -14,7 +14,7 @@ const address = document.querySelector('.address');
 if (form) {
     form.addEventListener('change', onChange);
     form.addEventListener('focusout', onFocusOut);
-    address.addEventListener('focusout', checkAddress);
+    address.addEventListener('change', checkAddress);
 }
 
 function onChange(e) {

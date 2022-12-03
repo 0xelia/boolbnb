@@ -31,7 +31,7 @@
             <div class="mb-6">
                 <label class="text-2xl block mb-4 font-bold" for="image">Modifica l'immagine di copertina *</label>
                 <input type="file" placeholder="Aggiungi l'immagine di copertina " name="image" id="image" value="{{old('image', $apartment->image)}}"
-                class="w-full px-4 py-4 rounded-xl @error('image') border border-red-700 @enderror">
+                class="w-full border px-4 py-4 rounded-xl @error('image') border border-red-700 @enderror">
 
                 @error('image')
                     <p class="text-red-700">
@@ -45,35 +45,41 @@
 
             <div class="mb-8">
                 <label class="text-2xl block mb-4 font-bold" for="images">Aggiungi o elimina foto dalla galleria</label>
-                <input type="file" multiple placeholder="Aggiungi qui un'immagine" name="images[]" id="images" value="{{old('images', $apartment->images)}}"
-                class="w-full px-4 py-4 rounded-xl @error('images') border border-red-700 @enderror">
-                {{-- Gallery preview --}}
-
-                <ul class="flex items-center gap-2 relative">
-                    @forelse ($apartment->images as $img)
-                        <li class="gallery_pic">
-                            <figure class="h-12 w-24 overflow-hidden rounded-xl relative">
-                                <img class="w-full h-full object-cover object-center" src="{{$img->img_path}}" alt="">
-                            </figure>
-                            <div class="flex">
-                                <input type="checkbox" name="delete_pic[]"  value="{{$img->id}}" id="{{$img->id}}">
-                                <p>Elimina immagine</p>
-                            </div>
-                        </li>
-
-                    @empty
-                    <p class="text-bold text-xl">Aggiungi foto alla galleria</p>
-                    @endforelse
-
-                    <li>
-                        <label for="images" class="file flex">
-                            <input type="file" multiple name="images[]" id="images" class=" custom-file-input order-2 @error('images') border border-red-700 @enderror">
-                            <div class="custom_file _tooltip">
-                                <span class="_tooltiptext">Aggiungi immagine</span>
-                            </div>
-                        </label>
-                    </li>
-                </ul>
+                <div class="rounded-2xl border">
+                    <input type="file" multiple placeholder="Aggiungi qui un'immagine" name="images[]" id="images" value="{{old('images', $apartment->images)}}"
+                    class="w-full px-4 py-4 rounded-xl @error('images') border border-red-700 @enderror">
+                    {{-- Gallery preview --}}
+    
+                    @if (count($apartment->images) > 0)
+                        <ul class="flex items-center gap-2 relative pl-4 pb-4">
+                            @foreach ($apartment->images as $img)
+                                <li class="gallery_pic">
+                                    <label for="{{$img->id}}" class="cursor-pointer">
+                                        <figure class="h-12 w-24 overflow-hidden rounded-xl relative mb-2">
+                                            <img class="w-full h-full object-cover object-center" src="{{$img->img_path}}" alt="">
+                                        </figure>
+                                    </label>
+                                    <div class="flex">
+                                        <input type="checkbox" name="delete_pic[]"  value="{{$img->id}}" id="{{$img->id}}" class="mr-1 cursor-pointer">
+                                        <label for="{{$img->id}}" class="cursor-pointer">Elimina</label>
+                                    </div>
+                                </li>
+        
+                            {{-- @empty
+                            <p class="text-bold text-xl">Aggiungi foto alla galleria</p> --}}
+                            @endforeach
+        
+                            {{-- <li>
+                                <label for="images" class="file flex">
+                                    <input type="file" multiple name="images[]" id="images" class=" custom-file-input order-2 @error('images') border border-red-700 @enderror">
+                                    <div class="custom_file _tooltip">
+                                        <span class="_tooltiptext">Aggiungi immagine</span>
+                                    </div>
+                                </label>
+                            </li> --}}
+                        </ul>                        
+                    @endif
+                </div>
 
 
                 @error('images.*')
@@ -158,7 +164,7 @@
             @php
             $key = env('TOMTOM_API_KEY');
             @endphp
-            <search-input-component class="text-2xl mb-6" api-key="{{ $key }}"></search-input-component>
+            <search-input-component class="mb-6" api-key="{{ $key }}"></search-input-component>
             @error('address')
                 <p class="text-red-700">
                     {{$message}}
@@ -168,14 +174,16 @@
             <div class="flex flex-col gap-2 mb-6">
 
                 <label class="text-2xl mr-2 font-bold">Visibilità *</label>
-                <div>
-                    <input class="p-2" @if($apartment->visible == true) checked @endif type="radio" name="visible" id="visible" value="true">
-                    <label class="mr-2" @checked(true) for="visible">Visibile</label>
-                </div>
-
-                <div>
-                    <input class="p-2" @if($apartment->visible == false) checked @endif type="radio" name="visible" id="hidden" value="false">
-                    <label class="mr-2" for="hidden">Nascosto</label>
+                <div class="rounded-2xl border pl-4 py-4">
+                    <div class="mb-2">
+                        <input class="p-2" @if($apartment->visible == true) checked @endif type="radio" name="visible" id="visible" value="true">
+                        <label class="mr-2" @checked(true) for="visible">Visibile</label>
+                    </div>
+    
+                    <div>
+                        <input class="p-2" @if($apartment->visible == false) checked @endif type="radio" name="visible" id="hidden" value="false">
+                        <label class="mr-2" for="hidden">Nascosto</label>
+                    </div>
                 </div>
 
                 @error('visible')
