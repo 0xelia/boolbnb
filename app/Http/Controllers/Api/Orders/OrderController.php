@@ -40,18 +40,14 @@ class OrderController extends Controller
 
             // sync apartment sponsor params
             $apartment = Apartment::where('id', $request->apartment['id'])->first();
+            // se c'è già una sponsorizzazione aggiungo la nuova durata alla data esistente
             if($apartment->sponsors){
-                $actual_date = $apartment->sponsors->last()->pivot->expire_date;
-                dd($actual_date);
+                $actual_date = $apartment->sponsors()->pluck('expire_date')->sortDesc()->first();
                 $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
-                $apartment->sponsors[0]->pivot->delete();
             } else {
                 $actual_date = Carbon::now();
                 $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
             }
-
-            // $actual_date = Carbon::now();
-            // $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
             
             $apartment->sponsors()->attach($sponsor->id, 
             [
@@ -59,7 +55,6 @@ class OrderController extends Controller
                 'expire_date' => $expire_date
             ]);
             $sponsors = $apartment->sponsors()->pluck('id')->toArray();
-            // var_dump($sponsors);
             array_push($sponsors, $sponsor->id);
             $apartment->sponsors()->sync($sponsors);
     

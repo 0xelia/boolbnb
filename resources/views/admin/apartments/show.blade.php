@@ -84,13 +84,12 @@
         <div class="mb-8">
             <p class="text-2xl font-bold mb-2"> Sponsorizazzione </p>
             <ul class="flex gap-6">
-                @forelse ($apartment->sponsors as $sponsor)
-                    <li class="font-bold">
-                        {{$sponsor->plan}}
-                    </li>
-                @empty
-                    <li class="font-bold">Nessuna sponsorizzazione</li>
-                @endforelse 
+                <li>
+                    <p>{{$plan_name}}</p>
+                    @if ($expire !== '')
+                        <p>Data di scadenza: {{$expire}}</p>
+                    @endif
+                </li>                    
             </ul>
         </div>
         <div class="mb-8">
