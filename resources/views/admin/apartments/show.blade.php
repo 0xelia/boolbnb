@@ -79,9 +79,9 @@
                     <p class="text-2xl text-center text-gray-700 font-bold mb-2"> Sponsorizazzione </p>
                     <ul class="flex justify-center h-full items-center gap-6">
                         <li>
-                            <p>{{$plan_name}}</p>
+                            <p class="text-2xl text-gray-500 mb-4">{{$plan_name}}</p>
                             @if ($expire !== '')
-                                <p>Data di scadenza: {{$expire}}</p>
+                                <p class="text-lg text-gray-500">Scade il: {{$expire}}</p>
                             @endif
                         </li> 
                     </ul>
@@ -107,7 +107,7 @@
             
             {{-- ultimi messaggi --}}
             
-            <div class="p-10 wrapper-sm shadow-md rounded-lg relative overflow-scroll flex-grow">
+            <div class="p-10 wrapper-sm shadow-md rounded-lg relative overflow-auto flex-grow">
                 <p class="text-2xl text-gray-700 font-bold "> Ultimi messaggi </p>
                 <ul class="">
                     @forelse ($apartment->messages()->orderBy('created_at', 'desc')->get() as $key => $message)
