@@ -1,7 +1,8 @@
 <template>
     <div ref="searchWrapper" :class="{'size rounded-full relative z-50': guest}" class="relative address-wrapper">
         <div>
-            <label v-if="!guest" for="address" class="font-bold block mb-2">Indirizzo *</label>
+            <label v-if="(!guest && page === 'create')" for="address" class="text-2xl font-bold block mb-2">Indirizzo *</label>
+            <label v-if="(!guest && page === 'edit')" for="address" class="text-2xl font-bold block mb-2">Indirizzo</label>
             
             <div class="mb-2" :class="{'search-box flex items-center rounded-full border-gray-700 border-2': guest}">
                 <i v-if="guest" class="fa-solid fa-magnifying-glass text-xl text-gray-700"></i>
@@ -10,7 +11,7 @@
             </div>
         </div>
 
-        <ul class="absolute top-0 left-0 w-full mb-4 rounded bg-white results-list" v-if="results">
+        <ul class="absolute top-0 left-0 w-full mb-4 rounded bg-white results-list" v-if="(results && results.length > 0 && address != '')">
             <li @click="getResult(result)" v-for="(result, index) in results" :key="index" class="result cursor-pointer px-2 py-3">
                 {{result.address.freeformAddress}}
             </li>
@@ -20,6 +21,7 @@
 
         <input class="p-2 flex-grow" type="hidden" name="latitude" v-model="latitude">
         <input class="p-2 flex-grow" type="hidden" name="longitude" v-model="longitude">
+        <input v-if="isBackend" class="p-2 flex-grow" type="hidden" name="city" v-model="city">
     </div>
 </template>
 
@@ -27,7 +29,12 @@
 <script>
 
     export default{
-        props: ['addr'],
+        props: ['addr', 'page'],
+        computed: {
+            isBackend() {
+                return typeof this.$route === 'undefined'
+            }
+        },
         data(){
             return{
                 typeahead: true,
@@ -38,6 +45,7 @@
                 maxFuzzyLevel: 2,
                 latitude: '',
                 longitude: '',
+                city: '',
                 address: this.addr ? this.addr : '',
                 results: null,
                 guest: false
@@ -46,7 +54,6 @@
         methods: {
             clearInput() {
                 this.address = ''
-                this.showResult()
             },
             showResult() {
                 if(this.$route) {
@@ -57,6 +64,7 @@
                             this.results = null
                             this.latitude = null
                             this.longitude = null                    
+                            this.city = null                    
                             // this.$emit('positionSelected', [
                             //     this.latitude,
                             //     this.longitude
@@ -73,7 +81,8 @@
                 }
             },
             getResult(result) {
-                this.results = null
+                this.results = null                
+                this.city = result ? result.address.countrySecondarySubdivision : result
                 this.latitude = result ? result.position.lat : result
                 this.longitude = result ? result.position.lon : result
                 this.address = result ? result.address.freeformAddress : result
@@ -101,6 +110,7 @@
                         this.results = results.results.filter(result => {
                             return result.type != 'Cross Street'
                         })
+                        console.log(this.results);
                     })       
                     .catch(err => {
                         this.results = null

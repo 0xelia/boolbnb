@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Apartment;
 use App\Http\Controllers\Controller;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -50,10 +52,23 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $apartments_with_sponsor = [];
+        $apartments = Apartment::where('user_id', $user->id)->get();
         if(Auth::id() != $user->id){
             return abort(403, 'Non hai i permessi per stare qui');
         }
-        return view('admin.users.show', compact('user'));
+        foreach($apartments as $apartment) {
+            $actual_date = $this->createCarbonDate(null);
+            $sponsorExpire = $apartment->sponsors()->pluck('expire_date');
+            foreach($sponsorExpire as $expire_date => $plan) {
+                $expire_carbon_date = $this->createCarbonDate($expire_date);            
+                if($expire_carbon_date > $actual_date) {
+                    array_push($apartments_with_sponsor, $apartment->id);
+                    break;
+                }
+            }
+        }
+        return view('admin.users.show', compact('user', 'apartments', 'apartments_with_sponsor'));
     }
 
     /**
@@ -118,5 +133,15 @@ class UserController extends Controller
         User::where('profile_pic', $user->profile_pic)->update(['profile_pic' => null]);
 
         return redirect()->route('admin.users.show', $user);
+    }
+
+    public function createCarbonDate($date) {
+        $result = null;
+        if($date) {
+            $result = Carbon::parse($date);
+        } else {
+            $result = Carbon::now();
+        }
+        return $result;
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="fixed top-0 bottom-0 flex left-0 right-0 items-center justify-center bg-black bg-opacity-25 z-10">
         
-        <div class="flex flex-col bg-white wrapper dark:bg-gray-900 relative">
+        <div class="flex flex-col bg-white wrapper dark:bg-gray-900 w-96 relative rounded-lg">
                 <div v-if="!paymentMethodVisible" class="container px-6 py-8 mx-auto">
                     <p class="text-xl text-center text-gray-500 dark:text-gray-300">
                         Scegli il tuo piano
@@ -29,15 +29,15 @@
                                 </div>
                             </div>
 
-                            <h2 class="text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300">${{sponsor.price}}</h2>
+                            <h2 class="text-2xl font-semibold text-gray-500 sm:text-4xl dark:text-gray-300">€{{sponsor.price}}</h2>
                         </div>
                     </div>
                 </div>
-                <div v-if="paymentMethodVisible" class="container h-full">
-                    <payment-component :getRes="getRes" :duration="duration" :apartment="apartment" :id="sponsorId"/>
+                <div v-if="paymentMethodVisible" class="flex flex-col items-center content-center container h-full">
+                    <payment-component :duration="duration" :apartment="apartment" :id="sponsorId"/>
                 </div>
-                <div class="flex pb-8">
-                    <button class="p-2  rounded-lg mx-auto bg-red-600 text-white" @click="close()">Annulla </button>
+                <div class="absolute top-2 right-2 flex pb-8">
+                    <button class="p-2 close rounded-lg mx-auto text-white" @click="close()"><i class="text-red-600 text-2xl fa-sharp fa-solid fa-circle-xmark"></i></button>
                 </div>
             </div>
         </div>
@@ -68,10 +68,6 @@
                 })
             },
 
-            getRes(data){
-                console.log(data.res)
-            },
-
             addActive(sponsors){
                 sponsors.forEach(sponsor=>{
                     sponsor.isActive = false
@@ -81,9 +77,6 @@
             showPayment(sponsor){
                 this.sponsorId = sponsor
                 this.paymentMethodVisible = !this.paymentMethodVisible
-
-                console.log(this.sponsorId)
-                console.log(sponsor)
             },
 
             getDuration(duration) {
@@ -100,8 +93,6 @@
         },
         mounted() {
             this.fetchSponsors()
-
-            console.log(this.apartment)
         },
     }
 </script>
@@ -109,5 +100,9 @@
 <style lang="scss" scoped>
     .wrapper{
         height: 600px;
+    }
+
+    .close{
+        outline: none,
     }
 </style>

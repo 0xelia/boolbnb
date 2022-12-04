@@ -1,7 +1,7 @@
-<template lang="">
-    <div class="static">
+<template>
+    <div class="static rounded overflow-hidden">
         <div>
-            <button class="p-1 rounded sponsor" @click="showPlans()">
+            <button class="p-1 sponsor font-semibold" @click="showPlans()">
                 Promuovi ora
             </button>
         </div>
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .sponsor{
-        background-color: #F5DF19;
-    }
+    // .sponsor{
+    //     background-color: #F5DF19;
+    // }
 </style>

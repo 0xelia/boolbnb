@@ -8,6 +8,7 @@ use App\Service;
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApartmentController extends Controller
 {
@@ -40,6 +41,15 @@ class ApartmentController extends Controller
             return response()->json([
                 'apartments' => $apartments,
                 'service_list' => $service_list,
+                'success' => true,
+            ]);
+        }
+
+        if ($type === 'cities'){
+            $apartments = Apartment::select('city')->groupBy('city')->havingRaw('COUNT(city) > ?', [3])->get();
+            
+            return response()->json([
+                'apartments' => $apartments,
                 'success' => true,
             ]);
         }
