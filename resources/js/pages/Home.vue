@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main v-show="fetchDone">
     <!-- Jumbo -->
     <section class="pb-10 container">
       <div class="items-center bg-brand-300 py-20 px-6 rounded-xl">
@@ -8,7 +8,7 @@
       </div>
     </section>
     <!-- Cards Appartamenti -->
-    <section class="container pb-10" v-if="(apartments && apartments.length < 0)">
+    <section v-show="fetchDone" class="container pb-10" v-if="(apartments && apartments.length < 0)">
       <div class="md:flex text-center justify-between items-end">
         <h2 class="text-3xl text-gray-700 font-bold">Appartamenti in Evidenza</h2>
         <!-- <a href="#" class="underline hidden md:block">Vedi tutto</a> -->
@@ -19,8 +19,7 @@
         </router-link>
       </div>
     </section>
-
-    <section v-for="(city, index) in cities" :key="index" :class="index === cities.length - 1 ? 'mb-0' : 'mb-10'" class="container">
+    <section v-show="fetchDone" v-for="(city, index) in cities" :key="index" :class="index === cities.length - 1 ? 'mb-0' : 'mb-10'" class="container">
       <h2 class="text-center md:text-left mb-2 text-3xl text-gray-700 font-bold">Appartmaneti a {{ city }}</h2>
       <div v-if="apartments_by_city" class="grid gap-x-6 gap-y-8 grid-cols-1 md:grid-cols-2 2xl:grid-cols-4">
         <router-link v-for="apartment in apartments_by_city[city]" :key="apartment.id" :to="{ name: 'apartments.show', params: { id: apartment.id }}">
@@ -28,22 +27,28 @@
         </router-link>
       </div>
     </section>
+    <section v-show="!fetchDone" class="container flex flex-col flex-grow justify-center items-center">
+      <LoaderComponent/>
+    </section>
   </main>
 </template>
 
 <script>
 import ApartmentCard from '../components/ApartmentCardComponent.vue';
+import LoaderComponent from '../components/LoaderComponent.vue';
 import SearchInput from '../components/SearchInputComponent.vue';
 
 export default {
   components: {
     ApartmentCard,
     SearchInput,
+    LoaderComponent,
   },
   data() {
     return {
       all_apartments: [],
       apartments: null,
+      fetchDone: false,
       cities: []
     }
   },
@@ -68,6 +73,7 @@ export default {
   },
   methods: {
     fetchPosts() {
+      this.fetchDone = false
       axios.get('/api/apartments/index/sponsored')
         .then(res => {
           const { apartments } = res.data
@@ -76,6 +82,8 @@ export default {
           //   el.address = el.address.split(' ').pop();
           // });
           this.apartments = apartments
+        }).finally(() => {
+          this.fetchDone = true
         })
     },
     fetchPostByCity() {

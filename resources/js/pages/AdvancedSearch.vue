@@ -320,10 +320,13 @@ export default {
 			this.longitude = longitude
 		},
 		fetchApartments() {
+			this.fetchDone = false
 			axios.get('api/apartments/index/all').then(res => {
 				const { apartments, service_list } = res.data
 				this.apartments = apartments
 				this.service_list = service_list
+			}).finally(() => {
+				this.fetchDone = true
 			})
 		},
 		toggleFilters() {
