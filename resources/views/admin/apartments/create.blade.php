@@ -25,15 +25,13 @@
                         </p>
                     @enderror
                 </div>
-                <div class="flex flex-col gap-2 mb-6">
+                <div class="flex border-0 flex-col gap-2 mb-6">
                     <label class="text-2xl mr-2 font-bold">Aggiungi immagine di copertina *</label>
-                    <div class="rounded-2xl border py-4 pl-4">
-                        <input type="file" name="image" accept="image/*" id="image" onchange="loadFile(e)" required>
-                        <!--<div class="image-preview" id="imagePreview">
-                            <img src="" alt="" class="image-preview__image">
-                            <span class="image-preview__default-text">Preview</span>
-                        </div>-->
-                    </div>
+
+                    {{-- IMAGE PREVIEW --}}
+
+                    <preview-comp label="Scegli un'immagine di copertina" name="image" multiple="{{false}}"/>
+
                     @error('image')
                         <p class="text-red-700">
                             {{$message}}
@@ -46,9 +44,12 @@
 
                 <div class="flex flex-col gap-2 mb-6">
                     <label class="text-2xl mr-2 font-bold">Aggiungi immagine/i alla galleria</label>
-                    <div class="rounded-2xl border py-4 pl-4">
+                    {{-- <div class="rounded-2xl border py-4 pl-4">
                         <input type="file" name="images[]" accept="image/*" id="images" multiple>
-                    </div>
+                    </div> --}}
+
+                    <preview-comp label="Scegli una o più immagini per la galleria" name="images[]" multiple="{{true}}" />
+
                     @error('images[]')
                         <p class="text-red-700">
                             {{$message}}
@@ -58,6 +59,8 @@
                         Selezione delle immagini valide. Dimensione massima 2 megabyte
                     </p>
                 </div>
+
+                
                 <div class="text-2xl font-bold mb-4">Informazioni: </div>
                 <div class="flex-row  md:flex md:gap-6 justify-between border p-3 rounded-lg items-center mb-4">
                     <div class="flex flex-col meters-wrapper">
@@ -175,7 +178,7 @@
 @endsection
 
 
-<script>
+{{-- <script>
     var loadFile = function()
 </script>
 
@@ -221,4 +224,4 @@
         display: none;
         width: 100%;
     }
-</style>
+</style> --}}
