@@ -22,9 +22,16 @@ class ApartmentController extends Controller
         if($type === 'sponsored') {
             $apartments = Apartment::has('sponsors')->with('sponsors')->get()->toArray();
             $apartmentsFiltered = array_filter($apartments, function ($apartment) {
+                $expire_date = null;
                 $now = Carbon::now();
-                $expire_date = Carbon::parse($apartment['sponsors'][0]['pivot']['expire_date']);
-                return $now->lessThan($expire_date);
+                foreach($apartment['sponsors'] as $sponsor) {
+                    $expire_date = Carbon::parse($sponsor['pivot']['expire_date']);
+                    $lessThan = $now->lessThan($expire_date);
+                    if($lessThan) {
+                        break;
+                    }
+                }
+                return $lessThan;
             });
             return response()->json([
                 'apartments' => $apartmentsFiltered,

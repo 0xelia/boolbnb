@@ -1,5 +1,5 @@
 <template>
-  <main v-show="fetchDone">
+  <main class="flex flex-col items-center">
     <!-- Jumbo -->
     <section class="pb-10 container">
       <div class="items-center bg-brand-300 py-20 px-6 rounded-xl">
@@ -8,7 +8,7 @@
       </div>
     </section>
     <!-- Cards Appartamenti -->
-    <section v-show="fetchDone" class="container pb-10" v-if="(apartments && apartments.length < 0)">
+    <section v-show="fetchAll && fetchSponsor && fetchCity" class="container pb-10" v-if="(apartments && apartments.length > 0)">
       <div class="md:flex text-center justify-between items-end">
         <h2 class="text-3xl text-gray-700 font-bold">Appartamenti in Evidenza</h2>
         <!-- <a href="#" class="underline hidden md:block">Vedi tutto</a> -->
@@ -19,7 +19,7 @@
         </router-link>
       </div>
     </section>
-    <section v-show="fetchDone" v-for="(city, index) in cities" :key="index" :class="index === cities.length - 1 ? 'mb-0' : 'mb-10'" class="container">
+    <section v-show="fetchAll && fetchSponsor && fetchCity" v-for="(city, index) in cities" :key="index" :class="index === cities.length - 1 ? 'mb-0' : 'mb-10'" class="container">
       <h2 class="text-center md:text-left mb-2 text-3xl text-gray-700 font-bold">Appartmaneti a {{ city }}</h2>
       <div v-if="apartments_by_city" class="grid gap-x-6 gap-y-8 grid-cols-1 md:grid-cols-2 2xl:grid-cols-4">
         <router-link v-for="apartment in apartments_by_city[city]" :key="apartment.id" :to="{ name: 'apartments.show', params: { id: apartment.id }}">
@@ -27,7 +27,7 @@
         </router-link>
       </div>
     </section>
-    <section v-show="!fetchDone" class="container flex flex-col flex-grow justify-center items-center">
+    <section v-show="!(fetchAll && fetchSponsor && fetchCity)" class="container flex flex-col flex-grow justify-center items-center">
       <LoaderComponent/>
     </section>
   </main>
@@ -48,7 +48,9 @@ export default {
     return {
       all_apartments: [],
       apartments: null,
-      fetchDone: false,
+      fetchSponsor: false,
+      fetchCity: false,
+      fetchAll: false,
       cities: []
     }
   },
@@ -73,7 +75,7 @@ export default {
   },
   methods: {
     fetchPosts() {
-      this.fetchDone = false
+      this.fetchSponsor = false
       axios.get('/api/apartments/index/sponsored')
         .then(res => {
           const { apartments } = res.data
@@ -82,11 +84,13 @@ export default {
           //   el.address = el.address.split(' ').pop();
           // });
           this.apartments = apartments
+          console.log(apartments);
         }).finally(() => {
-          this.fetchDone = true
+          this.fetchSponsor = true
         })
     },
     fetchPostByCity() {
+      this.fetchCity = false
       axios.get('/api/apartments/index/cities').then(res => {
         const { apartments } = res.data
         const cities = []
@@ -94,13 +98,18 @@ export default {
           cities.push(apartment.city)
         });
         this.cities = cities
+      }).finally(() => {
+        this.fetchCity = true
       })
     },
     fetchAllApartments() {
+      this.fetchAll = false
       axios.get('/api/apartments/index/all')
         .then(res => {
           const { apartments } = res.data
           this.all_apartments = apartments
+        }).finally(() => {
+          this.fetchAll = true
         })
     },
   },
