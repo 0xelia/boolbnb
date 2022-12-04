@@ -2,7 +2,7 @@
   <div class="flex min-h-screen flex-col">
     <Header />
     <router-view class="flex-grow"></router-view>
-    <Footer/>
+    <Footer class="static md:fixed bottom-0 w-full"/>
   </div>
 </template>
 
@@ -19,5 +19,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+
 </style>

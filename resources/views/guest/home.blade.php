@@ -17,7 +17,7 @@
     <!--tom tom -->
 
 </head>
-<body class="bg-gray-100 text-gray-500 text-base antialiased leading-none">
+<body class="bg-gray-100 text-gray-500 md:pb-20 text-base antialiased leading-none">
     @php
         $user = Auth::check() ? Auth::user() : null;
     @endphp
