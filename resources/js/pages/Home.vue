@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main v-show="fetchDone">
     <!-- Jumbo -->
     <section class="pb-10 md:container">
       <div class="items-center bg-gradient-to-t from-brand-300 py-20 rounded-b-xl">
@@ -8,7 +8,7 @@
       </div>
     </section>
     <!-- Cards Appartamenti -->
-    <section class="container pb-10">
+    <section v-show="fetchDone" class="container pb-10">
       <div class="md:flex text-center justify-between items-end">
         <h2 class="text-3xl text-gray-700 font-bold">Appartamenti in Evidenza</h2>
         <!-- <a href="#" class="underline hidden md:block">Vedi tutto</a> -->
@@ -19,25 +19,32 @@
         </router-link>
       </div>
     </section>
+    <section v-show="!fetchDone" class="container flex flex-col flex-grow justify-center items-center">
+      <LoaderComponent/>
+    </section>
   </main>
 </template>
 
 <script>
 import ApartmentCard from '../components/ApartmentCardComponent.vue';
+import LoaderComponent from '../components/LoaderComponent.vue';
 import SearchInput from '../components/SearchInputComponent.vue';
 
 export default {
   components: {
     ApartmentCard,
     SearchInput,
+    LoaderComponent,
   },
   data() {
     return {
       apartments: null,
+      fetchDone: false,
     }
   },
   methods: {
     fetchPosts() {
+      this.fetchDone = false
       axios.get('/api/apartments/index/sponsored')
         .then(res => {
           const { apartments } = res.data
@@ -46,6 +53,8 @@ export default {
           //   el.address = el.address.split(' ').pop();
           // });
           this.apartments = apartments
+        }).finally(() => {
+          this.fetchDone = true
         })
     },
   },

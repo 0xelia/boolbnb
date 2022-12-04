@@ -282,14 +282,15 @@
         <a href="/" class="text-brand-500 hover:underline">Torna alla home</a>
       </div>
     </div>
-    <div v-show="!fetchDone">
-      <h3 class="text-6xl">CARICAMENTO</h3>
+    <div v-show="!fetchDone" class="container flex flex-col flex-grow justify-center items-center">
+      <LoaderComponent/>
     </div>
   </div>
 </template>
 
 <script>
 import tt from "@tomtom-international/web-sdk-maps";
+import LoaderComponent from "../components/LoaderComponent.vue";
 
 export default {
   props: ["id"],
@@ -314,6 +315,9 @@ export default {
       mapCreation: false,
       fetchDone: false,
     };
+  },
+  components: {
+    LoaderComponent,
   },
   methods: {
     goBack() {
