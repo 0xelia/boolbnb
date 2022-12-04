@@ -113,12 +113,12 @@
                     @forelse ($apartment->messages()->orderBy('created_at', 'desc')->get() as $key => $message)
                     <a href="{{ route('admin.messages.show', [$apartment,$message]) }}">
                         
-                        <li class="relative flex message flex-col gap-2 -ml-4 p-4 rounded-lg cursor-pointer border-0 border-b-1 border-gray-300">
+                        <li class="relative flex  flex-col gap-2 -ml-4 p-4 rounded-lg cursor-pointer border-0 border-b-1 border-gray-300">
                             <p class="mb-2 font-bold text-gray-700">
                                 {{$message->name . ' ' . $message->surname}}
                             </p>
                             
-                            <p class="truncate text-gray-500 text">
+                            <p class="truncate text-gray-500 ">
                                 {{$message->text}}
                             </p>
                             
