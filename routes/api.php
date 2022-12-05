@@ -23,3 +23,13 @@ Route::get('orders/generate', 'Api\Orders\OrderController@generate');
 Route::post('orders/make/payment', 'Api\Orders\OrderController@makePayment');
 
 Route::get('sponsors', 'Api\Sponsors\SponsorController@index');
+
+Route::get('search/{input}', 'Api\Search\SearchInputController@index');
+
+Route::get('apartments/index/{type}', 'Api\Apartments\ApartmentController@index');
+Route::get('apartments/{apartment}', 'Api\Apartments\ApartmentController@show');
+
+Route::get('services/index/{type}', 'Api\Services\ServiceController@index');
+Route::get('services/{services}', 'Api\Services\ServiceController@show');
+
+Route::resource('messages', 'Api\MessageController')->only('store');

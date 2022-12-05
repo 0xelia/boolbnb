@@ -28,6 +28,19 @@ Vue.component(
     'sponsor-component',
     require('./components/SponsorComponent.vue').default);
 
+Vue.component(
+
+    'payment-component',
+    require('./components/PaymentComp.vue').default);
+
+Vue.component(
+    'promotion-component',
+    require('./components/PromotionComponent.vue').default);
+
+Vue.component(
+    'preview-comp',
+    require('./components/ImgPreview.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

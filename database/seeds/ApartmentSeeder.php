@@ -15,28 +15,30 @@ class ApartmentSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+        $apartments = config('apartments');
         $user_ids = User::all()->pluck('id');
-        $services = Service::all();
+        $services = Service::all()->pluck('id')->toArray();
 
-        for($i = 0; $i <= 15; $i++){
-            $a = new Apartment;
-            $a->title = $faker->words(rand(3, 8), true);
+        foreach ($apartments as $apartment) {
+            $a = new Apartment();
+            
+            $a->title = $apartment['title'];
             $a->user_id = $faker->randomElement($user_ids);
-            $a->rooms_number = rand(2, 6);
-            $a->beds_number = rand(2, 6);
-            $a->bath_number = rand(2, 6);
-            $a->meters = rand(70, 300);
-            $a->address = $faker->streetAddress();
-            $a->latitude = $faker->latitude();
-            $a->longitude = $faker->longitude();
-            $a->image = $faker->imageUrl();
-            $a->price = rand(20, 400);
-
+            $a->rooms_number = $apartment['rooms_number'];
+            $a->beds_number = $apartment['beds_number'];
+            $a->bath_number = $apartment['bath_number'];
+            $a->meters = $apartment['meters'];
+            $a->address = $apartment['address'];
+            $a->latitude = $apartment['latitude'];
+            $a->longitude = $apartment['longitude'];
+            $a->city = $apartment['city'];
+            $a->image = $apartment['image'];
+            $a->price = $apartment['price'];
+            
             $a->save();
 
-            $random_services = $services->shuffle()->take(3);
-            $a->services()->sync($random_services);
-
+            $serviceIds = $faker->randomElements($services, $faker->numberBetween(1, 6));
+            $a->services()->sync($serviceIds);
         }
     }
 }

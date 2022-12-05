@@ -1,5 +1,7 @@
 const mix = require('laravel-mix');
 
+mix.config.fileLoaderDirs.fonts = 'assets/fonts';
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -13,12 +15,15 @@ const mix = require('laravel-mix');
 
 mix
   .js('resources/js/app.js', 'public/js')
+  .js('resources/js/front.js', 'public/js')
   .js('resources/js/validation.js', 'public/js')
+  .js('resources/js/header.js', 'public/js')
   .postCss('resources/css/app.css', 'public/css', [
     require('postcss-import'),
     require('tailwindcss'),
     require('postcss-nested'),
     require('autoprefixer'),
+
   ]);
 
 if (mix.inProduction()) {

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class ApartmentController extends Controller
 {
@@ -23,8 +24,10 @@ class ApartmentController extends Controller
     public function index()
     {
         $user_id = Auth::id();
+        $route_name = Route::currentRouteName();
+
         $apartments = Apartment::where('user_id', $user_id)->paginate(8);
-        return view('admin.apartments.index', compact('apartments'));
+        return view('admin.apartments.index', compact('apartments', 'route_name'));
     }
 
     /**
@@ -55,6 +58,7 @@ class ApartmentController extends Controller
             'bath_number' => 'required|integer|min:0|max:255',
             'meters' => 'required|integer|min:0|max:65535',
             'address' => 'required|max:255',
+            'city' => 'required|max:255',
             'latitude' => 'required|max:255',
             'longitude' => 'required|max:255',
             'image' => 'required|image|max:2048',
@@ -80,14 +84,14 @@ class ApartmentController extends Controller
         if(array_key_exists('services', $params)){
             $apartment->services()->sync($params['services']);
         }
-        
-        if(array_key_exists('sponsors', $params)){
-            $sponsor = Sponsor::where('id', $params['sponsors'])->first();
-            $actual_date = Carbon::now();
-            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
-            $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
-            $apartment->sponsors()->sync($params['sponsors']);
-        }
+
+        // if(array_key_exists('sponsors', $params)){
+        //     $sponsor = Sponsor::where('id', $params['sponsors'])->first();
+        //     $actual_date = Carbon::now();
+        //     $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
+        //     $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
+        //     $apartment->sponsors()->sync($params['sponsors']);
+        // }
 
         if(array_key_exists('images', $params)){
             foreach($params['images'] as $image){
@@ -109,11 +113,22 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
+        $plan_name = 'Nessuna sponsorizzazione';
+        $expire = '';
         if(Auth::id() != $apartment->user->id){
             return abort(403, 'Non hai i permessi per stare qui');
         }
-
-        return view('admin.apartments.show', compact('apartment'));
+        $actual_date = $this->createCarbonDate(null);
+        $sponsorPlanExpire = $apartment->sponsors()->pluck('plan','expire_date');
+        foreach($sponsorPlanExpire as $expire_date => $plan) {
+            $expire_carbon_date = $this->createCarbonDate($expire_date);            
+            if($expire_carbon_date > $actual_date) {
+                $plan_name = $plan;
+                $expire = $expire_carbon_date->format('d/m/y H:i');
+                break;
+            }
+        }
+        return view('admin.apartments.show', compact('apartment','plan_name', 'expire'));
     }
 
     /**
@@ -151,6 +166,7 @@ class ApartmentController extends Controller
             'delete_pic.*' => 'nullable',
             'meters' => 'required|integer|min:0|max:65535',
             'address' => 'max:255',
+            'city' => 'max:255',
             'latitude' => 'max:255',
             'longitude' => 'max:255',
             'image' => 'image|max:2048',
@@ -165,11 +181,12 @@ class ApartmentController extends Controller
         ]);
 
         $params['user_id'] = Auth::id();
-    
+
         if(!$params['address']){
-            $params['address'] = $apartment->address; 
-            $params['latitude'] = $apartment->latitude; 
-            $params['longitude'] = $apartment->longitude; 
+            $params['address'] = $apartment->address;
+            $params['latitude'] = $apartment->latitude;
+            $params['longitude'] = $apartment->longitude;
+            $params['city'] = $apartment->city;
         }
 
         $params['visible'] = $params['visible'] === 'true' ? 1 : 0;
@@ -187,19 +204,19 @@ class ApartmentController extends Controller
         if(array_key_exists('services', $params)){
             $apartment->services()->sync($params['services']);
         }
-        
-        if(array_key_exists('sponsor', $params)){
-            $sponsor = Sponsor::where('id', $params['sponsor'])->first();
-            $actual_date = Carbon::now();
-            $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);     
-            $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
-            $apartment->sponsors()->sync($params['sponsor']);
-        }
-       
+
+        // if(array_key_exists('sponsor', $params)){
+        //     $sponsor = Sponsor::where('id', $params['sponsor'])->first();
+        //     $actual_date = Carbon::now();
+        //     $expire_date = Carbon::parse($actual_date)->addHours($sponsor->duration);
+        //     $apartment->sponsors()->attach($sponsor->id, ['expire_date' => $expire_date]);
+        //     $apartment->sponsors()->sync($params['sponsor']);
+        // }
+
         $apartment->update($params);
 
         if(array_key_exists('delete_pic', $params)){
-            foreach($params['delete_pic'] as $id){                
+            foreach($params['delete_pic'] as $id){
                 $img = Image::where('id', $id)->first();
                 Storage::delete($img->path);
                 $img->delete();
@@ -210,11 +227,11 @@ class ApartmentController extends Controller
 
             foreach($params['images'] as $image){
                 $image_params = [];
-                
+
                 $image_path = Storage::put('gallery', $image);
                 $image_params['path'] = $image_path;
                 $image_params['apartment_id'] = $apartment->id;
-                
+
                 $newImage = Image::create($image_params);
             }
         }
@@ -238,5 +255,15 @@ class ApartmentController extends Controller
 
         $apartment->delete();
         return redirect()->route('admin.apartments.index');
+    }
+
+    public function createCarbonDate($date) {
+        $result = null;
+        if($date) {
+            $result = Carbon::parse($date);
+        } else {
+            $result = Carbon::now();
+        }
+        return $result;
     }
 }
