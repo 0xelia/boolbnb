@@ -18,8 +18,28 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+//import search_input from './components/SearchInputComponent.vue'
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component(
+    'search-input-component',
+    require('./components/SearchInputComponent.vue').default);
+
+Vue.component(
+    'sponsor-component',
+    require('./components/SponsorComponent.vue').default);
+
+Vue.component(
+
+    'payment-component',
+    require('./components/PaymentComp.vue').default);
+
+Vue.component(
+    'promotion-component',
+    require('./components/PromotionComponent.vue').default);
+
+Vue.component(
+    'preview-comp',
+    require('./components/ImgPreview.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
