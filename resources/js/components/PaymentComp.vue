@@ -33,7 +33,7 @@
                 <i v-if="send" class="animate-spin fa-solid fa-circle-notch"></i> <span v-if="(send === false)"><i class="fa-solid fa-arrow-right"></i></span>
             </button>
             <div class="absolute bottom-10 text-red-600 font-semibold" v-if="(invalidInput === true)">
-                Alcuni campi sono vuoti
+                Uno o più cambi sono vuoti
             </div>
         </div>
         <div v-if="response" class="flex flex-col items-center content-center gap-10 text-xl text-center text-gray-700 font-semibold">

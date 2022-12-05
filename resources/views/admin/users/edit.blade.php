@@ -80,7 +80,7 @@
                       </label>
                       <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="file" name="profile_pic" id="profile_pic">
                       @error('profile_pic')
-                            <div id="profile_pic" class="invalid-feedback">
+                            <div id="profile_pic" class="pt-2 text-red italic text-red-700 invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
