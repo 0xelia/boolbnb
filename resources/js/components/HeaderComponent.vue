@@ -31,7 +31,7 @@ export default {
     methods: {
         logout() {
             const path = this.$route.path
-            axios.post('logout').then(res => {
+            axios.post('/logout').then(res => {
                 window.location.href = path
             })
         },
