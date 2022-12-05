@@ -3,7 +3,7 @@
     <!-- Jumbo -->
     <section class="pb-10 container">
       <div class="items-center bg-brand-300 py-20 px-6 rounded-xl">
-        <h1 class="text-5xl md:text-6xl font-bold text-gray-700 pb-12 text-center">Trova il tuo appartamento ideale</h1>
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-700 pb-12 text-center">Trova il tuo appartamento ideale</h1>
         <SearchInput class="mx-auto bg-white"/>
       </div>
     </section>
