@@ -268,12 +268,18 @@ export default {
 				const distance1 = this.getDistanceFromLatLonInKm(this.latitude, this.longitude, ap1.latitude, ap1.longitude)
 				const distance2 = this.getDistanceFromLatLonInKm(this.latitude, this.longitude, ap2.latitude, ap2.longitude)
 				if(ap1.sponsors.length > 0) {
-					date1 = new Date(ap1.sponsors[0].pivot.expire_date)
-					date1 = now < date1 ? date1 : null
+					ap1.sponsors.every(sponsor => {
+						date1 = new Date(sponsor.pivot.expire_date)
+						date1 = now < date1 ? true : false
+						return !date1
+					})
 				}											
 				if(ap2.sponsors.length > 0) {
-					date2 = new Date(ap2.sponsors[0].pivot.expire_date)
-					date2 = now < date2 ? date2 : null
+					ap2.sponsors.every(sponsor => {
+						date2 = new Date(sponsor.pivot.expire_date)
+						date2 = now < date2 ? true : false
+						return !date2
+					})
 				}	
 				if(date1 && !date2) {
 					return -1
