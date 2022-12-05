@@ -409,7 +409,6 @@ export default {
   },
   updated(){
     this.createMap()
-    window.scrollTo(0, 0)
   },
   watch:{
     mapCreation(a,b){
