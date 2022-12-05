@@ -108,17 +108,15 @@
             
             checkInput(){
                 if(this.year && this.month && this.cvv && this.creditCardNumber) {
+                    this.invalidInput = false
                     this.checkName()
                     this.checkCardNumber()
                     this.expDate()
                     this.checkCvv()
-                    this.invalidInput = false
                     if(!this.dataCheck && !this.cvvCheck && !this.cardCheck && !this.nameCheck) {
                         this.makePayment()
                         this.invalidInput = false
-                    } else {
-                        this.invalidInput = true
-                    }
+                    }    
                 } else {
                     this.invalidInput = true
                 }
