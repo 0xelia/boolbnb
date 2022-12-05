@@ -405,9 +405,11 @@ export default {
       this.msgLastname = this.user.surname
       this.msgEmail = this.user.email
     }
+    window.scrollTo(0, 0)
   },
   updated(){
     this.createMap()
+    window.scrollTo(0, 0)
   },
   watch:{
     mapCreation(a,b){

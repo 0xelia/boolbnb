@@ -116,6 +116,10 @@ export default {
     this.fetchPosts()
     this.fetchPostByCity()
     this.fetchAllApartments()
+    window.scrollTo(0, 0)
+  },
+  updated() {
+    window.scrollTo(0, 0)
   }
 }
 </script>

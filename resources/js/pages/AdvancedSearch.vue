@@ -351,6 +351,7 @@ export default {
 	},
 	created() {
 		this.fetchApartments()
+		window.scrollTo(0, 0)
 	},
 	mounted() {
 		this.latitude = this.$route.query.lat ? this.$route.query.lat : null;
@@ -359,6 +360,9 @@ export default {
 		window.addEventListener('resize', () => {
 			this.screen = window.innerWidth
 		})
+	},
+	updated() {
+		window.scrollTo(0, 0)
 	},
 	watch: {
 		urlAddress: function(newValue, oldValue) {
