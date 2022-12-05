@@ -84,7 +84,6 @@ export default {
           //   el.address = el.address.split(' ').pop();
           // });
           this.apartments = apartments
-          console.log(apartments);
         }).finally(() => {
           this.fetchSponsor = true
         })

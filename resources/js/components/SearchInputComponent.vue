@@ -54,6 +54,12 @@
         methods: {
             clearInput() {
                 this.address = ''
+                this.latitude = null
+                this.longitude = null
+                if(this.isBackend) {
+                    this.city = null
+                }
+                this.getResult()
             },
             showResult() {
                 if(this.$route) {
@@ -110,7 +116,6 @@
                         this.results = results.results.filter(result => {
                             return result.type != 'Cross Street'
                         })
-                        console.log(this.results);
                     })       
                     .catch(err => {
                         this.results = null
