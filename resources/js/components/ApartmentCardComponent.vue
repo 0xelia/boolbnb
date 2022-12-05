@@ -42,16 +42,18 @@ export default {
     },
     methods: {
         checkDate(apartment) {
-            let date = false
+            let isSponsored = false
             if(apartment.sponsors.length > 0) {
-                date = apartment.sponsors[0].pivot.expire_date
-                if(date) {
-                    const now = new Date()
-                    date = new Date(date)
-                    date = now < date ? date : null
-                }
+                apartment.sponsors.forEach(sponsor => {
+                    let date = sponsor.pivot.expire_date
+                    if(date) {
+                        const now = new Date()
+                        date = new Date(date)
+                        isSponsored = now < date ? date : null
+                    }                   
+                });
             }
-            return date
+            return isSponsored
         }
     },   
 }
