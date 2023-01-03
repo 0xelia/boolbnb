@@ -39,7 +39,7 @@
 export default {
     data() {
         return {
-            links: ['© 2022 airbnb', 'Privacy', 'Termini', 'Destinazioni'],
+            links: [`© ${new Date().getFullYear()} airbnb`, 'Privacy', 'Termini', 'Destinazioni'],
             settings: [
                 {
                     text: 'Italiano(IT)',
